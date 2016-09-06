@@ -1,26 +1,14 @@
 import React from 'react';
 
-export default class App extends React.Component {
-  state = {
-    inputValue: ''
-  }
-
-  handleInputChange = (event) => {
-    this.setState({
-      inputValue: event.target.value
-    })
-  }
-
+export default class InputWords extends React.Component {
   render() {
     return (
-      <form>
-        <input
-          name="words"
-          type="text"
-          value={this.state.inputValue}
-          onChange={this.handleInputChange}
-        />
-      </form>
+      <input
+        name="words"
+        type="text"
+        value={this.props.value}
+        onChange={this.props.handleChange}
+      />
     );
   }
 }
