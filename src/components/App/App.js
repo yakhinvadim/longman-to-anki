@@ -1,14 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
+import InputWords from '../InputWords/InputWords.js';
 import './App.css';
 
-class App extends Component {
+export default class App extends React.Component {
   render() {
     return (
-      <div className="App">
-      
-      </div>
+      <InputWords/>
     );
   }
 }
-
-export default App;
