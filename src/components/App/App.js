@@ -1,4 +1,9 @@
 import React from 'react';
+import { flatten } from 'ramda';
+
+import composeDictionaryEntry from '../../utils/composeDictionaryEntry.js';
+import getCorrectUrls from '../../utils/getCorrectUrls.js';
+
 import InputWords from '../InputWords/InputWords.js';
 import './App.css';
 
@@ -16,15 +21,28 @@ export default class App extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.fetchWordData(this.state.inputValue)
-  }
 
-  fetchWordData = (word) => {
-    fetch(`https://query.yahooapis.com/v1/public/yql?q=SELECT%20*%20FROM%20html%20WHERE%20url%3D%22http%3A%2F%2Fwww.ldoceonline.com%2Fdictionary%2F${word}%22&diagnostics=true`)
-      .then(resp => resp.text())
-      .then(data => this.setState({
-        wordData: data
+    const words = this.state.inputValue.split(',').map(item => item.trim());
+    const correctUrls = words.map(word => getCorrectUrls(word));
+
+
+    Promise.all(
+      correctUrls
+    )
+      .then(urls => Promise.all(
+        flatten(urls).map(
+          url => fetch(url)
+            .then(res => res.text())
+        )
+      ))
+      .then(bodies => bodies.map(composeDictionaryEntry))
+      .then(entries => entries.reduce(
+        (card, cards) => `${cards}${card}`
+      ), '')
+      .then(result => this.setState({
+        wordData: result
       }))
+      .catch(err => console.log(err));
   }
 
   render() {
