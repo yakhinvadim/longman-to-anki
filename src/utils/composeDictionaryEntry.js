@@ -11,7 +11,8 @@ export default function composeDictionaryEntry(body) {
     var lexUnit = $('.EXAMPLE').eq(exampleNumber).parent().prevAll('h2').children('.LEXUNIT').text().trim() +
       $('.EXAMPLE').eq(exampleNumber).parent().prevAll('strong').text().trim();
     var phrasalVerb = $('.EXAMPLE').eq(exampleNumber).parents('.PhrVbEntry').find('.phrvbhwdsel').text().trim();
-    if (lexUnit.length != 0 && phrasalVerb != 0) {
+    if (lexUnit.length !== 0 && phrasalVerb.length !== 0) {
+      console.log(phrasalVerb)
       return lexUnit + '<br>' + phrasalVerb;
     } else
       return lexUnit + phrasalVerb;
@@ -48,7 +49,7 @@ export default function composeDictionaryEntry(body) {
   function composeDictionaryEntry() {
     var dictionaryEntry = '';
 
-    for (i = 0; i < $('.EXAMPLE').length; i++) {
+    for (let i = 0; i < $('.EXAMPLE').length; i++) {
       dictionaryEntry += composeCard(i);
     };
 
