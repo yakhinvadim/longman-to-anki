@@ -1,10 +1,10 @@
 import React from 'react';
 import { flatten } from 'ramda';
 
-import composeDictionaryEntry from '../../utils/composeDictionaryEntry/composeDictionaryEntry.js';
-import getCorrectUrls from '../../utils/getCorrectUrls.js';
+import composeDictionaryEntry from '../../utils/composeDictionaryEntry/composeDictionaryEntry';
+import getCorrectUrls from '../../utils/getCorrectUrls';
 
-import InputWords from '../InputWords/InputWords.js';
+import InputWords from '../InputWords/InputWords';
 import './App.css';
 
 export default class App extends React.Component {
