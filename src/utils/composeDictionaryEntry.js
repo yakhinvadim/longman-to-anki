@@ -12,7 +12,6 @@ export default function composeDictionaryEntry(body) {
       $('.EXAMPLE').eq(exampleNumber).parent().prevAll('strong').text().trim();
     var phrasalVerb = $('.EXAMPLE').eq(exampleNumber).parents('.PhrVbEntry').find('.phrvbhwdsel').text().trim();
     if (lexUnit.length !== 0 && phrasalVerb.length !== 0) {
-      console.log(phrasalVerb)
       return lexUnit + '<br>' + phrasalVerb;
     } else
       return lexUnit + phrasalVerb;
