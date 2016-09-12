@@ -42,7 +42,7 @@ export default function composeDictionaryEntry(body) {
     var usage = getUsage(exampleNumber).length ? '<span class="usage">' + getUsage(exampleNumber) + '</span><br>' : '';
     var definition = '<span class="definition">' + getDefinition(exampleNumber) + '</span>';
 
-    return (example + form + term + ';' + geography + usage + definition + '\r\n');
+    return (example + form + term + ';' + geography + usage + definition + '\n');
   }
 
   function composeDictionaryEntry() {
