@@ -1,5 +1,5 @@
 import getCorrectUrls from './getCorrectUrls';
-import composeQuery from '../composeQuery/composeQuery.js'
+import composeQuery from '../composeQuery/composeQuery.js';
 
 it('returns correct urls for 1 page word "deliberately"', () => {
   return getCorrectUrls("deliberately")

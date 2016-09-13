@@ -1,7 +1,8 @@
 import cheerio from 'cheerio';
+import composeQuery from '../composeQuery/composeQuery.js'
 
 export default function getCorrectUrls(word) {
-  return fetch(`https://query.yahooapis.com/v1/public/yql?q=SELECT%20*%20FROM%20html%20WHERE%20url%3D%22http%3A%2F%2Fwww.ldoceonline.com%2Fsearch%2F%3Fq%3D${word}%22&diagnostics=true`)
+  return fetch(composeQuery({ type: 'search', word: word }))
     .then(resp => {
       return resp.text()
     })
@@ -18,11 +19,11 @@ export default function getCorrectUrls(word) {
     })
     .then(urlsNumber => {
       if(urlsNumber < 2) {
-        return [`https://query.yahooapis.com/v1/public/yql?q=SELECT%20*%20FROM%20html%20WHERE%20url%3D%22http%3A%2F%2Fwww.ldoceonline.com%2Fdictionary%2F${word}%22`]
+        return [composeQuery({ type: 'entry', word: word })]
       } else {
         let correctUrls = [];
         for(let i = 1; i <= urlsNumber; i++) {
-          correctUrls.push(`https://query.yahooapis.com/v1/public/yql?q=SELECT%20*%20FROM%20html%20WHERE%20url%3D%22http%3A%2F%2Fwww.ldoceonline.com%2Fdictionary%2F${word}_${i}%22`)
+          correctUrls.push(composeQuery({ type: 'entry', word: `${word}_${i}` }))
         }
         return correctUrls;
       }
