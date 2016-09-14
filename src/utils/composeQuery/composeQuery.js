@@ -1,10 +1,13 @@
 export default function composeQuery({ type, word }) {
   const queryStr = type === 'entry'
-    ? 'dictionary/' : type === 'search'
-    ? 'search/?q='
+    ? 'dictionary/'
     : 'search/?q=';
 
-  return `https://query.yahooapis.com/v1/public/yql?q=${encodeURIComponent(
-    `SELECT * FROM html WHERE url="http://www.ldoceonline.com/${queryStr}${word}"`
+  const dictionaryUrl = `http://www.ldoceonline.com/${queryStr}${word}`;
+
+  const queryUrl = `https://query.yahooapis.com/v1/public/yql?q=${encodeURIComponent(
+    `SELECT * FROM html WHERE url="${dictionaryUrl}"`
   )}`;
+
+  return queryUrl;
 }
