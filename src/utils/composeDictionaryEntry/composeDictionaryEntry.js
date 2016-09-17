@@ -1,4 +1,5 @@
 import cheerio from 'cheerio';
+import R from 'ramda';
 
 export default function composeDictionaryEntry(body) {
   let $ = cheerio.load(body);
@@ -124,15 +125,8 @@ export default function composeDictionaryEntry(body) {
     return (example + form + term + ';' + geography + usage + definition + '\n');
   }
 
-  function composeDictionaryEntry() {
-    let dictionaryEntry = '';
+  const cards = R.times(composeCard, $('.EXAMPLE').length);
+  const dictionaryEntry = R.join('', cards);
 
-    for (let i = 0; i < $('.EXAMPLE').length; i++) {
-      dictionaryEntry += composeCard(i);
-    };
-
-    return dictionaryEntry;
-  }
-
-  return composeDictionaryEntry();
+  return dictionaryEntry;
 }
