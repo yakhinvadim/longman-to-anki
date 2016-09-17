@@ -4,29 +4,31 @@ import R from 'ramda';
 export default function composeDictionaryEntry(body) {
   let $ = cheerio.load(body);
 
+  const examples = $('.EXAMPLE');
+
   function getExample(exampleNumber) {
-    return $('.EXAMPLE')
+    return examples
       .eq(exampleNumber)
       .text()
       .trim();
   }
 
   function getForm(exampleNumber) {
-    const lexUnit = $('.EXAMPLE')
+    const lexUnit = examples
       .eq(exampleNumber)
       .parent()
       .prevAll('h2')
       .children('.LEXUNIT')
       .text()
       .trim()
-      + $('.EXAMPLE')
+      + examples
       .eq(exampleNumber)
       .parent()
       .prevAll('strong')
       .text()
       .trim();
 
-    const phrasalVerb = $('.EXAMPLE')
+    const phrasalVerb = examples
       .eq(exampleNumber)
       .parents('.PhrVbEntry')
       .find('.phrvbhwdsel')
@@ -46,7 +48,7 @@ export default function composeDictionaryEntry(body) {
   }
 
   function getGeography(exampleNumber) {
-    return $('.EXAMPLE')
+    return examples
       .eq(exampleNumber)
       .parent()
       .prevAll('.GEO')
@@ -55,7 +57,7 @@ export default function composeDictionaryEntry(body) {
   }
 
   function getUsage(exampleNumber) {
-    return $('.EXAMPLE')
+    return examples
       .eq(exampleNumber)
       .parent()
       .prevAll('.REGISTERLAB')
@@ -64,14 +66,14 @@ export default function composeDictionaryEntry(body) {
   }
 
   function getDefinition(exampleNumber) {
-    return $('.EXAMPLE')
+    return examples
       .eq(exampleNumber)
       .parent()
       .prevAll('ftdef')
       .children('.DEF')
       .text()
       .trim()
-      + $('.EXAMPLE')
+      + examples
       .eq(exampleNumber)
       .parent()
       .parent()
@@ -125,7 +127,7 @@ export default function composeDictionaryEntry(body) {
     return (example + form + term + ';' + geography + usage + definition + '\n');
   }
 
-  const cards = R.times(composeCard, $('.EXAMPLE').length);
+  const cards = R.times(composeCard, examples.length);
   const dictionaryEntry = R.join('', cards);
 
   return dictionaryEntry;
