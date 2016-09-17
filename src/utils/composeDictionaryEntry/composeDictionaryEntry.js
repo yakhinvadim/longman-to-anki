@@ -42,6 +42,27 @@ export default function composeDictionaryEntry(body) {
     var usage = getUsage(exampleNumber).length ? '<span class="usage">' + getUsage(exampleNumber) + '</span><br>' : '';
     var definition = '<span class="definition">' + getDefinition(exampleNumber) + '</span>';
 
+    /*
+      a typical card looks like this:
+
+
+      FRONT SIDE
+
+      She seemed rather struck on Vincent                    <-- example
+
+      be struck on somebody/something                        <-- form
+
+      struck                                                 <-- term
+
+
+      BACK SIDE
+
+      British English informal                               <-- geography and usage
+
+      to think that someone or something is very good        <-- definition
+
+    */
+
     return (example + form + term + ';' + geography + usage + definition + '\n');
   }
 
