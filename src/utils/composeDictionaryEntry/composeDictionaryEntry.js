@@ -11,7 +11,7 @@ export default function composeDictionaryEntry(body) {
   }
 
   function getForm(exampleNumber) {
-    var lexUnit = $('.EXAMPLE')
+    const lexUnit = $('.EXAMPLE')
       .eq(exampleNumber)
       .parent()
       .prevAll('h2')
@@ -25,7 +25,7 @@ export default function composeDictionaryEntry(body) {
       .text()
       .trim();
 
-    var phrasalVerb = $('.EXAMPLE')
+    const phrasalVerb = $('.EXAMPLE')
       .eq(exampleNumber)
       .parents('.PhrVbEntry')
       .find('.phrvbhwdsel')
@@ -81,18 +81,6 @@ export default function composeDictionaryEntry(body) {
   }
 
   function composeCard(exampleNumber) {
-    var example = '<span class="example">' + getExample(exampleNumber) + '</span><br><br>';
-
-    var form = getForm(exampleNumber).length ? '<span class="form">' + getForm(exampleNumber) + '</span><br><br>' : '';
-
-    var term = '<span class="term">' + getTerm() + '</span>';
-
-    var geography = getGeography(exampleNumber).length ? '<span class="term">' + getGeography(exampleNumber) + '</span> ' : '';
-
-    var usage = getUsage(exampleNumber).length ? '<span class="usage">' + getUsage(exampleNumber) + '</span><br>' : '';
-
-    var definition = '<span class="definition">' + getDefinition(exampleNumber) + '</span>';
-
     /*
       a typical card looks like this:
 
@@ -114,11 +102,30 @@ export default function composeDictionaryEntry(body) {
 
     */
 
+    const example = `<span class="example">${getExample(exampleNumber)}</span><br><br>`;
+
+    const form = getForm(exampleNumber).length
+      ? `<span class="form">${getForm(exampleNumber)}</span><br><br>`
+      : ``;
+
+    const term = `<span class="term">${getTerm()}</span>`;
+
+    const geography = getGeography(exampleNumber).length
+      ? `<span class="term">${getGeography(exampleNumber)}</span> `
+      : ``;
+
+    const usage = getUsage(exampleNumber).length
+      ? `<span class="usage">${getUsage(exampleNumber)}</span><br>`
+      : ``;
+
+    const definition = `<span class="definition">${getDefinition(exampleNumber)}</span>`;
+
+
     return (example + form + term + ';' + geography + usage + definition + '\n');
   }
 
   function composeDictionaryEntry() {
-    var dictionaryEntry = '';
+    let dictionaryEntry = '';
 
     for (let i = 0; i < $('.EXAMPLE').length; i++) {
       dictionaryEntry += composeCard(i);
