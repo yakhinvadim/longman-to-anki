@@ -1,2 +1,4 @@
 # longman-to-anki-web
-A webapp to help you learn English words with Anki
+A web app to help you learn English words with Anki
+
+Work in progress. You can use https://github.com/yakhinvadim/longman-to-anki-plus for now.
