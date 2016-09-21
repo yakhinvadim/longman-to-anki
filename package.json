@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "react-scripts": "0.4.1"
+    "react-scripts": "0.4.3"
   },
   "dependencies": {
     "cheerio": "^0.22.0",
