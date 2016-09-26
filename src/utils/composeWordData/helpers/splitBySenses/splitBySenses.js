@@ -1,7 +1,7 @@
 import cheerio from 'cheerio';
 import R from 'ramda';
 
-const toArray = R.when(R.is(String), R.of);
+const coerceArray = R.unless(R.is(Array), R.of);
 
 export default function splitByEntries(entryMarkup) {
   const $ = cheerio.load(entryMarkup, { decodeEntities: false });
@@ -10,5 +10,5 @@ export default function splitByEntries(entryMarkup) {
     .map((i, el) => $(el).html())
     .get();
 
-  return toArray(output);
+  return coerceArray(output);
 }
