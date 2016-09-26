@@ -1,7 +1,7 @@
-import cheerio from 'cheerio';
+import cheerify from './../cheerify/cheerify.js';
 
 export default function getDefinition(senseMarkup) {
-  const $ = cheerio.load(senseMarkup, { decodeEntities: false });
+  const $ = cheerify(senseMarkup);
 
   return $('.DEF').text().trim();
 }

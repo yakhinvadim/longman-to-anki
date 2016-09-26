@@ -1,10 +1,10 @@
-import cheerio from 'cheerio';
+import cheerify from './../cheerify/cheerify.js';
 import R from 'ramda';
 
 const coerceArray = R.unless(R.is(Array), R.of);
 
 export default function splitByEntries(entryMarkup) {
-  const $ = cheerio.load(entryMarkup, { decodeEntities: false });
+  const $ = cheerify(entryMarkup);
 
   const output = $('.Sense')
     .map((i, el) => $(el).html())
