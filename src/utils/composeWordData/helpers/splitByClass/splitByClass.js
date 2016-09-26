@@ -1,12 +1,15 @@
 import cheerify from './../cheerify/cheerify.js';
 import coerceArray from './../coerceArray/coerceArray.js';
+import R from 'ramda';
 
-export default function splitByEntries(pageMarkup) {
-  const $ = cheerify(pageMarkup);
+const splitByClass = R.curry((className, markup) => {
+  const $ = cheerify(markup);
 
-  const output = $('.Entry')
+  const output = $(className)
     .map((i, el) => $(el).html())
     .get();
 
   return coerceArray(output);
-}
+});
+
+export default splitByClass;

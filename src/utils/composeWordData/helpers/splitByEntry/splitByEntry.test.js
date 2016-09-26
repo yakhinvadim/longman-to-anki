@@ -1,17 +1,17 @@
-import splitByEntries from './splitByEntries.js';
+import splitByEntry from './splitByEntry.js';
 import deliberately from './../../mocks/deliberately';
 import set from './../../mocks/set';
 
-describe('splitByEntries', () => {
+describe('splitByEntry', () => {
   it('splits "deliberately" pageMarkup correctly', () => {
     expect(
-      splitByEntries(deliberately.pageMarkup)
+      splitByEntry(deliberately.pageMarkup)
     ).toEqual(deliberately.entriesMarkup)
   });
 
   it('splits "set" pageMarkup correctly', () => {
     expect(
-      splitByEntries(set.pageMarkup)
+      splitByEntry(set.pageMarkup)
     ).toEqual(set.entriesMarkup)
   });
 });

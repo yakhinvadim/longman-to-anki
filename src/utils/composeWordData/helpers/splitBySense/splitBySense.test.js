@@ -1,23 +1,23 @@
-import splitBySenses from './splitBySenses.js';
+import splitBySense from './splitBySense.js';
 import deliberately from './../../mocks/deliberately';
 import set from './../../mocks/set';
 
-describe('splitBySenses', () => {
+describe('splitBySense', () => {
   it('splits "deliberately" entryMarkup correctly', () => {
     expect(
-      splitBySenses(deliberately.entriesMarkup[0])
+      splitBySense(deliberately.entriesMarkup[0])
     ).toEqual(deliberately.sensesMarkup)
   });
 
   it('splits "set" first entryMarkup by correct number of senses', () => {
     expect(
-      splitBySenses(set.entriesMarkup[0]).length
+      splitBySense(set.entriesMarkup[0]).length
     ).toEqual(25)
   });
 
   it('splits "set" second entryMarkup correctly', () => {
     expect(
-      splitBySenses(set.entriesMarkup[1])
+      splitBySense(set.entriesMarkup[1])
     ).toEqual(set.sensesMarkup)
   });
 });
