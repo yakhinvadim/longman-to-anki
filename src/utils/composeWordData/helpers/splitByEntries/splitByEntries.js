@@ -1,7 +1,5 @@
 import cheerify from './../cheerify/cheerify.js';
-import R from 'ramda';
-
-const toArray = R.when(R.is(String), R.of);
+import coerceArray from './../coerceArray/coerceArray.js';
 
 export default function splitByEntries(pageMarkup) {
   const $ = cheerify(pageMarkup);
@@ -10,5 +8,5 @@ export default function splitByEntries(pageMarkup) {
     .map((i, el) => $(el).html())
     .get();
 
-  return toArray(output);
+  return coerceArray(output);
 }

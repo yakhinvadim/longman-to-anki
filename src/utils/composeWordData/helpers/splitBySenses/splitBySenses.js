@@ -1,7 +1,5 @@
 import cheerify from './../cheerify/cheerify.js';
-import R from 'ramda';
-
-const coerceArray = R.unless(R.is(Array), R.of);
+import coerceArray from './../coerceArray/coerceArray.js';
 
 export default function splitByEntries(entryMarkup) {
   const $ = cheerify(entryMarkup);
