@@ -9,9 +9,15 @@ describe('splitBySenses', () => {
     ).toEqual(deliberately.sensesMarkup)
   });
 
-  it('splits "set" firts entryMarkup by correct number of senses', () => {
+  it('splits "set" first entryMarkup by correct number of senses', () => {
     expect(
       splitBySenses(set.entriesMarkup[0]).length
     ).toEqual(25)
+  });
+
+  it('splits "set" second entryMarkup correctly', () => {
+    expect(
+      splitBySenses(set.entriesMarkup[1])
+    ).toEqual(set.sensesMarkup)
   });
 });
