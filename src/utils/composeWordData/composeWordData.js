@@ -20,7 +20,7 @@ export default function composeWordData(pageMarkup) {
     [
       getWord(pageMarkup),
       R.pipe(
-        splitByClass('.Entry'),
+        splitByClass('.ldoceEntry'),
         R.map(composeEntryData)
       )(pageMarkup)
     ]
