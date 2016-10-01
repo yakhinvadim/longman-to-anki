@@ -4,10 +4,12 @@ import R from 'ramda';
 const removeSpeakerIcon = R.replace(/🔊/g, '');
 const removeGlossary = R.replace(/\(=.*\)/g, '');
 const fixDoubleSpace = R.replace(/ {2}/g, ' ');
+const fixSeparatedPeriod = R.replace(/ \./g, '.');
 const cleanse = R.pipe(
   removeSpeakerIcon,
   removeGlossary,
   fixDoubleSpace,
+  fixSeparatedPeriod,
   R.trim
 );
 
