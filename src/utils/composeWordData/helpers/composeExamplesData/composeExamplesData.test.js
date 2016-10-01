@@ -1,21 +1,21 @@
-import getExamples from './getExamples.js';
+import composeExamplesData from './composeExamplesData.js';
 import deliberately from './../../mocks/deliberately';
 import set from './../../mocks/set';
 import R from 'ramda';
 
-describe('getExamples', () => {
-  it('gets correct examples for "deliberately" entry', () => {
+describe('composeExamplesData', () => {
+  it('composes correct examples for "deliberately" entry', () => {
     expect(
-      R.map(getExamples, deliberately.sensesMarkup)
+      R.map(composeExamplesData, deliberately.sensesMarkup)
     ).toEqual([
       [{ text: 'He deliberately upset her.' }],
       [{ text: 'He shook his head slowly and deliberately.' }]
     ])
   });
 
-  it('gets correct examples for "set" entry', () => {
+  it('composes correct examples for "set" entry', () => {
     expect(
-      R.map(getExamples, set.sensesMarkup)
+      R.map(composeExamplesData, set.sensesMarkup)
     ).toEqual([
       [
         {

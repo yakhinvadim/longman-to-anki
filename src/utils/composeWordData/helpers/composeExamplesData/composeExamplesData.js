@@ -5,11 +5,14 @@ const removeSpeakerIcon = R.replace(/🔊/g, '');
 const removeGlossary = R.replace(/\(=.*\)/g, '');
 const fixDoubleSpace = R.replace(/ {2}/g, ' ');
 const cleanse = R.pipe(
-    removeSpeakerIcon,
-    removeGlossary,
-    fixDoubleSpace,
-    R.trim
-  );
+  removeSpeakerIcon,
+  removeGlossary,
+  fixDoubleSpace,
+  R.trim
+);
+
+const getText = R.invoker(0, 'text');
+const getForm = R.invoker(1, 'prevAll')('.PROPFORM, .PROPFORMPREP, .COLLO');
 
 export default function getExamples(senseMarkup) {
   const $ = cheerify(senseMarkup);
@@ -19,37 +22,28 @@ export default function getExamples(senseMarkup) {
     (i, el) => cheerioExamples[i] = $(el)
   );
 
-  const getText = R.invoker(0, 'text');
-  const getForm = R.invoker(1, 'prevAll')('.PROPFORM, .PROPFORMPREP, .COLLO');
-
-  const forms = R.map(
-    R.pipe(
-      getForm,
-      getText
-    )
-  )(cheerioExamples);
-
-  const examples = R.map(
+  const examplesText = R.map(
     R.pipe(
       getText,
-      cleanse
+      cleanse,
+      R.objOf('text')
     )
   )(cheerioExamples);
 
-  const formsObj = R.map(
-    R.objOf('form')
-  )(forms);
+  const examplesForms = R.map(
+    R.pipe(
+      getForm,
+      getText,
+      R.objOf('form')
+    )
+  )(cheerioExamples);
 
-  const examplesObj = R.map(
-    R.objOf('text')
-  )(examples);
-
-  const result = R.zipWith(
+  const examplesData = R.zipWith(
     R.pipe(
       R.merge,
       R.filter(R.complement(R.isEmpty))
-    ), formsObj, examplesObj
+    ), examplesForms, examplesText
   );
 
-  return result;
+  return examplesData;
 }
