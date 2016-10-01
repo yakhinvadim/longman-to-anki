@@ -1,5 +1,6 @@
 import splitByClass from './helpers/splitByClass/splitByClass.js';
 import composeSenseData from './helpers/composeSenseData/composeSenseData.js';
+import getWord from './helpers/getWord/getWord.js';
 import R from 'ramda';
 
 export default function composeWordData(pageMarkup) {
@@ -12,13 +13,18 @@ export default function composeWordData(pageMarkup) {
   );
 
   const result = R.zipObj(
-    ['word', 'entries'],
-    ['deliberately',
+    [
+      'word',
+      'entries'
+    ],
+    [
+      getWord(pageMarkup),
       R.pipe(
         splitByClass('.Entry'),
         R.map(composeEntryData)
       )(pageMarkup)
-  ]);
+    ]
+  );
 
   return result;
 }
