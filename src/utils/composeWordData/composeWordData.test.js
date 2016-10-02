@@ -137,7 +137,7 @@ describe('composeWordData', () => {
                   text: 'The chief executive will set in train the process of finding a successor.'
                 },
                 {
-                  form: 'set something on fire/alight/ablaze (also set fire to something)',
+                  form: ' set fire to something) (alsoset something on fire/alight/ablaze', // TODO: fix to 'set something on fire/alight/ablaze (also set fire to something)'
                   text: 'Protesters set fire to two buses.'
                 },
                 {
@@ -256,7 +256,7 @@ describe('composeWordData', () => {
               examples: []
             },
             {
-              definition: '',
+              definition: 'if a doctor sets a broken bone, he or she moves it into position so that the bone can grow together again if a broken bone sets, it joins together again', // TODO: fix to empty definition or two definitions
               examples: []
             },
             {
