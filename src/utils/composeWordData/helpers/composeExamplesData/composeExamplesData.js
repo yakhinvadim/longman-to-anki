@@ -14,7 +14,7 @@ const cleanse = R.pipe(
 );
 
 const getText = R.invoker(0, 'text');
-const getForm = R.invoker(1, 'prevAll')('.PROPFORM, .PROPFORMPREP, .COLLO');
+const getForm = R.invoker(1, 'prevAll')('.PROPFORM, .PROPFORMPREP, .COLLO, .LINKWORD');
 
 export default function getExamples(senseMarkup) {
   const $ = cheerify(senseMarkup);
