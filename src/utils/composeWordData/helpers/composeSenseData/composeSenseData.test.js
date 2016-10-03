@@ -1,16 +1,16 @@
 import composeSenseData from './composeSenseData.js';
-import deliberately from '../../mocks/deliberately';
+import set from '../../mocks/set';
 
 describe('composeSenseData', () => {
   it('senseData contain definition', () => {
     expect(
-      composeSenseData(deliberately.sensesMarkup[0]).definition
+      composeSenseData(set.sensesMarkup2[0]).definition
     ).toBeDefined();
   });
 
   it('senseData contain examples', () => {
     expect(
-      composeSenseData(deliberately.sensesMarkup[0]).examples
+      composeSenseData(set.sensesMarkup2[0]).examples
     ).toBeDefined();
   });
 });
