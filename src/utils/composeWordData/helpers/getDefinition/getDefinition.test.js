@@ -15,7 +15,7 @@ describe('getDefinition', () => {
 
   it('gets correct definitions for "set" second entry', () => {
     expect(
-      R.map(getDefinition, set.sensesMarkup)
+      R.map(getDefinition, set.sensesMarkup2)
     ).toEqual([
       'a group of similar things that belong together or are related in some way',
       'a television, or a piece of equipment for receiving radio signals',

@@ -32,6 +32,6 @@ describe('splitByClass for .Sense', () => {
   it('splits "set" second entryMarkup correctly', () => {
     expect(
       splitByClass('.Sense', set.entriesMarkup[1])
-    ).toEqual(set.sensesMarkup)
+    ).toEqual(set.sensesMarkup2)
   });
 });

@@ -1,86 +1,89 @@
 import composeExamplesData from './composeExamplesData.js';
-import deliberately from './../../mocks/deliberately';
 import set from './../../mocks/set';
-import R from 'ramda';
 
 describe('composeExamplesData', () => {
-  it('composes correct examples for "deliberately" entry', () => {
+
+  it('composes correct examplesData for sense with one simple example', () => {
     expect(
-      R.map(composeExamplesData, deliberately.sensesMarkup)
+      composeExamplesData(set.sensesMarkup2[1])
     ).toEqual([
-      [{ text: 'He deliberately upset her.' }],
-      [{ text: 'He shook his head slowly and deliberately.' }]
+      {
+        text: 'a colour television set'
+      }
     ])
   });
 
-  it('composes correct examples for "set" entry', () => {
+  it('composes correct examplesData for sense with one grammar example', () => {
     expect(
-      R.map(composeExamplesData, set.sensesMarkup)
+      composeExamplesData(set.sensesMarkup2[2])
     ).toEqual([
-      [
-        {
-          text: 'a set of tools',
-          form: 'set of'
-        },
-        {
-          text: 'We face a new set of problems.',
-          form: 'set of'
-        },
-        {
-          text: 'The older generation have a different set of values.',
-          form: 'set of'
-        },
-        {
-          text: 'a chess set'
-        }
-      ],
-      [
-        {
-          text: 'a colour television set'
-        }
-      ],
-      [
-        {
-          text: 'Cruise met Kidman on the set of ‘Days of Thunder’.',
-          form: 'on set/on the set'
-        }
-      ],
-      [],
-      [
-        {
-          text: 'Nadal won the second set 6–4.'
-        }
-      ],
-      [
-        {
-          text: 'a favourite meeting place of the smart set'
-        },
-        {
-          text: 'Val got in with a wild set at college.'
-        }
-      ],
-      [],
-      [
-        {
-          text: 'Sasha performed a three-hour set.'
-        }
-      ],
-      [
-        {
-          text: 'The set (x, y) has two members.'
-        }
-      ],
-      [
-        {
-          text: 'Adam’s in the top set for maths.',
-          form: 'top/bottom etc set'
-        }
-      ],
-      [
-        {
-          text: 'onion sets'
-        }
-      ]
+      {
+        text: 'Cruise met Kidman on the set of ‘Days of Thunder’.',
+        form: 'on set/on the set'
+      }
+    ])
+  });
+
+  it('composes correct examplesData for sense with one collocation example', () => {
+    expect(
+      composeExamplesData(set.sensesMarkup2[9])
+    ).toEqual([
+      {
+        text: 'Adam’s in the top set for maths.',
+        form: 'top/bottom etc set'
+      }
+    ])
+  });
+
+  it('composes correct examplesData for sense with no examples', () => {
+    expect(
+      composeExamplesData(set.sensesMarkup2[3])
+    ).toEqual([])
+  });
+
+  it('composes correct examplesData for sense with glossary in example', () => {
+    expect(
+      composeExamplesData(set.sensesMarkup2[5])
+    ).toEqual([
+      {
+        text: 'a favourite meeting place of the smart set'
+      },
+      {
+        text: 'Val got in with a wild set at college.'
+      }
+    ])
+  });
+
+  it('composes correct examplesData for crossreference sense', () => {
+    expect(
+      composeExamplesData(set.sensesMarkup2[6])
+    ).toEqual([])
+  });
+
+  xit('composes correct examplesData for sense with linkword in grammar/collocation', () => {
+    expect(
+      composeExamplesData(set.sensesMarkup1[0])
+    ).toEqual([
+      {
+        form: 'set something in motion/progress/train',
+        text: 'A study by military experts was immediately set in motion.'
+      },
+      {
+        form: 'set something in motion/progress/train',
+        text: 'The chief executive will set in train the process of finding a successor.'
+      },
+      {
+        form: 'set something on fire/alight/ablaze (also set fire to something)',
+        text: 'Protesters set fire to two buses.'
+      },
+      {
+        form: 'set somebody/something doing something',
+        text: 'Her last remark has set me thinking.'
+      },
+      {
+        form: 'set somebody/something doing something',
+        text: 'The wind set the trees rustling.'
+      }
     ])
   });
 });

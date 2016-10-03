@@ -29,7 +29,7 @@ describe('composeSenseData', () => {
 
   it('gets correct senseData for "set" senses', () => {
     expect(
-      R.map(composeSenseData, set.sensesMarkup)
+      R.map(composeSenseData, set.sensesMarkup2)
     ).toEqual([
       {
         definition: 'a group of similar things that belong together or are related in some way',
