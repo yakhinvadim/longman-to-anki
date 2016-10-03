@@ -4,7 +4,13 @@ import getDefinition from './../getDefinition/getDefinition.js';
 
 export default function composeSenseData(senseMarkup) {
   return R.zipObj(
-    ['definition', 'examples'],
-    [getDefinition(senseMarkup), composeExamplesData(senseMarkup)]
+    [
+      'definition',
+      'examples'
+    ],
+    [
+      getDefinition(senseMarkup),
+      composeExamplesData(senseMarkup)
+    ]
   )
 }
