@@ -1,15 +1,8 @@
 import getWord from './getWord.js';
-import deliberately from './../../mocks/deliberately';
 import set from './../../mocks/set';
 
 describe('getWord', () => {
-  it('gets correct definitions for "deliberately" entry', () => {
-    expect(
-      getWord(deliberately.pageMarkup)
-    ).toEqual('deliberately')
-  });
-
-  it('gets correct definitions for "set" second entry', () => {
+  it('gets correct word for "set" markup', () => {
     expect(
       getWord(set.pageMarkup)
     ).toEqual('set')
