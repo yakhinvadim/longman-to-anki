@@ -3,7 +3,7 @@ import set from './../../mocks/set';
 
 describe('composeExamplesData', () => {
 
-  it('composes correct examplesData for sense with one simple example', () => {
+  it('composes correct examplesData for a sense with one simple example', () => {
     expect(
       composeExamplesData(set.sensesMarkup2[1])
     ).toEqual([
@@ -13,7 +13,7 @@ describe('composeExamplesData', () => {
     ])
   });
 
-  it('composes correct examplesData for sense with one grammar example', () => {
+  it('composes correct examplesData for a sense with one grammar example', () => {
     expect(
       composeExamplesData(set.sensesMarkup2[2])
     ).toEqual([
@@ -24,7 +24,7 @@ describe('composeExamplesData', () => {
     ])
   });
 
-  it('composes correct examplesData for sense with one collocation example', () => {
+  it('composes correct examplesData for a sense with one collocation example', () => {
     expect(
       composeExamplesData(set.sensesMarkup2[9])
     ).toEqual([
@@ -35,13 +35,13 @@ describe('composeExamplesData', () => {
     ])
   });
 
-  it('composes correct examplesData for sense with no examples', () => {
+  it('composes correct examplesData for a sense with no examples', () => {
     expect(
       composeExamplesData(set.sensesMarkup2[3])
     ).toEqual([])
   });
 
-  it('composes correct examplesData for sense with glossary in example', () => {
+  it('composes correct examplesData for a sense with glossary in example', () => {
     expect(
       composeExamplesData(set.sensesMarkup2[5])
     ).toEqual([
@@ -54,13 +54,13 @@ describe('composeExamplesData', () => {
     ])
   });
 
-  it('composes correct examplesData for crossreference sense', () => {
+  it('composes correct examplesData for a crossreference sense', () => {
     expect(
       composeExamplesData(set.sensesMarkup2[6])
     ).toEqual([])
   });
 
-  xit('composes correct examplesData for sense with linkword in grammar/collocation', () => {
+  xit('composes correct examplesData for a sense with linkword in grammar/collocation', () => {
     expect(
       composeExamplesData(set.sensesMarkup1[0])
     ).toEqual([
