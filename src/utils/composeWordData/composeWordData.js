@@ -1,6 +1,6 @@
 import splitByClass from './helpers/splitByClass/splitByClass.js';
 import composeEntryData from './helpers/composeEntryData/composeEntryData.js';
-import getWord from './helpers/getWord/getWord.js';
+import getHeadword from './helpers/getHeadword/getHeadword.js';
 import R from 'ramda';
 
 export default function composeWordData(pageMarkup) {
@@ -10,7 +10,7 @@ export default function composeWordData(pageMarkup) {
       'entries'
     ],
     [
-      getWord(pageMarkup),
+      getHeadword(pageMarkup),
       R.pipe(
         splitByClass('.ldoceEntry'),
         R.map(composeEntryData)
