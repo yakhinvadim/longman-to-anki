@@ -4,7 +4,7 @@ import set from './mocks/set';
 describe('composeWordData', () => {
   it('wordData contains word', () => {
     expect(
-      composeWordData(set.pageMarkup).word
+      composeWordData(set.pageMarkup).headword
     ).toBeDefined();
   });
 

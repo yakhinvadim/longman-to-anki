@@ -6,7 +6,7 @@ import R from 'ramda';
 export default function composeWordData(pageMarkup) {
   return R.zipObj(
     [
-      'word',
+      'headword',
       'entries'
     ],
     [
