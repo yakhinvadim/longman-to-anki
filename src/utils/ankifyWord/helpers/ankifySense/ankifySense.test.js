@@ -4,6 +4,7 @@ const headword = 'headword';
 
 const sense = {
   definition: 'definition',
+  situation: '',
   examples: [
     {
       text: 'example1'

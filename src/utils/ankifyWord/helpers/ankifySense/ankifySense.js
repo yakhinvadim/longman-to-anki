@@ -4,7 +4,7 @@ import ankifyExample from '../ankifyExample/ankifyExample.js';
 const ankifySenseNotCurried = (headword, sense) => {
   const cards = R.pipe(
     R.prop('examples'),
-    R.map(ankifyExample(headword, sense.definition)),
+    R.map(ankifyExample(headword, sense.definition, sense.situation)),
     R.join('\n')
   )(sense);
 
