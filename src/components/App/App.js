@@ -1,10 +1,9 @@
 import React from 'react';
-import { flatten } from 'ramda';
+import R from 'ramda';
+import ankifyWord from '../../utils/ankifyWord/ankifyWord';
+import composeWordData from '../../utils/composeWordData/composeWordData';
+import composeQuery from '../../utils/composeQuery/composeQuery';
 
-import composeDictionaryEntry from '../../utils/composeDictionaryEntry/composeDictionaryEntry';
-import getCorrectUrls from '../../utils/getCorrectUrls/getCorrectUrls';
-
-import InputWords from '../InputWords/InputWords';
 import './App.css';
 
 export default class App extends React.Component {
@@ -23,22 +22,22 @@ export default class App extends React.Component {
     event.preventDefault();
 
     const words = this.state.inputValue.split(',').map(item => item.trim());
-    const correctUrls = words.map(word => getCorrectUrls(word));
-
+    const urls = words.map(composeQuery);
 
     Promise.all(
-      correctUrls
+      urls.map(
+        url => fetch(url).then(res => res.text())
+      )
     )
-      .then(urls => Promise.all(
-        flatten(urls).map(
-          url => fetch(url)
-            .then(res => res.text())
-        )
+      .then(R.pipe(
+        R.map(
+          R.pipe(
+            composeWordData,
+            ankifyWord
+          )
+        ),
+        R.join('\n')
       ))
-      .then(bodies => bodies.map(composeDictionaryEntry))
-      .then(entries => entries.reduce(
-        (card, cards) => `${cards}${card}`
-      ), '')
       .then(result => this.setState({
         wordData: result
       }))
@@ -51,9 +50,11 @@ export default class App extends React.Component {
         <form
           onSubmit={this.handleSubmit}
         >
-          <InputWords
+          <input
+            name='words'
+            type='text'
             value={this.state.inputValue}
-            handleChange={this.handleInputChange}
+            onChange={this.handleInputChange}
           />
         </form>
 
