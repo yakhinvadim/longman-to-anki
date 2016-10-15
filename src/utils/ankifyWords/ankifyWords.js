@@ -1,33 +1,27 @@
 import R from 'ramda';
 import ankifyWordData from '../ankifyWordData/ankifyWordData';
 import composeWordData from '../composeWordData/composeWordData';
-import composeQuery from '../composeQuery/composeQuery';
+import wordsToQueries from '../wordsToQueries/wordsToQueries';
 
 export default function ankifyWords(words) {
-  const urls = R.pipe(
-    R.split(','),
-    R.map(R.pipe(
-      R.trim,
-      composeQuery
-    ))
-  )(words);
+  const queries = wordsToQueries(words);
 
-  const urlsToMarkup = R.map(R.pipeP(
+  const queryToMarkup = R.pipeP(
     fetch,
     resp => resp.text()
-  ));
-
-  const markupToAnkiCards = R.pipe(
-    R.map(R.pipe(
-      composeWordData,
-      ankifyWordData
-    )),
-    R.join('\n')
   );
 
-  const ankiCards = 
-    Promise.all( urlsToMarkup(urls) )
-      .then(markupToAnkiCards)
+  const markupToAnkiCard = R.pipe(
+    composeWordData,
+    ankifyWordData
+  );
+
+  const ankiCards =
+    Promise.all( R.map(queryToMarkup)(queries) )
+      .then(R.pipe(
+        R.map(markupToAnkiCard),
+        R.join('\n')
+      ))
       .catch(console.log);
 
   return ankiCards;
