@@ -1,5 +1,5 @@
 import React from 'react';
-import ankifyWords from '../../utils/ankifyWords/ankifyWords.js';
+import ankifyWords from '../../utils/ankifyWords/ankifyWords';
 import './App.css';
 
 export default class App extends React.Component {

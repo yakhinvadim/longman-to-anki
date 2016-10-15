@@ -1,5 +1,5 @@
-import cheerify from './../cheerify/cheerify.js';
-import coerceArray from './../coerceArray/coerceArray.js';
+import cheerify from '../cheerify/cheerify.js';
+import coerceArray from '../coerceArray/coerceArray.js';
 import R from 'ramda';
 
 const splitByClass = R.curry((className, markup) => {

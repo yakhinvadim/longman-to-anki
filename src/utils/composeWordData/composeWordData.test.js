@@ -1,5 +1,5 @@
 import composeWordData from './composeWordData.js';
-import set from './mocks/set';
+import set from '../../mocks/set';
 
 describe('composeWordData', () => {
   it('wordData contains word', () => {

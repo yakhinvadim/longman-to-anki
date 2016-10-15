@@ -1,5 +1,5 @@
 import getDefinition from './getDefinition.js';
-import set from './../../mocks/set';
+import set from '../../mocks/set';
 
 describe('getDefinition', () => {
   it('gets correct definition for a normal sense', () => {

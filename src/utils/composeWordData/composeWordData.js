@@ -1,6 +1,6 @@
-import splitByClass from './helpers/splitByClass/splitByClass.js';
-import composeEntryData from './helpers/composeEntryData/composeEntryData.js';
-import getHeadword from './helpers/getHeadword/getHeadword.js';
+import splitByClass from '../splitByClass/splitByClass.js';
+import composeEntryData from '../composeEntryData/composeEntryData.js';
+import getHeadword from '../getHeadword/getHeadword.js';
 import R from 'ramda';
 
 export default function composeWordData(pageMarkup) {

@@ -1,4 +1,4 @@
-import cheerify from './../cheerify/cheerify.js';
+import cheerify from '../cheerify/cheerify.js';
 
 export default function getHeadword(pageMarkup) {
   const $ = cheerify(pageMarkup);

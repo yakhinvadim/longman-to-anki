@@ -1,4 +1,4 @@
-import cheerify from './../cheerify/cheerify.js';
+import cheerify from '../cheerify/cheerify.js';
 import R from 'ramda';
 
 const removeSpeakerIcon = R.replace(/🔊/g, '');

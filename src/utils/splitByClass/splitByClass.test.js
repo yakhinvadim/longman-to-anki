@@ -1,5 +1,5 @@
 import splitByClass from './splitByClass.js';
-import set from './../../mocks/set';
+import set from '../../mocks/set';
 
 describe('splitByClass for .Entry', () => {
   it('splits "set" pageMarkup correctly', () => {

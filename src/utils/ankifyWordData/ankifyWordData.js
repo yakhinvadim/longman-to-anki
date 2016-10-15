@@ -1,5 +1,5 @@
 import R from 'ramda';
-import ankifyEntryData from './helpers/ankifyEntryData/ankifyEntryData.js';
+import ankifyEntryData from '../ankifyEntryData/ankifyEntryData.js';
 
 export default function ankifyWordData(wordData) {
   const cards = R.pipe(
