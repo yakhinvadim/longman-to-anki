@@ -1,6 +1,6 @@
-import ankifyWord from './ankifyWord.js';
+import ankifyWordData from './ankifyWordData.js';
 
-const word = {
+const wordData = {
   headword: 'headword',
   entries: [
     {
@@ -35,10 +35,10 @@ const ankiCards =
   '\n' +
   'second example<br><br>headword#second definition';
 
-describe('ankifyWord', () => {
+describe('ankifyWordData', () => {
   it('composes correct ankiCards ', () => {
     expect(
-      ankifyWord(word)
+      ankifyWordData(wordData)
     ).toBe(ankiCards);
   });
 });

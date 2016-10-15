@@ -4,12 +4,12 @@ const sideDelimiter = '#';
 const smallVerticalOffset = '<br>';
 const bigVerticalOffset = '<br><br>';
 
-const ankifyExampleNotCurried = (headword, definition, situation, example) => {
+const ankifyExampleDataNotCurried = (headword, definition, situation, exampleData) => {
   const frontSide = R.join('', [
-    `${example.text}`,
+    `${exampleData.text}`,
     `${situation ? `${smallVerticalOffset}(${situation})` : ''}`,
     `${bigVerticalOffset}`,
-    `${example.form || headword}`
+    `${exampleData.form || headword}`
   ]);
   const backSide = `${definition}`;
   const card = `${frontSide}${sideDelimiter}${backSide}`;
@@ -17,6 +17,6 @@ const ankifyExampleNotCurried = (headword, definition, situation, example) => {
   return card;
 }
 
-const ankifyExample = R.curry(ankifyExampleNotCurried);
+const ankifyExampleData = R.curry(ankifyExampleDataNotCurried);
 
-export default ankifyExample;
+export default ankifyExampleData;

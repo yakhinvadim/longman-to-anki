@@ -1,6 +1,6 @@
 import React from 'react';
 import R from 'ramda';
-import ankifyWord from '../../utils/ankifyWord/ankifyWord';
+import ankifyWordData from '../../utils/ankifyWordData/ankifyWordData';
 import composeWordData from '../../utils/composeWordData/composeWordData';
 import composeQuery from '../../utils/composeQuery/composeQuery';
 
@@ -33,7 +33,7 @@ export default class App extends React.Component {
         R.map(
           R.pipe(
             composeWordData,
-            ankifyWord
+            ankifyWordData
           )
         ),
         R.join('\n')

@@ -1,8 +1,8 @@
-import ankifySense from './ankifySense.js';
+import ankifySenseData from './ankifySenseData.js';
 
 const headword = 'headword';
 
-const sense = {
+const senseData = {
   definition: 'definition',
   situation: '',
   examples: [
@@ -20,10 +20,10 @@ const ankiCards =
   '\n' +
   'example2<br><br>headword#definition';
 
-describe('ankifySense', () => {
+describe('ankifySenseData', () => {
   it('composes correct ankiCards ', () => {
     expect(
-      ankifySense(headword, sense)
+      ankifySenseData(headword, senseData)
     ).toBe(ankiCards);
   });
 });

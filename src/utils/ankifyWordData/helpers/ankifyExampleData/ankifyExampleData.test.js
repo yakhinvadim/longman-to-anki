@@ -1,14 +1,14 @@
-import ankifyExample from './ankifyExample.js';
+import ankifyExampleData from './ankifyExampleData.js';
 
 const definition = 'some definition';
 const headword = 'some headword';
 
-describe('ankifyExample', () => {
+describe('ankifyExampleData', () => {
   it('composes correct card for example with form', () => {
     const situation = '';
 
     expect(
-      ankifyExample(headword, definition, situation, {
+      ankifyExampleData(headword, definition, situation, {
         text: 'example with text and form',
         form: 'some form'
       })
@@ -19,7 +19,7 @@ describe('ankifyExample', () => {
     const situation = '';
 
     expect(
-      ankifyExample(headword, definition, situation, {
+      ankifyExampleData(headword, definition, situation, {
         text: 'example with only text'
       })
     ).toBe('example with only text<br><br>some headword#some definition');
@@ -29,7 +29,7 @@ describe('ankifyExample', () => {
     const situation = 'informal';
 
     expect(
-      ankifyExample(headword, definition, situation, {
+      ankifyExampleData(headword, definition, situation, {
         text: 'example with only text'
       })
     ).toBe('example with only text<br>(informal)<br><br>some headword#some definition');

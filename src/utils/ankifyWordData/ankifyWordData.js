@@ -1,12 +1,12 @@
 import R from 'ramda';
-import ankifyEntry from './helpers/ankifyEntry/ankifyEntry.js';
+import ankifyEntryData from './helpers/ankifyEntryData/ankifyEntryData.js';
 
-export default function ankifyWord(word) {
+export default function ankifyWordData(wordData) {
   const cards = R.pipe(
     R.prop('entries'),
-    R.map(ankifyEntry(word.headword)),
+    R.map(ankifyEntryData(wordData.headword)),
     R.join('\n')
-  )(word);
+  )(wordData);
 
   return cards;
 
