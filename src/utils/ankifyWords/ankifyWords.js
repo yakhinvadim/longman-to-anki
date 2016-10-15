@@ -3,21 +3,16 @@ import ankifyWordData from '../ankifyWordData/ankifyWordData';
 import composeWordData from '../composeWordData/composeWordData';
 import wordsToQueries from '../wordsToQueries/wordsToQueries';
 
+const fetchText = R.pipeP(fetch, R.invoker(0, 'text'));
+const markupToAnkiCard = R.pipe(composeWordData, ankifyWordData);
+
 export default function ankifyWords(words) {
   const queries = wordsToQueries(words);
 
-  const queryToMarkup = R.pipeP(
-    fetch,
-    resp => resp.text()
-  );
-
-  const markupToAnkiCard = R.pipe(
-    composeWordData,
-    ankifyWordData
-  );
-
   const ankiCards =
-    Promise.all( R.map(queryToMarkup)(queries) )
+    Promise.all(
+      R.map(fetchText)(queries)
+    )
       .then(R.pipe(
         R.map(markupToAnkiCard),
         R.join('\n')
