@@ -45,6 +45,9 @@ export default class App extends React.Component {
   render() {
     return (
       <div className='App'>
+        <h1>Longman to Anki</h1>
+        <p>A web app to help you learn English with Anki</p>
+
         <form
           onSubmit={this.handleSubmit}
           style={{
