@@ -1,6 +1,7 @@
 import React from 'react';
 import ankifyWords from '../../utils/ankifyWords/ankifyWords';
 import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
 import './App.css';
 
 export default class App extends React.Component {
@@ -36,6 +37,11 @@ export default class App extends React.Component {
             floatingLabelText="Type some words, you want to learn"
             value={this.state.inputValue}
             onChange={this.handleInputChange}
+          />
+          <RaisedButton
+            label="Compose cards"
+            primary
+            type='submit'
           />
         </form>
 
