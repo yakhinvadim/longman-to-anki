@@ -1,4 +1,5 @@
 import React from 'react';
+import CopyToClipboard from 'react-copy-to-clipboard';
 import ankifyWords from '../../utils/ankifyWords/ankifyWords';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -51,6 +52,12 @@ export default class App extends React.Component {
           value={this.state.wordData}
           rowsMax={10}
         />
+        <CopyToClipboard text={this.state.wordData}>
+          <RaisedButton
+            label="Copy to clipboard"
+            primary
+          />
+        </CopyToClipboard>
       </div>
     );
   }
