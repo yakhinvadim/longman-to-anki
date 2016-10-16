@@ -47,6 +47,9 @@ export default class App extends React.Component {
       <div className='App'>
         <form
           onSubmit={this.handleSubmit}
+          style={{
+            marginBottom: 20
+          }}
         >
           <TextField
             hintText="example, bear, mouse"
@@ -87,7 +90,9 @@ export default class App extends React.Component {
             marginLeft: 20,
             display: this.state.showImportOptions ? 'inline' : 'none'
           }}
-        >Set the import options as on the sample</span>
+        >
+          Set the import options as on the sample
+        </span>
         <img
           style={{
             marginTop: 20,
