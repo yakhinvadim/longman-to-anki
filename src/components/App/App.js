@@ -1,5 +1,6 @@
 import React from 'react';
 import ankifyWords from '../../utils/ankifyWords/ankifyWords';
+import TextField from 'material-ui/TextField';
 import './App.css';
 
 export default class App extends React.Component {
@@ -30,17 +31,19 @@ export default class App extends React.Component {
         <form
           onSubmit={this.handleSubmit}
         >
-          <input
-            name='words'
-            type='text'
+          <TextField
+            hintText="example, bear, mouse"
+            floatingLabelText="Type some words, you want to learn"
             value={this.state.inputValue}
             onChange={this.handleInputChange}
           />
         </form>
 
-        <div className="word-data">
-          {this.state.wordData}
-        </div>
+        <TextField
+          multiLine
+          fullWidth
+          value={this.state.wordData}
+        />
       </div>
     );
   }
