@@ -27,7 +27,7 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className='App'>
         <form
           onSubmit={this.handleSubmit}
         >
@@ -43,6 +43,7 @@ export default class App extends React.Component {
           multiLine
           fullWidth
           value={this.state.wordData}
+          rowsMax={10}
         />
       </div>
     );

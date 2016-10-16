@@ -1,4 +1,6 @@
-.word-data {
-  font-family: monospace;
-  white-space: pre;
+.App {
+  max-width: 1000px;
+  margin-top: 30px;
+  margin-left: auto;
+  margin-right: auto;
 }
