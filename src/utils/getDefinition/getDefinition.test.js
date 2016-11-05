@@ -14,9 +14,9 @@ describe('getDefinition', () => {
     ).toEqual('')
   });
 
-  xit('gets correct definitions for a sense with subsenses', () => {
+  it('gets correct definitions for a sense with subsenses', () => {
     expect(
       getDefinition(set.sensesMarkup1[1])
-    ).toEqual('if a doctor sets a broken bone, he or she moves it into position so that the bone can grow together again\nOR\nif a broken bone sets, it joins together again')
+    ).toEqual('1) if a doctor sets a broken bone, he or she moves it into position so that the bone can grow together again<br>2) if a broken bone sets, it joins together again')
   });
 });
