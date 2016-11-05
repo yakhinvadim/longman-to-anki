@@ -60,30 +60,13 @@ describe('composeExamplesData', () => {
     ).toEqual([])
   });
 
-  xit('composes correct examplesData for a sense with linkword in grammar/collocation', () => {
+  it('composes correct examplesData for a sense with linkword in grammar/collocation', () => {
     expect(
-      composeExamplesData(set.sensesMarkup1[0])
-    ).toEqual([
-      {
-        form: 'set something in motion/progress/train',
-        text: 'A study by military experts was immediately set in motion.'
-      },
-      {
-        form: 'set something in motion/progress/train',
-        text: 'The chief executive will set in train the process of finding a successor.'
-      },
+      composeExamplesData(set.sensesMarkup1[0])[2]
+    ).toEqual(
       {
         form: 'set something on fire/alight/ablaze (also set fire to something)',
         text: 'Protesters set fire to two buses.'
-      },
-      {
-        form: 'set somebody/something doing something',
-        text: 'Her last remark has set me thinking.'
-      },
-      {
-        form: 'set somebody/something doing something',
-        text: 'The wind set the trees rustling.'
-      }
-    ])
+      })
   });
 });
