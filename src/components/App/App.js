@@ -108,6 +108,7 @@ class App extends React.Component {
         >
           Set the import options as on the sample
         </span>
+
         <img
           style={{
             marginTop: 20,
