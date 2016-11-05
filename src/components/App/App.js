@@ -1,7 +1,4 @@
 import React from 'react';
-import injectTapEventPlugin from 'react-tap-event-plugin';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import ankifyWords from '../../utils/ankifyWords/ankifyWords';
@@ -17,15 +14,6 @@ const importOptionsAlt = `
 `;
 
 class App extends React.Component {
-  constructor(props) {
-    injectTapEventPlugin();
-    super(props);
-  }
-
-  getChildContext() {
-    return { muiTheme: getMuiTheme(baseTheme) };
-  }
-
   state = {
     inputValue: '',
     wordData: '',
@@ -121,9 +109,5 @@ class App extends React.Component {
     );
   }
 }
-
-App.childContextTypes = {
-  muiTheme: React.PropTypes.object.isRequired,
-};
 
 export default App;
