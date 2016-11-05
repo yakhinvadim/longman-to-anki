@@ -11,7 +11,6 @@ before_script:
 - git remote add origin https://yakhinvadim:${GH_TOKEN}@github.com/yakhinvadim/longman-to-anki.git
 script:
 - npm test
-deploy:
 - npm run deploy
 env:
   global:
