@@ -1,7 +1,7 @@
 {
-  "name": "longman-to-anki-web",
+  "name": "longman-to-anki",
   "version": "1.0.0",
-  "homepage": "https://yakhinvadim.github.io/longman-to-anki-web/",
+  "homepage": "https://yakhinvadim.github.io/longman-to-anki/",
   "private": true,
   "devDependencies": {
     "react-scripts": "0.7.0"
