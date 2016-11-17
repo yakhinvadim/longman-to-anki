@@ -4,7 +4,7 @@
   "homepage": "https://yakhinvadim.github.io/longman-to-anki/",
   "private": true,
   "devDependencies": {
-    "gh-pages": "^0.11.0",
+    "gh-pages": "^0.12.0",
     "react-scripts": "0.7.0"
   },
   "dependencies": {
