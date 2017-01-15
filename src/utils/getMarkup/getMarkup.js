@@ -1,8 +1,7 @@
-import R from 'ramda';
-
-const getMarkup = query => R.pipeP(
-  fetch,
-  R.invoker(0, 'text')
-)(query);
+const getMarkup = async query => {
+  const response = await fetch(query);
+  const markup = await response.text();
+  return markup;
+}
 
 export default getMarkup;
