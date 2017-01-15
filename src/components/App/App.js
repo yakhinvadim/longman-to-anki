@@ -2,6 +2,8 @@ import React from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import ankifyWords from '../../utils/ankifyWords/ankifyWords';
+import getWordsData from '../../utils/getWordsData/getWordsData';
+import debounce from 'lodash.debounce';
 
 import './App.css';
 import importOptions from './images/import-options.png';
@@ -41,6 +43,8 @@ class App extends React.Component {
       showImportOptions: true
     })
   }
+
+  debouncedGetWordsData = debounce(getWordsData, 500);
 
   render() {
     return (
