@@ -1,6 +1,6 @@
 import R from 'ramda';
 
-const ankifySenseData = (ankifyExampleData, headword, senseData) => {
+const ankifySenseData = ({ankifyExampleData, headword}, senseData) => {
   const {definition, situation} = senseData;
   const cards = R.pipe(
     R.prop('examples'),
