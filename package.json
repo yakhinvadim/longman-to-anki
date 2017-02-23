@@ -9,10 +9,10 @@
   },
   "dependencies": {
     "cheerio": "^0.22.0",
-    "material-ui": "^0.16.0",
-    "ramda": "^0.22.1",
-    "react": "^15.3.1",
-    "react-dom": "^15.3.1",
+    "material-ui": "^0.17.0",
+    "ramda": "^0.23.0",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
     "react-tap-event-plugin": "^2.0.1"
   },
   "scripts": {
