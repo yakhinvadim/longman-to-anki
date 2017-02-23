@@ -41,3 +41,5 @@ jspm_packages
 
 # misc
 .DS_Store
+.chrome
+.vscode
