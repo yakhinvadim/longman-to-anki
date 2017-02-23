@@ -1,3 +1,4 @@
+import R from 'ramda';
 import ankifyExampleData from './ankifyExampleData.js';
 
 const definition = 'some definition';
@@ -12,7 +13,13 @@ describe('ankifyExampleData', () => {
         text: 'example with text and form',
         form: 'some form'
       })
-    ).toBe('example with text and form<br><br>some form#some definition');
+    ).toBe(R.join('', [
+      `<span class="lta-example">example with text and form</span>`,
+      `<br><br>`,
+      `<span class="lta-form">some form</span>`,
+      `#`,
+      `<span class="lta-definition">some definition</span>`
+    ]));
   });
 
   it('composes correct card for example without form', () => {
@@ -22,7 +29,13 @@ describe('ankifyExampleData', () => {
       ankifyExampleData(headword, definition, situation, {
         text: 'example with only text'
       })
-    ).toBe('example with only text<br><br>some headword#some definition');
+    ).toBe(R.join('', [
+      `<span class="lta-example">example with only text</span>`,
+      `<br><br>`,
+      `<span class="lta-headword">some headword</span>`,
+      `#`,
+      `<span class="lta-definition">some definition</span>`
+    ]));
   });
 
   it('composes correct card for example with situation', () => {
@@ -32,6 +45,14 @@ describe('ankifyExampleData', () => {
       ankifyExampleData(headword, definition, situation, {
         text: 'example with only text'
       })
-    ).toBe('example with only text<br>(informal)<br><br>some headword#some definition');
+    ).toBe(R.join('', [
+      `<span class="lta-example">example with only text</span>`,
+      `<br>`,
+      `<span class="lta-situation">(informal)</span>`,
+      `<br><br>`,
+      `<span class="lta-headword">some headword</span>`,
+      `#`,
+      `<span class="lta-definition">some definition</span>`
+    ]));
   });
 });

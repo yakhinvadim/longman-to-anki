@@ -1,22 +1,50 @@
 import R from 'ramda';
 
 const sideDelimiter = '#';
+// I don't use css-margins for offset, because I want cards to be styled "out of box", even without css styles
 const smallVerticalOffset = '<br>';
 const bigVerticalOffset = '<br><br>';
 
-const ankifyExampleDataNotCurried = (headword, definition, situation, exampleData) => {
-  const frontSide = R.join('', [
-    `${exampleData.text}`,
-    `${situation ? `${smallVerticalOffset}(${situation})` : ''}`,
-    `${bigVerticalOffset}`,
-    `${exampleData.form || headword}`
+const join = R.join('');
+
+const ankifyExampleData = (headword, definition, situation, exampleData) => {
+
+  // card parts
+
+  const cardExample = `<span class="lta-example">${exampleData.text}</span>`;
+
+  const cardMaybeSituation = situation
+    ? `${smallVerticalOffset}<span class="lta-situation">(${situation})</span>`
+    : '';
+
+  const cardForm = exampleData.form
+    ? `<span class="lta-form">${exampleData.form}</span>`
+    : `<span class="lta-headword">${headword}</span>`;
+  
+  const cardDefinition = `<span class="lta-definition">${definition}</span>`;
+
+
+  // card sides 
+
+  const frontSide = join([
+    cardExample,
+    cardMaybeSituation,
+    bigVerticalOffset,
+    cardForm
   ]);
-  const backSide = `${definition}`;
-  const card = `${frontSide}${sideDelimiter}${backSide}`;
+
+  const backSide = cardDefinition;
+
+
+  // card
+
+  const card = join([
+    frontSide,
+    sideDelimiter,
+    backSide
+  ]);
 
   return card;
 }
 
-const ankifyExampleData = R.curry(ankifyExampleDataNotCurried);
-
-export default ankifyExampleData;
+export default R.curry(ankifyExampleData);
