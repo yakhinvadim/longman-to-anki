@@ -1,32 +1,25 @@
 import ankifyWordData from './ankifyWordData.js';
 
-const ankifyEntryData = irrelevantArgs => entryData => entryData.senses.length;
+const ankifyEntryData = ({ankifySenseData, ankifyExampleData, headword}) => entryData => `${entryData} ${headword}`;
+const ankifySenseData = () => {};
+const ankifyExampleData = () => {};
 const wordData = {
   headword: 'headword',
   entries: [
-    {
-      senses: [
-        {},
-        {}
-      ]
-    },
-    {
-      senses: [
-        {}
-      ]
-    }
+    'entry1',
+    'entry2'
   ]
 };
 
 const ankiCards =
-  '2' +
+  'entry1 headword' +
   '\n' +
-  '1';
+  'entry2 headword';
 
 describe('ankifyWordData', () => {
   it('composes correct ankiCards ', () => {
     expect(
-      ankifyWordData({ ankifyEntryData }, wordData)
+      ankifyWordData({ankifyEntryData, ankifySenseData, ankifyExampleData}, wordData)
     ).toBe(ankiCards);
   });
 });
