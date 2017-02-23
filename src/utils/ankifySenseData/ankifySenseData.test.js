@@ -1,24 +1,21 @@
 import ankifySenseData from './ankifySenseData.js';
 
-const ankifyExampleData = ({headword, definition, situation}) => exampleData => exampleData.text;
+const ankifyExampleData =
+  ({headword, definition, situation}) => exampleData => `${exampleData} ${situation} ${definition} ${headword}`;
 const headword = 'headword';
 const senseData = {
   definition: 'definition',
-  situation: '',
+  situation: 'situation',
   examples: [
-    {
-      text: 'example1'
-    },
-    {
-      text: 'example2',
-    }
+    'example1',
+    'example2'
   ]
 };
 
 const ankiCards =
-  'example1' +
+  'example1 situation definition headword' +
   '\n' +
-  'example2';
+  'example2 situation definition headword';
 
 describe('ankifySenseData', () => {
   it('composes correct ankiCards ', () => {
