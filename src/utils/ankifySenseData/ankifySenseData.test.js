@@ -1,7 +1,7 @@
 import ankifySenseData from './ankifySenseData.js';
 
+const ankifyExampleData = (headword, definition, situation) => example => example.text;
 const headword = 'headword';
-
 const senseData = {
   definition: 'definition',
   situation: '',
@@ -16,14 +16,14 @@ const senseData = {
 };
 
 const ankiCards =
-  'example1<br><br>headword#definition' +
+  'example1' +
   '\n' +
-  'example2<br><br>headword#definition';
+  'example2';
 
 describe('ankifySenseData', () => {
   it('composes correct ankiCards ', () => {
     expect(
-      ankifySenseData(headword, senseData)
+      ankifySenseData(ankifyExampleData, headword, senseData)
     ).toBe(ankiCards);
   });
 });

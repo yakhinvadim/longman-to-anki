@@ -7,7 +7,7 @@ const bigVerticalOffset = '<br><br>';
 
 const join = R.join('');
 
-const ankifyExampleData = (headword, definition, situation, exampleData) => {
+const ankifyExampleData = ({headword, definition, situation}, exampleData) => {
 
   // card parts
 

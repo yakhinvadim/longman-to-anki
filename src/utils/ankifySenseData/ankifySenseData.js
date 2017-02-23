@@ -1,16 +1,16 @@
 import R from 'ramda';
-import ankifyExampleData from '../ankifyExampleData/ankifyExampleData.js';
 
-const ankifySenseDataNotCurried = (headword, senseData) => {
+const ankifySenseData = (ankifyExampleData, headword, senseData) => {
+  const {definition, situation} = senseData;
   const cards = R.pipe(
     R.prop('examples'),
-    R.map(ankifyExampleData(headword, senseData.definition, senseData.situation)),
+    R.map(
+      ankifyExampleData({ headword, definition, situation })
+    ),
     R.join('\n')
   )(senseData);
 
   return cards;
 }
 
-const ankifySenseData = R.curry(ankifySenseDataNotCurried);
-
-export default ankifySenseData;
+export default R.curry(ankifySenseData);

@@ -9,7 +9,7 @@ describe('ankifyExampleData', () => {
     const situation = '';
 
     expect(
-      ankifyExampleData(headword, definition, situation, {
+      ankifyExampleData({headword, definition, situation}, {
         text: 'example with text and form',
         form: 'some form'
       })
@@ -26,7 +26,7 @@ describe('ankifyExampleData', () => {
     const situation = '';
 
     expect(
-      ankifyExampleData(headword, definition, situation, {
+      ankifyExampleData({headword, definition, situation}, {
         text: 'example with only text'
       })
     ).toBe(R.join('', [
@@ -42,7 +42,7 @@ describe('ankifyExampleData', () => {
     const situation = 'informal';
 
     expect(
-      ankifyExampleData(headword, definition, situation, {
+      ankifyExampleData({headword, definition, situation}, {
         text: 'example with only text'
       })
     ).toBe(R.join('', [
