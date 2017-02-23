@@ -1,7 +1,6 @@
 import ankifySenseData from './ankifySenseData.js';
 
-const ankifyExampleData =
-  ({headword, definition, situation}) => exampleData => `${exampleData} ${situation} ${definition} ${headword}`;
+const ankifyExampleData = ({headword, definition, situation}) => exampleData => `${exampleData} ${situation} ${definition} ${headword}`;
 const headword = 'headword';
 const senseData = {
   definition: 'definition',
