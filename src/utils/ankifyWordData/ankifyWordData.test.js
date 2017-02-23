@@ -1,44 +1,32 @@
 import ankifyWordData from './ankifyWordData.js';
 
+const ankifyEntryData = irrelevantArgs => entryData => entryData.senses.length;
 const wordData = {
   headword: 'headword',
   entries: [
     {
       senses: [
-        {
-          definition: 'first definition',
-          examples: [
-            {
-              text: 'first example'
-            }
-          ]
-        }
+        {},
+        {}
       ]
     },
     {
       senses: [
-        {
-          definition: 'second definition',
-          examples: [
-            {
-              text: 'second example'
-            }
-          ]
-        }
+        {}
       ]
     }
   ]
 };
 
 const ankiCards =
-  'first example<br><br>headword#first definition' +
+  '2' +
   '\n' +
-  'second example<br><br>headword#second definition';
+  '1';
 
 describe('ankifyWordData', () => {
   it('composes correct ankiCards ', () => {
     expect(
-      ankifyWordData(wordData)
+      ankifyWordData({ ankifyEntryData }, wordData)
     ).toBe(ankiCards);
   });
 });

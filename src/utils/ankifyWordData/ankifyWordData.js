@@ -1,29 +1,16 @@
 import R from 'ramda';
-import ankifyEntryData from '../ankifyEntryData/ankifyEntryData.js';
 
-export default function ankifyWordData(wordData) {
+const ankifyWordData = ({ankifyEntryData, ankifySenseData, ankifyExampleData}, wordData) => {
+  const {headword} = wordData;
   const cards = R.pipe(
     R.prop('entries'),
-    R.map(ankifyEntryData(wordData.headword)),
+    R.map(
+      ankifyEntryData({ankifySenseData, ankifyExampleData, headword})
+    ),
     R.join('\n')
   )(wordData);
 
   return cards;
-
-  /*
-    a typical card looks like this:
-
-
-    FRONT SIDE
-
-    She seemed rather struck on Vincent                    <-- example
-
-    be struck on somebody/something                        <-- form
-
-
-    BACK SIDE
-
-    to think that someone or something is very good        <-- definition
-
-  */
 }
+
+export default R.curry(ankifyWordData);
