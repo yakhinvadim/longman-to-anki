@@ -1,6 +1,7 @@
 import cheerify from '../cheerify/cheerify.js';
-import coerceArray from '../coerceArray/coerceArray.js';
 import R from 'ramda';
+
+const coerceArray = R.unless(R.is(Array), R.of);
 
 const splitByClass = R.curry((className, markup) => {
   const $ = cheerify(markup);
