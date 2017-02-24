@@ -1,11 +1,10 @@
 import React from 'react';
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
 import ankifyWords from '../../utils/ankifyWords/ankifyWords';
 import Header from '../Header/Header';
 import ImportOptions from '../ImportOptions/ImportOptions';
 import DownloadButton from '../DownloadButton/DownloadButton';
 import ResultCards from '../ResultCards/ResultCards';
+import UserWords from '../UserWords/UserWords';
 
 import './App.css';
 
@@ -41,27 +40,13 @@ export default class App extends React.Component {
     render() {
         return (
             <div className='App'>
-                <Header/>
-
-                <form
-                    onSubmit={this.handleSubmit}
-                    style={{
-                        marginBottom: 20
-                    }}
-                >
-                    <TextField
-                        hintText="example, bear, mouse"
-                        floatingLabelText="Type some words, you want to learn"
-                        value={this.state.inputValue}
-                        onChange={this.handleInputChange}
-                        fullWidth
-                    />
-                    <RaisedButton
-                        label="Compose cards"
-                        primary
-                        type='submit'
-                    />
-                </form>
+                <Header />
+                
+                <UserWords
+                    onSubmit={this.handleSubmit}    
+                    value={this.state.inputValue}
+                    onChange={this.handleInputChange}
+                />
 
                 <ResultCards
                     value={this.state.wordData}
