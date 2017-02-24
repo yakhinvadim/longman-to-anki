@@ -5,6 +5,7 @@ import ankifyWords from '../../utils/ankifyWords/ankifyWords';
 import Header from '../Header/Header';
 import ImportOptions from '../ImportOptions/ImportOptions';
 import DownloadButton from '../DownloadButton/DownloadButton';
+import ResultCards from '../ResultCards/ResultCards';
 
 import './App.css';
 
@@ -62,12 +63,8 @@ export default class App extends React.Component {
                     />
                 </form>
 
-                <TextField
-                    hintText="Text for anki cards will appear here"
-                    multiLine
-                    fullWidth
+                <ResultCards
                     value={this.state.wordData}
-                    rowsMax={10}
                 />
 
                 <DownloadButton
