@@ -14,7 +14,7 @@ import './App.css';
 export default class App extends React.Component {
     state = {
         inputValue: '',
-        cards: '',
+        cardsArr: [],
         showImportOptions: false
     }
 
@@ -33,10 +33,9 @@ export default class App extends React.Component {
         for (let word of words) {
             const wordCards = await wordToCards(word);
             cardsArr[i] = wordCards;
-            const cards = R.join('\n')(cardsArr);
         
             this.setState({
-                cards
+                cardsArr
             });
 
             i++;
@@ -50,6 +49,8 @@ export default class App extends React.Component {
     }
 
     render() {
+        const cards = R.join('\n')(this.state.cardsArr);
+
         return (
             <div className='App'>
                 <Header />
@@ -60,14 +61,14 @@ export default class App extends React.Component {
                 />
 
                 <ResultCards
-                    value={this.state.cards}
+                    value={cards}
                 />
 
                 <DownloadButton
-                    fileContent={encodeURIComponent(this.state.cards)}
+                    fileContent={encodeURIComponent(cards)}
                     fileName={`longman-to-anki ${this.state.inputValue}`}
                     onClick={this.handleDownload}
-                    disabled={!this.state.cards}
+                    disabled={!cards}
                 />
 
                 {this.state.showImportOptions && <ImportOptions />}
