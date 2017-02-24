@@ -1,5 +1,8 @@
 import React from 'react';
-import ankifyWords from '../../utils/ankifyWords/ankifyWords';
+import R from 'ramda';
+import getWords from '../../utils/getWords/getWords';
+import wordToCards from '../../utils/wordToCards/wordToCards';
+
 import Header from '../Header/Header';
 import ImportOptions from '../ImportOptions/ImportOptions';
 import DownloadButton from '../DownloadButton/DownloadButton';
@@ -11,24 +14,33 @@ import './App.css';
 export default class App extends React.Component {
     state = {
         inputValue: '',
-        wordData: '',
+        cards: '',
         showImportOptions: false
     }
 
-    handleInputChange = (event) => {
+    handleInputChange = async (event) => {
+        const inputValue = event.target.value;
+
         this.setState({
-            inputValue: event.target.value
+            inputValue
         })
-    }
+        
+        const words = getWords(inputValue);
 
-    handleSubmit = (event) => {
-        event.preventDefault();
+        let cardsArr = [];
+        let i = 0;
 
-        ankifyWords(this.state.inputValue)
-            .then(result => this.setState({
-                wordData: result
-            }))
-            .catch(err => console.log(err));
+        for (let word of words) {
+            const wordCards = await wordToCards(word);
+            cardsArr[i] = wordCards;
+            const cards = R.join('\n')(cardsArr);
+        
+            this.setState({
+                cards
+            });
+
+            i++;
+        }
     }
 
     handleDownload = () => {
@@ -43,20 +55,19 @@ export default class App extends React.Component {
                 <Header />
                 
                 <UserWords
-                    onSubmit={this.handleSubmit}    
                     value={this.state.inputValue}
                     onChange={this.handleInputChange}
                 />
 
                 <ResultCards
-                    value={this.state.wordData}
+                    value={this.state.cards}
                 />
 
                 <DownloadButton
-                    fileContent={encodeURIComponent(this.state.wordData)}
+                    fileContent={encodeURIComponent(this.state.cards)}
                     fileName={`longman-to-anki ${this.state.inputValue}`}
                     onClick={this.handleDownload}
-                    disabled={!this.state.wordData}
+                    disabled={!this.state.cards}
                 />
 
                 {this.state.showImportOptions && <ImportOptions />}
