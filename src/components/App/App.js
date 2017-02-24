@@ -2,6 +2,7 @@ import React from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import ankifyWords from '../../utils/ankifyWords/ankifyWords';
+import Header from '../Header/Header';
 
 import './App.css';
 import importOptions from './images/import-options.png';
@@ -45,8 +46,7 @@ class App extends React.Component {
   render() {
     return (
       <div className='App'>
-        <h1>Longman to Anki</h1>
-        <p>A web app to help you learn English with Anki</p>
+        <Header/>
 
         <form
           onSubmit={this.handleSubmit}
