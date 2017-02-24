@@ -3,16 +3,9 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import ankifyWords from '../../utils/ankifyWords/ankifyWords';
 import Header from '../Header/Header';
+import ImportOptions from '../ImportOptions/ImportOptions';
 
 import './App.css';
-import importOptions from './images/import-options.png';
-
-const importOptionsAlt = `
-  Import options:
-  Fiels separated by: '#',
-  Ignore lines where first field matches existing note,
-  Allow HTML in fields
-`;
 
 class App extends React.Component {
   state = {
@@ -88,23 +81,7 @@ class App extends React.Component {
           disabled={!this.state.wordData}
         />
 
-        <span
-          style={{
-            marginLeft: 20,
-            display: this.state.showImportOptions ? 'inline' : 'none'
-          }}
-        >
-          Set the import options as on the sample
-        </span>
-
-        <img
-          style={{
-            marginTop: 20,
-            display: this.state.showImportOptions ? 'block' : 'none'
-          }}
-          alt={importOptionsAlt}
-          src={importOptions}
-        />
+        {this.state.showImportOptions && <ImportOptions />}
       </div>
     );
   }
