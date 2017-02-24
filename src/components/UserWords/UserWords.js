@@ -27,6 +27,8 @@ export default class UserWords extends PureComponent {
                     value={value}
                     onChange={onChange}
                     fullWidth
+                    multiLine
+                    rowsMax={20}
                 />
                 <RaisedButton
                     label="Compose cards"
