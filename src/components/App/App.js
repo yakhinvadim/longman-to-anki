@@ -4,6 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import ankifyWords from '../../utils/ankifyWords/ankifyWords';
 import Header from '../Header/Header';
 import ImportOptions from '../ImportOptions/ImportOptions';
+import DownloadButton from '../DownloadButton/DownloadButton';
 
 import './App.css';
 
@@ -69,14 +70,9 @@ class App extends React.Component {
           rowsMax={10}
         />
 
-        <RaisedButton
-          label="Save as txt"
-          primary
-          href={`data:text/plain;charset=utf-8,${encodeURIComponent(this.state.wordData)}`}
-          download={`longman-to-anki ${this.state.inputValue}`}
-          buttonStyle={{
-            verticalAlign: 'initial'
-          }}
+        <DownloadButton
+          fileContent={encodeURIComponent(this.state.wordData)}
+          fileName={`longman-to-anki ${this.state.inputValue}`}
           onClick={this.handleDownload}
           disabled={!this.state.wordData}
         />
