@@ -15,12 +15,14 @@ export default class UserWords extends PureComponent {
 
         return (
             <TextField
-                hintText="example, bear, mouse"
+                hintText={<span>example<br/>bear<br/>mouse</span>}
                 floatingLabelText="Type some words, you want to learn"
+                floatingLabelFixed={true}
                 value={value}
                 onChange={onChange}
                 fullWidth
                 multiLine
+                rows={3}
                 rowsMax={20}
             />
         );
