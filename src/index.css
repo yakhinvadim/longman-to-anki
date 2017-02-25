@@ -3,3 +3,9 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.disqus-wrapper {
+  max-width: 800px;
+  margin: 30px auto 0;
+  padding: 20px;
+}
