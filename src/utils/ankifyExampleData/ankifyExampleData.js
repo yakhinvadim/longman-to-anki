@@ -7,7 +7,7 @@ const bigVerticalOffset = '<br><br>';
 
 const join = R.join('');
 
-const ankifyExampleData = ({headword, definition, situation}, exampleData) => {
+const ankifyExampleData = ({headword, definition, situation, synonym}, exampleData) => {
 
   // card parts
 
@@ -15,6 +15,10 @@ const ankifyExampleData = ({headword, definition, situation}, exampleData) => {
 
   const cardMaybeSituation = situation
     ? `${smallVerticalOffset}<span class="lta-situation">(${situation})</span>`
+    : '';
+  
+  const cardMaybeSynonym = synonym
+    ? `${smallVerticalOffset}<span class="lta-synonym">(synonym: ${synonym})</span>`
     : '';
 
   const cardForm = exampleData.form
@@ -33,8 +37,10 @@ const ankifyExampleData = ({headword, definition, situation}, exampleData) => {
     cardForm
   ]);
 
-  const backSide = cardDefinition;
-
+  const backSide = join([
+    cardDefinition,
+    cardMaybeSynonym
+  ]);
 
   // card
 
