@@ -15,7 +15,7 @@ export default class UserWords extends PureComponent {
 
         return (
             <TextField
-                hintText={<span>example<br/>bear<br/>mouse</span>}
+                hintText={<span>example<br/>bear<br/>fire alarm</span>}
                 floatingLabelText="Type some words, you want to learn"
                 floatingLabelFixed={true}
                 value={value}
