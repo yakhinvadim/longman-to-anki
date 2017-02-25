@@ -2,8 +2,8 @@ import R from 'ramda';
 
 const sideDelimiter = '#';
 // I don't use css-margins for offset, because I want cards to be styled "out of box", even without css styles
-const smallVerticalOffset = '<br>';
-const bigVerticalOffset = '<br><br>';
+const newLine = '<br>';
+const verticalOffset = '<br><br>';
 
 const join = R.join('');
 
@@ -14,11 +14,11 @@ const ankifyExampleData = ({headword, definition, situation, synonym}, exampleDa
   const cardExample = `<span class="lta-example">${exampleData.text}</span>`;
 
   const cardMaybeSituation = situation
-    ? `${smallVerticalOffset}<span class="lta-situation">(${situation})</span>`
+    ? `${newLine}<span class="lta-situation">(${situation})</span>`
     : '';
   
   const cardMaybeSynonym = synonym
-    ? `${smallVerticalOffset}<span class="lta-synonym">(synonym: ${synonym})</span>`
+    ? `${newLine}<span class="lta-synonym">(synonym: ${synonym})</span>`
     : '';
 
   const cardForm = exampleData.form
@@ -33,7 +33,7 @@ const ankifyExampleData = ({headword, definition, situation, synonym}, exampleDa
   const frontSide = join([
     cardExample,
     cardMaybeSituation,
-    bigVerticalOffset,
+    verticalOffset,
     cardForm
   ]);
 
