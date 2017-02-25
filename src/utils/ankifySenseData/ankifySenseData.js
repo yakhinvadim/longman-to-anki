@@ -1,11 +1,11 @@
 import R from 'ramda';
 
 const ankifySenseData = ({ankifyExampleData, headword}, senseData) => {
-  const {definition, situation, synonym} = senseData;
+  const {definition, situation, synonym, antonym} = senseData;
   const cards = R.pipe(
     R.prop('examples'),
     R.map(
-      ankifyExampleData({ headword, definition, situation, synonym })
+      ankifyExampleData({ headword, definition, situation, synonym, antonym })
     ),
     R.join('\n')
   )(senseData);
