@@ -6,7 +6,7 @@ const newLine = '<br>';
 
 const join = R.join('');
 
-const ankifyNoExampleData = (headword, {definition, situation, synonym, antonym}) => {
+const ankifyNoExampleData = ({headword, pronunciation}, {definition, situation, synonym, antonym}) => {
 
   // card parts
 
@@ -23,6 +23,10 @@ const ankifyNoExampleData = (headword, {definition, situation, synonym, antonym}
     : '';
 
   const cardForm = `<span class="lta-headword">${headword}</span>`;
+
+  const cardMaybePronunciation = pronunciation
+    ? `${newLine}<span class="lta-pronunciation">[${pronunciation}]</span>`
+    : '';
   
   const cardDefinition = `<span class="lta-definition">${definition}</span>`;
 
@@ -36,7 +40,10 @@ const ankifyNoExampleData = (headword, {definition, situation, synonym, antonym}
     cardMaybeSituation
   ]);
 
-  const backSide = cardForm;
+  const backSide = join([
+    cardForm,
+    cardMaybePronunciation
+  ]);
 
   // card
 

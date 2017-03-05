@@ -1,6 +1,6 @@
 import R from 'ramda';
 
-const ankifySenseData = ({ankifyExampleData, ankifyNoExampleData, headword}, senseData) => {
+const ankifySenseData = ({ankifyExampleData, ankifyNoExampleData, headword, pronunciation}, senseData) => {
   const {definition, situation, synonym, antonym} = senseData;
   const cards = R.pipe(
     R.ifElse(
@@ -9,13 +9,13 @@ const ankifySenseData = ({ankifyExampleData, ankifyNoExampleData, headword}, sen
         R.isEmpty
       ),
       R.pipe(
-        ankifyNoExampleData(headword),
+        ankifyNoExampleData({headword, pronunciation}),
         R.unless(R.is(Array), R.of)
       ),
       R.pipe(
         R.prop('examples'),
         R.map(
-          ankifyExampleData({ headword, definition, situation, synonym, antonym })
+          ankifyExampleData({ headword, pronunciation, definition, situation, synonym, antonym })
         )
       )
     ),
