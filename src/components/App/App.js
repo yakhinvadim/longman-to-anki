@@ -57,8 +57,16 @@ export default class App extends React.Component {
     }
 
     render() {
-        const cards = R.join('\n')(this.state.cardsArr);
-        const wordsTotal = this.state.cardsArr.length;
+        const cards = R.pipe(
+            R.reject(R.isEmpty),
+            R.join('\n')
+        )(this.state.cardsArr);
+        
+        const wordsTotal = R.pipe(
+            R.reject(R.isEmpty),
+            R.length
+        )(this.state.cardsArr);
+
         const cardsTotal = R.match(/\n/g)(cards).length;
 
         return (
