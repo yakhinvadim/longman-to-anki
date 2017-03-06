@@ -5,7 +5,7 @@ import getPronunciation from '../getPronunciation/getPronunciation.js';
 import R from 'ramda';
 
 export default function composeWordData(pageMarkup) {
-  return R.zipObj(
+  const wordData = R.zipObj(
     [
       'headword',
       'pronunciation',
@@ -20,4 +20,6 @@ export default function composeWordData(pageMarkup) {
       )(pageMarkup)
     ]
   );
+
+  return wordData;
 }
