@@ -1,5 +1,6 @@
 import React from 'react';
 import R from 'ramda';
+import debounce from 'lodash.debounce';
 import getWords from '../../utils/getWords/getWords';
 import wordToCards from '../../utils/wordToCards/wordToCards';
 
@@ -25,22 +26,28 @@ export default class App extends React.Component {
             inputValue
         })
         
-        const words = getWords(inputValue);
-
-        let cardsArr = [];
-        let i = 0;
-
-        for (let word of words) {
-            const wordCards = await wordToCards(word);
-            cardsArr[i] = wordCards;
-        
-            this.setState({
-                cardsArr
-            });
-
-            i++;
-        }
+        this.debouncedComposeCards();
     }
+
+    debouncedComposeCards = debounce(
+        async () => {
+            const words = getWords(this.state.inputValue);
+
+            let cardsArr = [];
+            let i = 0;
+
+            for (let word of words) {
+                const wordCards = await wordToCards(word);
+                cardsArr[i] = wordCards;
+            
+                this.setState({
+                    cardsArr
+                });
+
+                i++;
+            }
+        }, 500
+    )
 
     handleDownload = () => {
         this.setState({
