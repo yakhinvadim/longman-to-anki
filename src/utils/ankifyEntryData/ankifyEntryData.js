@@ -6,6 +6,7 @@ const ankifyEntryData = ({ankifySenseData, ankifyExampleData, ankifyNoExampleDat
     R.map(
       ankifySenseData({ ankifyExampleData, ankifyNoExampleData, headword, pronunciation })
     ),
+    R.reject(R.isEmpty),
     R.join('\n')
   )(entryData);
 
