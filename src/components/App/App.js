@@ -9,6 +9,7 @@ import ImportOptions from '../ImportOptions/ImportOptions';
 import DownloadButton from '../DownloadButton/DownloadButton';
 import ResultCards from '../ResultCards/ResultCards';
 import UserWords from '../UserWords/UserWords';
+import Totals from '../Totals/Totals';
 
 import './App.css';
 
@@ -57,6 +58,8 @@ export default class App extends React.Component {
 
     render() {
         const cards = R.join('\n')(this.state.cardsArr);
+        const wordsTotal = this.state.cardsArr.length;
+        const cardsTotal = R.match(/\n/g)(cards).length;
 
         return (
             <div className='App'>
@@ -71,12 +74,18 @@ export default class App extends React.Component {
                     value={cards}
                 />
 
-                <DownloadButton
-                    fileContent={encodeURIComponent(cards)}
-                    fileName={`longman-to-anki ${this.state.inputValue}`}
-                    onClick={this.handleDownload}
-                    disabled={!cards}
-                />
+                <div  className='App__download-section'>
+                    <Totals
+                        wordsTotal={wordsTotal}
+                        cardsTotal={cardsTotal}
+                    />
+                    <DownloadButton
+                        fileContent={encodeURIComponent(cards)}
+                        fileName={`longman-to-anki ${this.state.inputValue}`}
+                        onClick={this.handleDownload}
+                        disabled={!cards}
+                    />
+                </div>
 
                 {this.state.showImportOptions && <ImportOptions />}
             </div>

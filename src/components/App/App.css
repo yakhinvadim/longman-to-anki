@@ -4,3 +4,9 @@
   margin: 0 auto;
   padding: 20px;
 }
+
+.App__download-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
