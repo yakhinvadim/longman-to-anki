@@ -1,4 +1,4 @@
-import cheerify from '../../helpers/cheerify/cheerify';
+import cheerify from '../../helpers/cheerify';
 
 export default function getSituation(senseMarkup) {
   const $ = cheerify(senseMarkup);
