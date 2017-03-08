@@ -3,7 +3,14 @@ import cheerify from '../../helpers/cheerify';
 const extractAntonym = senseMarkup => {
     const $ = cheerify(senseMarkup);
 
-    return $('.OPP').contents().not('.synopp').text().trim();
+    const antonym =
+        $('.OPP') // OPP means opposite
+            .contents()
+            .not('.synopp') // element with text "OPP"
+            .text()
+            .trim();
+    
+    return antonym;
 }
 
 export default extractAntonym;
