@@ -6,7 +6,7 @@ export default function composeEntryData(entryMarkup) {
   return R.zipObj(
     ['senses'],
     [R.pipe(
-      splitByClass('.Sense'),
+      splitByClass('Sense'),
       R.map(composeSenseData)
     )(entryMarkup)]
   );

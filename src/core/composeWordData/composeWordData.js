@@ -15,7 +15,7 @@ export default function composeWordData(pageMarkup) {
       getHeadword(pageMarkup),
       getPronunciation(pageMarkup),
       R.pipe(
-        splitByClass('.ldoceEntry'),
+        splitByClass('ldoceEntry'),
         R.map(composeEntryData)
       )(pageMarkup)
     ]

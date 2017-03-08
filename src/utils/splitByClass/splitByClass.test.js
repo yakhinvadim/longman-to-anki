@@ -1,18 +1,21 @@
 import splitByClass from './splitByClass';
-import set from '../../mocks/set';
 
-describe('splitByClass for .Entry', () => {
-  it('splits "set" pageMarkup correctly', () => {
+const markup = `<ul>
+  <li class="fruit apple">Apple</li>
+  <li class="fruit orange">Orange</li>s
+  <li class="fruit pear">Pear</li>
+</ul>`;
+
+describe('splitByClass', () => {
+  it('splits correctly if several elements with class are found', () => {
     expect(
-      splitByClass('.Entry', set.pageMarkup)
-    ).toEqual(set.entriesMarkup)
+      splitByClass('fruit', markup)
+    ).toEqual(['Apple', 'Orange', 'Pear'])
   });
-});
 
-describe('splitByClass for .Sense', () => {
-  it('splits "set" second entryMarkup correctly', () => {
+  it('splits correctly if only one element with class is found', () => {
     expect(
-      splitByClass('.Sense', set.entriesMarkup[1])
-    ).toEqual(set.sensesMarkup2)
+      splitByClass('orange', markup)
+    ).toEqual(['Orange'])
   });
 });

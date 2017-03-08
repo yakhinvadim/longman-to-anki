@@ -1,16 +1,14 @@
-import cheerify from '../../helpers/cheerify';
 import R from 'ramda';
+import cheerify from '../../helpers/cheerify';
 
-const coerceArray = R.unless(R.is(Array), R.of);
-
-const splitByClass = R.curry((className, markup) => {
+const splitByClass = (className, markup) => {
   const $ = cheerify(markup);
 
-  const output = $(className)
+  const output = $(`.${className}`)
     .map((i, el) => $(el).html())
     .get();
 
-  return coerceArray(output);
-});
+  return output;
+};
 
-export default splitByClass;
+export default R.curry(splitByClass);
