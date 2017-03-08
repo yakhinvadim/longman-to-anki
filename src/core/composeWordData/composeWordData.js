@@ -1,10 +1,11 @@
-import splitByClass from '../../utils/splitByClass/splitByClass';
-import composeEntryData from '../composeEntryData/composeEntryData';
-import extractHeadword from '../extractHeadword/extractHeadword';
-import extractPronunciation from '../extractPronunciation/extractPronunciation';
 import R from 'ramda';
 
-export default function composeWordData(pageMarkup) {
+import splitByClass from '../../utils/splitByClass/splitByClass';
+import extractHeadword from '../extractHeadword/extractHeadword';
+import extractPronunciation from '../extractPronunciation/extractPronunciation';
+import composeEntryData from '../composeEntryData/composeEntryData';
+
+const composeWordData = pageMarkup => {
   const wordData = R.zipObj(
     [
       'headword',
@@ -22,4 +23,6 @@ export default function composeWordData(pageMarkup) {
   );
 
   return wordData;
-}
+ }
+
+export default composeWordData;
