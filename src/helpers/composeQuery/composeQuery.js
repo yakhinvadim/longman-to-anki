@@ -1,15 +1,16 @@
 import R from 'ramda';
 
-const someSymbolsToHyphens = R.replace(/[/ ’]/g, '-');
-const someSymbolsDelete = R.replace(/[(!?.)]/g, '');
+const someSymbolsDelete = R.replace(/[(!?.,)]/g, '');
 const fixDoubleSpaces = R.replace(/ {2}/g, ' ');
+const someSymbolsToHyphens = R.replace(/[/ ’]/g, '-');
 
 export default function composeQuery(word) {
   const escapedWord = R.pipe(
+    R.toLower,
     someSymbolsDelete,
-    someSymbolsToHyphens,
+    R.trim,
     fixDoubleSpaces,
-    word => word.toLowerCase()
+    someSymbolsToHyphens
   )(word);
 
   const dictionaryUrl = `http://www.ldoceonline.com/dictionary/${escapedWord}`;
