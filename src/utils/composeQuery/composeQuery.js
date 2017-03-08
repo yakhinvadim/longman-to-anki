@@ -1,6 +1,6 @@
 import R from 'ramda';
 
-const someSymbolsToHyphens = R.replace(/[\/ ’]/g, '-');
+const someSymbolsToHyphens = R.replace(/[/ ’]/g, '-');
 const someSymbolsDelete = R.replace(/[(!?.)]/g, '');
 const fixDoubleSpaces = R.replace(/ {2}/g, ' ');
 
