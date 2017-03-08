@@ -1,6 +1,6 @@
 import R from 'ramda';
 import composeSenseData from '../composeSenseData/composeSenseData';
-import splitByClass from '../../helpers/splitByClass/splitByClass';
+import splitByClass from '../../utils/splitByClass/splitByClass';
 
 export default function composeEntryData(entryMarkup) {
   return R.zipObj(

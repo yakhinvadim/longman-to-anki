@@ -1,5 +1,5 @@
 import R from 'ramda';
-import composeQuery from '../../helpers/composeQuery/composeQuery';
+import composeQuery from '../../utils/composeQuery/composeQuery';
 import getMarkup from '../../helpers/getMarkup/getMarkup';
 import composeWordData from '../composeWordData/composeWordData';
 import ankifyWordData from '../ankifyWordData/ankifyWordData';
