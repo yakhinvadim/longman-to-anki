@@ -1,12 +1,21 @@
 import cheerify from '../../helpers/cheerify';
 
-export default function extractPronunciation(pageMarkup) {
+const extractPronunciation = pageMarkup => {
   const $ = cheerify(pageMarkup); 
     
-  const pronunciationWrapper = $('.HWD').first().nextAll('.PronCodes');
+  const pronunciationWrapper = $('.PronCodes').first();
     
-  const britPronunciation = pronunciationWrapper.children('.PRON').text();
-  const amerPronunciation = pronunciationWrapper.children('.AMEVARPRON').text();
+  const britPronunciation =
+    pronunciationWrapper
+      .children('.PRON') // pronunciation
+      .text();
+
+  const amerPronunciation =
+    pronunciationWrapper
+      .children('.AMEVARPRON') // american variant pronunciation
+      .text();
     
   return britPronunciation + amerPronunciation;
 }
+
+export default extractPronunciation;
