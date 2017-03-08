@@ -1,6 +1,6 @@
 import cheerify from '../../helpers/cheerify';
 
-export default function getPronunciation(pageMarkup) {
+export default function extractPronunciation(pageMarkup) {
   const $ = cheerify(pageMarkup); 
     
   const pronunciationWrapper = $('.HWD').first().nextAll('.PronCodes');

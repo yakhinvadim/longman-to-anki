@@ -1,10 +1,10 @@
-import getHeadword from './getHeadword';
+import extractHeadword from './extractHeadword';
 import set from '../../mocks/set';
 
-describe('getHeadword', () => {
+describe('extractHeadword', () => {
   it('gets correct word for a "set" markup', () => {
     expect(
-      getHeadword(set.pageMarkup)
+      extractHeadword(set.pageMarkup)
     ).toEqual('set')
   });
 });

@@ -1,16 +1,16 @@
-import getAntonym from './getAntonym';
+import extractAntonym from './extractAntonym';
 import set from '../../mocks/set';
 
-describe('getAntonym', () => {
+describe('extractAntonym', () => {
   it('gets correct antonym for sense with one antonym', () => {
     expect(
-      getAntonym(set.sensesMarkup1[2])
+      extractAntonym(set.sensesMarkup1[2])
     ).toEqual('rise')
   });
 
   it('gets correct antonym for sense without antonym', () => {
     expect(
-      getAntonym(set.sensesMarkup1[1])
+      extractAntonym(set.sensesMarkup1[1])
     ).toEqual('')
   });
 });

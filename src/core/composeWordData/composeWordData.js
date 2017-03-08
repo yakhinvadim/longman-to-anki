@@ -1,7 +1,7 @@
 import splitByClass from '../../utils/splitByClass/splitByClass';
 import composeEntryData from '../composeEntryData/composeEntryData';
-import getHeadword from '../getHeadword/getHeadword';
-import getPronunciation from '../getPronunciation/getPronunciation';
+import extractHeadword from '../extractHeadword/extractHeadword';
+import extractPronunciation from '../extractPronunciation/extractPronunciation';
 import R from 'ramda';
 
 export default function composeWordData(pageMarkup) {
@@ -12,8 +12,8 @@ export default function composeWordData(pageMarkup) {
       'entries'
     ],
     [
-      getHeadword(pageMarkup),
-      getPronunciation(pageMarkup),
+      extractHeadword(pageMarkup),
+      extractPronunciation(pageMarkup),
       R.pipe(
         splitByClass('ldoceEntry'),
         R.map(composeEntryData)

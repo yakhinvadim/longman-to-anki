@@ -1,9 +1,9 @@
 import R from 'ramda';
 import composeExamplesData from '../composeExamplesData/composeExamplesData';
-import getDefinition from '../getDefinition/getDefinition';
-import getSynonym from '../getSynonym/getSynonym';
-import getAntonym from '../getAntonym/getAntonym';
-import getSituation from '../getSituation/getSituation';
+import extractDefinition from '../extractDefinition/extractDefinition';
+import extractSynonym from '../extractSynonym/extractSynonym';
+import extractAntonym from '../extractAntonym/extractAntonym';
+import extractSituation from '../extractSituation/extractSituation';
 
 export default function composeSenseData(senseMarkup) {
   return R.zipObj(
@@ -15,10 +15,10 @@ export default function composeSenseData(senseMarkup) {
       'examples'
     ],
     [
-      getDefinition(senseMarkup),
-      getSituation(senseMarkup),
-      getSynonym(senseMarkup),
-      getAntonym(senseMarkup),
+      extractDefinition(senseMarkup),
+      extractSituation(senseMarkup),
+      extractSynonym(senseMarkup),
+      extractAntonym(senseMarkup),
       composeExamplesData(senseMarkup)
     ]
   )

@@ -1,6 +1,6 @@
 import cheerify from '../../helpers/cheerify';
 
-export default function getDefinition(senseMarkup) {
+export default function extractDefinition(senseMarkup) {
   const $ = cheerify(senseMarkup);
 
   const defs = $('.DEF');
