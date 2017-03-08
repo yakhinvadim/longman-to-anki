@@ -1,7 +1,7 @@
 import React from 'react';
 import R from 'ramda';
 import debounce from 'lodash.debounce';
-import getWords from '../../utils/getWords/getWords';
+import splitByWord from '../../utils/splitByWord/splitByWord';
 import wordToCards from '../../core/wordToCards/wordToCards';
 
 import Header from '../Header/Header';
@@ -32,7 +32,7 @@ export default class App extends React.Component {
 
     debouncedComposeCards = debounce(
         async () => {
-            const words = getWords(this.state.inputValue);
+            const words = splitByWord(this.state.inputValue);
 
             let cardsArr = [];
             let i = 0;

@@ -1,9 +1,9 @@
-import getWords from './getWords';
+import splitByWord from './splitByWord';
 
-describe('getWords', () => {
+describe('splitByWord', () => {
   it('splits, removes spaces, drops empty values', () => {
     expect(
-      getWords(' hello\n\n world')
+      splitByWord(' hello\n\n world')
     ).toEqual(['hello', 'world'])
   });
 });
