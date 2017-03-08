@@ -19,6 +19,6 @@ const composeWordData = pageMarkup => {
   };
 
   return wordData;
- }
+}
 
 export default composeWordData;

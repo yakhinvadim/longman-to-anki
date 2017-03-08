@@ -8,15 +8,27 @@ describe('composeSenseData', () => {
     ).toBeDefined();
   });
 
-  it('senseData contains examples', () => {
+  it('senseData contains situation', () => {
     expect(
-      composeSenseData(set.sensesMarkup2[0]).examples
+      composeSenseData(set.sensesMarkup2[0]).situation
+    ).toBeDefined();
+  });
+  
+  it('senseData contains synonym', () => {
+    expect(
+      composeSenseData(set.sensesMarkup2[0]).synonym
+    ).toBeDefined();
+  });
+  
+  it('senseData contains antonym', () => {
+    expect(
+      composeSenseData(set.sensesMarkup2[0]).antonym
     ).toBeDefined();
   });
 
-  it('senseData contains usage', () => {
+  it('senseData contains examples', () => {
     expect(
-      composeSenseData(set.sensesMarkup3[0]).situation
+      composeSenseData(set.sensesMarkup2[0]).examples
     ).toBeDefined();
   });
 });
