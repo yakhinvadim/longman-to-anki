@@ -1,4 +1,4 @@
-import splitByClass from '../../utils/splitByClass/splitByClass';
+import splitByClass from '../../helpers/splitByClass/splitByClass';
 import composeEntryData from '../composeEntryData/composeEntryData';
 import getHeadword from '../getHeadword/getHeadword';
 import getPronunciation from '../getPronunciation/getPronunciation';

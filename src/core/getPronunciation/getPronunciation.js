@@ -1,4 +1,4 @@
-import cheerify from '../../utils/cheerify/cheerify';
+import cheerify from '../../helpers/cheerify/cheerify';
 
 export default function getPronunciation(pageMarkup) {
   const $ = cheerify(pageMarkup); 

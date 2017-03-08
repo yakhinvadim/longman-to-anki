@@ -1,4 +1,4 @@
-import cheerify from '../../utils/cheerify/cheerify';
+import cheerify from '../../helpers/cheerify/cheerify';
 
 const getSynonym = senseMarkup => {
     const $ = cheerify(senseMarkup);

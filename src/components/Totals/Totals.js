@@ -1,5 +1,5 @@
 import React, { PropTypes, PureComponent } from 'react';
-import maybePluralize from '../../utils/maybePluralize/maybePluralize';
+import maybePluralize from '../../helpers/maybePluralize/maybePluralize';
 
 export default class Totals extends PureComponent {
     static propTypes = {

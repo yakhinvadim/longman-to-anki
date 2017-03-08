@@ -1,4 +1,4 @@
-import cheerify from '../../utils/cheerify/cheerify';
+import cheerify from '../../helpers/cheerify/cheerify';
 import R from 'ramda';
 
 const coerceArray = R.unless(R.is(Array), R.of);

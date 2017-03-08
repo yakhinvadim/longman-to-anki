@@ -1,4 +1,4 @@
-import cheerify from '../../utils/cheerify/cheerify';
+import cheerify from '../../helpers/cheerify/cheerify';
 
 const getAntonym = senseMarkup => {
     const $ = cheerify(senseMarkup);
