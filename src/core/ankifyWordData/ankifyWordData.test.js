@@ -1,4 +1,4 @@
-import ankifyWordData from './ankifyWordData.js';
+import ankifyWordData from './ankifyWordData';
 
 const ankifyEntryData = ({ankifySenseData, ankifyExampleData, headword}) => entryData => `${entryData} ${headword}`;
 const ankifySenseData = () => {};

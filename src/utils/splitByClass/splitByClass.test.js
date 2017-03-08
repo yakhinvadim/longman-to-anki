@@ -1,4 +1,4 @@
-import splitByClass from './splitByClass.js';
+import splitByClass from './splitByClass';
 import set from '../../mocks/set';
 
 describe('splitByClass for .Entry', () => {

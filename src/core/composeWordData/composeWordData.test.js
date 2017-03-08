@@ -1,4 +1,4 @@
-import composeWordData from './composeWordData.js';
+import composeWordData from './composeWordData';
 import set from '../../mocks/set';
 
 describe('composeWordData', () => {

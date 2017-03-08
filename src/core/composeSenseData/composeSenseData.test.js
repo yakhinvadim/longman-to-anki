@@ -1,4 +1,4 @@
-import composeSenseData from './composeSenseData.js';
+import composeSenseData from './composeSenseData';
 import set from '../../mocks/set';
 
 describe('composeSenseData', () => {

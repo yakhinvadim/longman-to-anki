@@ -1,4 +1,4 @@
-import getDefinition from './getDefinition.js';
+import getDefinition from './getDefinition';
 import set from '../../mocks/set';
 
 describe('getDefinition', () => {

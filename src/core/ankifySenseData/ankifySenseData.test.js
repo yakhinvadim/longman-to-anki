@@ -1,4 +1,4 @@
-import ankifySenseData from './ankifySenseData.js';
+import ankifySenseData from './ankifySenseData';
 
 const ankifyExampleData = ({ headword, definition, situation }) => exampleData => `${exampleData} ${situation} ${definition} ${headword}`;
 const ankifyNoExampleData = headword => ({ definition, situation }) => `${situation} ${definition} ${headword}`;

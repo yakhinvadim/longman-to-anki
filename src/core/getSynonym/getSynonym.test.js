@@ -1,4 +1,4 @@
-import getSynonym from './getSynonym.js';
+import getSynonym from './getSynonym';
 import set from '../../mocks/set';
 
 describe('getSynonym', () => {

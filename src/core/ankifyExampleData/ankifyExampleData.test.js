@@ -1,5 +1,5 @@
 import R from 'ramda';
-import ankifyExampleData from './ankifyExampleData.js';
+import ankifyExampleData from './ankifyExampleData';
 
 const definition = 'some definition';
 const headword = 'some headword';

@@ -1,4 +1,4 @@
-import getSituation from './getSituation.js';
+import getSituation from './getSituation';
 import set from '../../mocks/set';
 
 describe('getSituation', () => {

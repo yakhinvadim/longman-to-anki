@@ -1,4 +1,4 @@
-import getPronunciation from './getPronunciation.js';
+import getPronunciation from './getPronunciation';
 import set from '../../mocks/set';
 
 describe('getPronunciation', () => {

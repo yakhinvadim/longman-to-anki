@@ -1,5 +1,5 @@
 import R from 'ramda';
-import composeSenseData from '../composeSenseData/composeSenseData.js';
+import composeSenseData from '../composeSenseData/composeSenseData';
 import splitByClass from '../../utils/splitByClass/splitByClass';
 
 export default function composeEntryData(entryMarkup) {

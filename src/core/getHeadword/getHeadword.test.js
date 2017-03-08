@@ -1,4 +1,4 @@
-import getHeadword from './getHeadword.js';
+import getHeadword from './getHeadword';
 import set from '../../mocks/set';
 
 describe('getHeadword', () => {

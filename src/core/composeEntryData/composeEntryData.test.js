@@ -1,4 +1,4 @@
-import composeEntryData from './composeEntryData.js';
+import composeEntryData from './composeEntryData';
 import set from '../../mocks/set';
 
 describe('composeEntryData', () => {

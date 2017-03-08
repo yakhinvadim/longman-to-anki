@@ -1,4 +1,4 @@
-import getAntonym from './getAntonym.js';
+import getAntonym from './getAntonym';
 import set from '../../mocks/set';
 
 describe('getAntonym', () => {
