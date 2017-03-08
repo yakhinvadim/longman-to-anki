@@ -1,14 +1,14 @@
 import R from 'ramda';
 import cheerify from '../../helpers/cheerify';
 
-const splitByClass = (className, markup) => {
+const splitBySelector = (selector, markup) => {
   const $ = cheerify(markup);
 
-  const output = $(`.${className}`)
+  const output = $(selector)
     .map((i, el) => $(el).html())
     .get();
 
   return output;
 };
 
-export default R.curry(splitByClass);
+export default R.curry(splitBySelector);

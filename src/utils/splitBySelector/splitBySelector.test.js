@@ -1,4 +1,4 @@
-import splitByClass from './splitByClass';
+import splitBySelector from './splitBySelector';
 
 const markup = `<ul>
   <li class="fruit apple">Apple</li>
@@ -6,16 +6,16 @@ const markup = `<ul>
   <li class="fruit pear">Pear</li>
 </ul>`;
 
-describe('splitByClass', () => {
+describe('splitBySelector', () => {
   it('splits correctly if several elements with class are found', () => {
     expect(
-      splitByClass('fruit', markup)
+      splitBySelector('.fruit', markup)
     ).toEqual(['Apple', 'Orange', 'Pear'])
   });
 
   it('splits correctly if only one element with class is found', () => {
     expect(
-      splitByClass('orange', markup)
+      splitBySelector('.orange', markup)
     ).toEqual(['Orange'])
   });
 });

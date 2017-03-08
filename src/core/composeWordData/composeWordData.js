@@ -1,5 +1,5 @@
 import R from 'ramda';
-import splitByClass from '../../utils/splitByClass/splitByClass';
+import splitBySelector from '../../utils/splitBySelector/splitBySelector';
 import extractHeadword from '../extractHeadword/extractHeadword';
 import extractPronunciation from '../extractPronunciation/extractPronunciation';
 import composeEntryData from '../composeEntryData/composeEntryData';
@@ -8,7 +8,7 @@ const composeWordData = pageMarkup => {
   const headword = extractHeadword(pageMarkup);
   const pronunciation = extractPronunciation(pageMarkup);
   const entries = R.pipe(
-    splitByClass('ldoceEntry'),
+    splitBySelector('.ldoceEntry'),
     R.map(composeEntryData)
   )(pageMarkup);
 

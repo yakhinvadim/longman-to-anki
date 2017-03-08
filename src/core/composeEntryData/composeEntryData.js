@@ -1,10 +1,10 @@
 import R from 'ramda';
 import composeSenseData from '../composeSenseData/composeSenseData';
-import splitByClass from '../../utils/splitByClass/splitByClass';
+import splitBySelector from '../../utils/splitBySelector/splitBySelector';
 
 const composeEntryData = entryMarkup => {
   const senses = R.pipe(
-      splitByClass('Sense'),
+      splitBySelector('.Sense'),
       R.map(composeSenseData)
     )(entryMarkup);
 
