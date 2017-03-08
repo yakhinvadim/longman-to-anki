@@ -2,7 +2,7 @@ import React from 'react';
 import R from 'ramda';
 import debounce from 'lodash.debounce';
 import getWords from '../../utils/getWords/getWords';
-import wordToCards from '../../utils/wordToCards/wordToCards';
+import wordToCards from '../../core/wordToCards/wordToCards';
 
 import Header from '../Header/Header';
 import ImportOptions from '../ImportOptions/ImportOptions';

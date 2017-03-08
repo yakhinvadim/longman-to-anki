@@ -1,4 +1,4 @@
-import splitByClass from '../splitByClass/splitByClass.js';
+import splitByClass from '../../utils/splitByClass/splitByClass';
 import composeEntryData from '../composeEntryData/composeEntryData.js';
 import getHeadword from '../getHeadword/getHeadword.js';
 import getPronunciation from '../getPronunciation/getPronunciation.js';
