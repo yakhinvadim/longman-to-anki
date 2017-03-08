@@ -3,5 +3,10 @@ import cheerify from '../../helpers/cheerify';
 export default function extractHeadword(pageMarkup) {
   const $ = cheerify(pageMarkup);
 
-  return $('h1.pagetitle').text().trim();
+  const headword =
+    $('h1.pagetitle') // I add h1 here, because page has two .pagetitle elements, and one of them is span
+      .text()
+      .trim();
+  
+  return headword;
 }

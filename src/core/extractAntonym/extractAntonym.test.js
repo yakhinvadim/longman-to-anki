@@ -2,13 +2,13 @@ import extractAntonym from './extractAntonym';
 import set from '../../mocks/set';
 
 describe('extractAntonym', () => {
-  it('gets correct antonym for sense with one antonym', () => {
+  it('extracts correct antonym for sense with one antonym', () => {
     expect(
       extractAntonym(set.sensesMarkup1[2])
     ).toEqual('rise')
   });
 
-  it('gets correct antonym for sense without antonym', () => {
+  it('extracts correct antonym for sense without antonym', () => {
     expect(
       extractAntonym(set.sensesMarkup1[1])
     ).toEqual('')
