@@ -1,21 +1,21 @@
 import R from 'ramda';
+import makeCard from '../makeCard/makeCard';
 
-const ankifySenseData = ({ankifyExampleData, ankifyNoExampleData, headword, pronunciation}, senseData) => {
-  const { definition, situation, synonym, antonym } = senseData;
+const join = R.join('\n');
 
-  const ankifySenseDataWithExamples = R.pipe(
-    R.prop('examples'),
-    R.map(ankifyExampleData({ headword, pronunciation, definition, situation, synonym, antonym })),
-    R.join('\n')
-  );
-  
-  const cards = R.cond([
-    [R.pipe(R.prop('definition'), R.isEmpty), R.always('')],
-    [R.pipe(R.prop('examples'  ), R.isEmpty), ankifyNoExampleData({headword, pronunciation})],
-    [R.T,                                     ankifySenseDataWithExamples]
-  ])(senseData);
+const ankifySenseData = R.curry((makeCard, { headword, pronunciation }, senseData) => {
+  const { definition, situation, synonym, antonym, examples, exampleGroups } = senseData;
+
+  const cardsFromExamples = R.map(R.pipe(
+    R.objOf('example'),
+    R.merge({ situation, form: headword, pronunciation, definition, synonym, antonym }),
+    makeCard
+  ))(examples);
+
+  const cards = join(cardsFromExamples);
 
   return cards;
-}
+});
 
-export default R.curry(ankifySenseData);
+export {ankifySenseData};
+export default ankifySenseData(makeCard);
