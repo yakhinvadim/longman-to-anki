@@ -24,6 +24,7 @@ const makeCard = ({example, situation, form, pronunciation, definition, synonym,
   
   const cardMaybeAntonym = antonym ? `${newLine}<span class="lta-antonym">(antonym: ${antonym})</span>` : '';
 
+  
   // card sides
 
   const frontSide = example
@@ -52,6 +53,7 @@ const makeCard = ({example, situation, form, pronunciation, definition, synonym,
         cardMaybePronunciation
     ]);
 
+  
   // card
 
   const card = join([
