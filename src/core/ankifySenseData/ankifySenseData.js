@@ -6,13 +6,32 @@ const join = R.join('\n');
 const ankifySenseData = R.curry((makeCard, { headword, pronunciation }, senseData) => {
   const { definition, situation, synonym, antonym, examples, exampleGroups } = senseData;
 
-  const cardsFromExamples = R.map(R.pipe(
+  
+  const ankifyExample = R.pipe(
     R.objOf('example'),
     R.merge({ situation, form: headword, pronunciation, definition, synonym, antonym }),
     makeCard
-  ))(examples);
+  );
 
-  const cards = join(cardsFromExamples);
+  const ankifyExampleGroup = R.pipe(
+    R.merge({ situation, pronunciation, definition, synonym, antonym }),
+    makeCard
+  );
+
+  
+  const cardsFromExamples = examples
+    ? R.pipe(R.map(ankifyExample), join)(examples)
+    : '';
+
+  const cardsFromExampleGroups = exampleGroups
+    ? R.pipe(R.map(ankifyExampleGroup), join)(exampleGroups)
+    : '';
+
+  
+  const cards = R.pipe(
+    R.reject(R.isEmpty),
+    join
+  )([cardsFromExamples, cardsFromExampleGroups]);
 
   return cards;
 });
