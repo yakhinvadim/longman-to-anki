@@ -1,16 +1,18 @@
 import R from 'ramda';
+import ankifyEntryData from '../ankifyEntryData/ankifyEntryData';
 
-const ankifyWordData = ({ankifyEntryData, ankifySenseData, ankifyExampleData, ankifyNoExampleData}, wordData) => {
-  const {headword, pronunciation} = wordData;
+const ankifyWordData = R.curry((ankifyEntryData, wordData) => {
+  const { headword, pronunciation, entries } = wordData;
+
   const cards = R.pipe(
-    R.prop('entries'),
     R.map(
-      ankifyEntryData({ankifySenseData, ankifyExampleData, ankifyNoExampleData, headword, pronunciation})
+      ankifyEntryData({headword, pronunciation})
     ),
     R.join('\n')
-  )(wordData);
+  )(entries);
 
   return cards;
-}
+})
 
-export default R.curry(ankifyWordData);
+export {ankifyWordData};
+export default ankifyWordData(ankifyEntryData);
