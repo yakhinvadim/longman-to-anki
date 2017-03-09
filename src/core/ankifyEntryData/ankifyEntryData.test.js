@@ -1,24 +1,24 @@
-import ankifyEntryData from './ankifyEntryData';
+import R from 'ramda';
+import { ankifyEntryData } from './ankifyEntryData';
 
-const ankifySenseData = ({ankifyExampleData, headword}) => senseData => `${senseData} ${headword}`;
-const ankifyExampleData = () => {};
+const join = R.join('\n');
+const fakeAnkifySenseData = ({ headword, pronunciation }) => senseData =>
+  `${senseData} ${headword} ${pronunciation}`;
+  
 const headword = 'headword';
-const entryData = {
-  senses: [
-    'sense1',
-    'sense2'
-  ]
-};
-
-const ankiCards =
-  'sense1 headword' +
-  '\n' +
-  'sense2 headword';
+const pronunciation = 'pronunciation';
 
 describe('ankifyEntryData', () => {
   it('composes correct ankiCards ', () => {
+    const entryData = {
+      senses: ['sense1', 'sense2']
+    };
+
     expect(
-      ankifyEntryData({ankifySenseData, ankifyExampleData, headword}, entryData)
-    ).toBe(ankiCards);
+      ankifyEntryData(fakeAnkifySenseData, {headword, pronunciation}, entryData)
+    ).toBe(join([
+      'sense1 headword pronunciation',
+      'sense2 headword pronunciation'
+    ]));
   });
 });
