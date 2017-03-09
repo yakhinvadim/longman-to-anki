@@ -2,13 +2,13 @@ import composeExampleGroupData from './composeExampleGroupData';
 import set from '../../mocks/set';
 
 describe('composeExampleGroupData', () => {
-  it('exampleGroupData contains headword', () => {
+  it('exampleGroupData contains form', () => {
     expect(
       composeExampleGroupData(set.pageMarkup).form
     ).toBeDefined();
   });
 
-  it('exampleGroupData contains pronunciation', () => {
+  it('exampleGroupData contains examples', () => {
     expect(
       composeExampleGroupData(set.pageMarkup).examples
     ).toBeDefined();
