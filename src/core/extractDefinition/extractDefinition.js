@@ -1,6 +1,6 @@
 import R from 'ramda';
 import splitBySelector from '../../utils/splitBySelector/splitBySelector';
-import getCheerioText from '../../helpers/getCheerioText';
+import cheerify from '../../helpers/cheerify';
 
 const extractDefinition = senseMarkup => {
 	const definition = R.pipe(
@@ -10,7 +10,8 @@ const extractDefinition = senseMarkup => {
 				R.always(''),
 				R.pipe(
 					R.map(R.pipe(
-						getCheerioText,
+						cheerify,
+						R.invoker(0, 'text'),
 						R.trim
 					)),
 					R.head

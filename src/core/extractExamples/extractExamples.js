@@ -1,5 +1,5 @@
 import R from 'ramda';
-import getCheerioText from '../../helpers/getCheerioText';
+import cheerify from '../../helpers/cheerify';
 import splitBySelector from '../../utils/splitBySelector/splitBySelector';
 
 const removeGlossary = R.replace(/\(=.*\)/g, '');
@@ -19,7 +19,8 @@ const extractExamples = senseOrExampleGroupMarkup => {
 	const examples = R.pipe(
 		splitBySelector({ selector: '.EXAMPLE', onlyChildren: true }),
 		R.map(R.pipe(
-			getCheerioText,
+			cheerify,
+			R.invoker(0, 'text'),
 			cleanse
 		))
 	)(senseOrExampleGroupMarkup);
