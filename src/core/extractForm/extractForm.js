@@ -1,4 +1,4 @@
-import cheerify from '../../helpers/cheerify';
+import cheerify from '../../utils/cheerify/cheerify';
 
 const extractAntonym = exampleGroupMarkup => {
 	const $ = cheerify(exampleGroupMarkup);

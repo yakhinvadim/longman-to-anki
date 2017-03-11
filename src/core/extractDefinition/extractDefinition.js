@@ -1,6 +1,6 @@
 import R from 'ramda';
 import splitBySelector from '../../utils/splitBySelector/splitBySelector';
-import cheerify from '../../helpers/cheerify';
+import cheerify from '../../utils/cheerify/cheerify';
 
 const extractDefinition = senseMarkup => {
 	const definition = R.pipe(

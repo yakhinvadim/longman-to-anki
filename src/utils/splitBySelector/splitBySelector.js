@@ -1,5 +1,5 @@
 import R from 'ramda';
-import cheerify from '../../helpers/cheerify';
+import cheerify from '../../utils/cheerify/cheerify';
 
 const splitBySelector = ({ selector, onlyChildren = false }, markup) => {
 	const $ = cheerify(markup);

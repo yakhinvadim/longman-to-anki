@@ -1,5 +1,5 @@
 import R from 'ramda';
-import cheerify from '../../helpers/cheerify';
+import cheerify from '../../utils/cheerify/cheerify'
 import splitBySelector from '../../utils/splitBySelector/splitBySelector';
 
 const removeGlossary = R.replace(/\(=.*\)/g, '');
