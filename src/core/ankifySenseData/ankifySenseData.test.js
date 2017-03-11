@@ -41,11 +41,11 @@ describe('ankifySenseData', () => {
       exampleGroups: [
         {
           form: 'form1',
-          example: 'example1'
+          examples: ['example11', 'example12']
         },
         {
           form: 'form2',
-          example: 'example2'
+          examples: ['example2']
         }
       ]
     };
@@ -53,7 +53,8 @@ describe('ankifySenseData', () => {
     expect(
       ankifySenseData(fakeMakeCard, {headword, pronunciation}, senseData)
     ).toEqual(join([
-      'example1 situation form1 pronunciation definition synonym antonym',
+      'example11 situation form1 pronunciation definition synonym antonym',
+      'example12 situation form1 pronunciation definition synonym antonym',
       'example2 situation form2 pronunciation definition synonym antonym'
     ]));
   });
@@ -69,11 +70,11 @@ describe('ankifySenseData', () => {
       exampleGroups: [
         {
           form: 'form3',
-          example: 'example3'
+          examples: ['example31', 'example32']
         },
         {
           form: 'form4',
-          example: 'example4'
+          examples: ['example4']
         }
       ]
     };
@@ -83,7 +84,8 @@ describe('ankifySenseData', () => {
     ).toEqual(join([
       'example1 situation headword pronunciation definition synonym antonym',
       'example2 situation headword pronunciation definition synonym antonym',
-      'example3 situation form3 pronunciation definition synonym antonym',
+      'example31 situation form3 pronunciation definition synonym antonym',
+      'example32 situation form3 pronunciation definition synonym antonym',
       'example4 situation form4 pronunciation definition synonym antonym'
     ]));
   });

@@ -12,13 +12,19 @@ const ankifySenseData = R.curry((makeCard, { headword, pronunciation }, senseDat
     R.merge({ situation, form: headword, pronunciation, definition, synonym, antonym }),
     makeCard
   );
-
-  const ankifyExampleGroup = R.pipe(
-    R.merge({ situation, pronunciation, definition, synonym, antonym }),
-    makeCard
-  );
-
   
+  const ankifyExampleGroup = exampleGroup => {
+    const { form: innerForm, examples: innerExamples } = exampleGroup;
+
+    const cards = R.map(R.pipe(
+      R.objOf('example'),
+      R.merge({ situation, form: innerForm, pronunciation, definition, synonym, antonym }),
+      makeCard
+    ))(innerExamples);
+    
+    return join(cards);
+  }
+
   const cardsFromExamples = examples
     ? R.pipe(R.map(ankifyExample), join)(examples)
     : '';
@@ -31,6 +37,7 @@ const ankifySenseData = R.curry((makeCard, { headword, pronunciation }, senseDat
     ? R.pipe(R.map(ankifySenseData(makeCard, { headword, pronunciation })), join)(subsenses)
     : '';
   
+  // TODO add cards if no examples
 
   const cards = R.pipe(
     R.reject(R.isEmpty),
