@@ -6,6 +6,10 @@ export default class ResultCards extends PureComponent {
 		value: PropTypes.string
 	}
 
+	static defaultProps = {
+		value: ''
+	}
+
 	render() {
 		return (
 			<TextField

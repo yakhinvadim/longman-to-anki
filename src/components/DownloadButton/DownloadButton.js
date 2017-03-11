@@ -4,9 +4,16 @@ import RaisedButton from 'material-ui/RaisedButton';
 export default class DownloadButton extends PureComponent {
 	static propTypes = {
 		fileContent: PropTypes.string,
-		fileName: PropTypes.string.isRequired,
-		onClick: PropTypes.func.isRequired,
-		disabled: PropTypes.bool.isRequired
+		fileName: PropTypes.string,
+		onClick: PropTypes.func,
+		disabled: PropTypes.bool
+	}
+
+	static defaultProps = {
+		fileContent: '',
+		fileName: 'longman-to-anki',
+		onClick: () => { },
+		disabled: false
 	}
 
 	render() {
