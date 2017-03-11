@@ -4,7 +4,7 @@ import splitBySelector from '../../utils/splitBySelector/splitBySelector';
 
 const composeEntryData = entryMarkup => {
   const senses = R.pipe(
-      splitBySelector('.Sense'),
+      splitBySelector({ selector: '.Sense' }),
       R.map(composeSenseData)
     )(entryMarkup);
 

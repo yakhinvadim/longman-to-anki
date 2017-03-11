@@ -8,7 +8,7 @@ const composeWordData = pageMarkup => {
   const headword = extractHeadword(pageMarkup);
   const pronunciation = extractPronunciation(pageMarkup);
   const entries = R.pipe(
-    splitBySelector('.ldoceEntry'),
+    splitBySelector({ selector:'.ldoceEntry' }),
     R.map(composeEntryData)
   )(pageMarkup);
 
