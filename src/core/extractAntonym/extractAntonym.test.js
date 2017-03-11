@@ -1,17 +1,17 @@
 import extractAntonym from './extractAntonym';
-import senseWithAntonym from '../../mocks/wordSet-entry1-sense11';
-import senseWithoutAntonym from '../../mocks/wordSet-entry2-sense9';
+import senseWithAntonymMarkup from '../../mocks/wordSet-entry1-sense11';
+import senseWithoutAntonymMarkup from '../../mocks/wordSet-entry2-sense9';
 
 describe('extractAntonym', () => {
 	it('extracts correct antonym for sense with one antonym', () => {
 		expect(
-			extractAntonym(senseWithAntonym)
+			extractAntonym(senseWithAntonymMarkup)
 		).toEqual('rise')
 	});
 
 	it('extracts correct antonym for sense without antonym', () => {
 		expect(
-			extractAntonym(senseWithoutAntonym)
+			extractAntonym(senseWithoutAntonymMarkup)
 		).toEqual('')
 	});
 });

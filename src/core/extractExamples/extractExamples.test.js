@@ -1,12 +1,12 @@
 import extractExamples from './extractExamples';
 import senseMarkup from '../../mocks/wordSet-entry1-sense5';
-import senseMarkupWithSingleExample from '../../mocks/wordSet-entry2-sense9';
+import senseWithSingleExampleMarkup from '../../mocks/wordSet-entry2-sense9';
 import exampleGroupMarkup from '../../mocks/wordSet-entry1-sense5-exampleGroup'
 
 describe('extractExamples', () => {
 	it('extracts correct single example from sense markup', () => {
 		expect(
-			extractExamples(senseMarkupWithSingleExample)
+			extractExamples(senseWithSingleExampleMarkup)
 		).toEqual([
 			'The set (x, y) has two members.'
 		])

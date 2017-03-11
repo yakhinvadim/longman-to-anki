@@ -1,17 +1,17 @@
 import extractSynonym from './extractSynonym';
-import markupWithSynonym from '../../mocks/wordSet-entry2-sense10';
-import markupWithoutSynonym from '../../mocks/wordSet-entry2-sense9';
+import senseWithSynonymMarkup from '../../mocks/wordSet-entry2-sense10';
+import senseWithoutSynonymMarkup from '../../mocks/wordSet-entry2-sense9';
 
 describe('extractSynonym', () => {
 	it('extracts correct synonym for sense with synonym', () => {
 		expect(
-			extractSynonym(markupWithSynonym)
+			extractSynonym(senseWithSynonymMarkup)
 		).toEqual('stream')
 	});
 
 	it('extracts correct synonym for sense without synonym', () => {
 		expect(
-			extractSynonym(markupWithoutSynonym)
+			extractSynonym(senseWithoutSynonymMarkup)
 		).toEqual('')
 	});
 });

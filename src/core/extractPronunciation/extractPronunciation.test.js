@@ -1,24 +1,24 @@
 import extractPronunciation from './extractPronunciation';
-import setMarkup from '../../mocks/wordSet';
-import goMarkup from '../../mocks/wordGo';
-import mouseMarkup from '../../mocks/wordMouse';
+import simpleWordMarkup from '../../mocks/wordSet';
+import irregularVerbMarkup from '../../mocks/wordGo';
+import irregularNounMarkup from '../../mocks/wordMouse';
 
 describe('extractPronunciation', () => {
 	it('extracts correct pronunciation for ordinary word', () => {
 		expect(
-			extractPronunciation(setMarkup)
+			extractPronunciation(simpleWordMarkup)
 		).toEqual('set')
 	});
 
 	it('extracts correct pronunciation for irregular verb and american pronounciation', () => {
 		expect(
-			extractPronunciation(goMarkup)
+			extractPronunciation(irregularVerbMarkup)
 		).toEqual('ɡəʊ $ ɡoʊ')
 	});
 
 	it('extracts correct pronunciation for irregular plural noun', () => {
 		expect(
-			extractPronunciation(mouseMarkup)
+			extractPronunciation(irregularNounMarkup)
 		).toEqual('maʊs')
 	});
 });

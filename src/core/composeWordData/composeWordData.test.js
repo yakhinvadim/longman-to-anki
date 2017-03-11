@@ -1,22 +1,22 @@
 import composeWordData from './composeWordData';
-import set from '../../mocks/set';
+import wordMarkup from '../../mocks/wordSet';
 
 describe('composeWordData', () => {
 	it('wordData contains headword', () => {
 		expect(
-			composeWordData(set.pageMarkup).headword
+			composeWordData(wordMarkup).headword
 		).toBeDefined();
 	});
 
 	it('wordData contains pronunciation', () => {
 		expect(
-			composeWordData(set.pageMarkup).pronunciation
+			composeWordData(wordMarkup).pronunciation
 		).toBeDefined();
 	});
 
 	it('wordData contains entries', () => {
 		expect(
-			composeWordData(set.pageMarkup).entries
+			composeWordData(wordMarkup).entries
 		).toBeDefined();
 	});
 });

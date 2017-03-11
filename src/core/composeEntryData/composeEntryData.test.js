@@ -1,10 +1,10 @@
 import composeEntryData from './composeEntryData';
-import set from '../../mocks/set';
+import entryMarkup from '../../mocks/wordSet-entry1';
 
 describe('composeEntryData', () => {
 	it('EntryData contains senses', () => {
 		expect(
-			composeEntryData(set.entriesMarkup[0]).senses
+			composeEntryData(entryMarkup).senses
 		).toBeDefined();
 	});
 });

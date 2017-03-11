@@ -1,16 +1,16 @@
 import composeExampleGroupData from './composeExampleGroupData';
-import set from '../../mocks/set';
+import exampleGroupMarkup from '../../mocks/wordSet-entry1-sense5-exampleGroup';
 
 describe('composeExampleGroupData', () => {
 	it('exampleGroupData contains form', () => {
 		expect(
-			composeExampleGroupData(set.pageMarkup).form
+			composeExampleGroupData(exampleGroupMarkup).form
 		).toBeDefined();
 	});
 
 	it('exampleGroupData contains examples', () => {
 		expect(
-			composeExampleGroupData(set.pageMarkup).examples
+			composeExampleGroupData(exampleGroupMarkup).examples
 		).toBeDefined();
 	});
 });
