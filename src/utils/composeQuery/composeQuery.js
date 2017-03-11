@@ -5,19 +5,19 @@ const fixDoubleSpaces = R.replace(/ {2}/g, ' ');
 const someSymbolsToHyphens = R.replace(/[/ ’]/g, '-');
 
 export default function composeQuery(word) {
-  const escapedWord = R.pipe(
-    R.toLower,
-    someSymbolsDelete,
-    R.trim,
-    fixDoubleSpaces,
-    someSymbolsToHyphens
-  )(word);
+	const escapedWord = R.pipe(
+		R.toLower,
+		someSymbolsDelete,
+		R.trim,
+		fixDoubleSpaces,
+		someSymbolsToHyphens
+	)(word);
 
-  const dictionaryUrl = `http://www.ldoceonline.com/dictionary/${escapedWord}`;
+	const dictionaryUrl = `http://www.ldoceonline.com/dictionary/${escapedWord}`;
 
-  const queryUrl = `https://query.yahooapis.com/v1/public/yql?q=${encodeURIComponent(
-    `SELECT * FROM html WHERE url="${dictionaryUrl}"`
-  )}`;
+	const queryUrl = `https://query.yahooapis.com/v1/public/yql?q=${encodeURIComponent(
+		`SELECT * FROM html WHERE url="${dictionaryUrl}"`
+	)}`;
 
-  return queryUrl;
+	return queryUrl;
 }

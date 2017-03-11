@@ -8,61 +8,61 @@ const join = R.join('');
 
 const makeCard = ({example, situation, form, pronunciation, definition, synonym, antonym}) => {
 
-  // card parts
+	// card parts
 
-  const cardExample = `<span class="lta-example">${example}</span>`;
+	const cardExample = `<span class="lta-example">${example}</span>`;
 
-  const cardDefinition = `<span class="lta-definition">${definition}</span>`;
-    
-  const cardForm = `<span class="lta-form">${form}</span>`;
-    
-  const cardMaybeSituation = situation ? `${newLine}<span class="lta-situation">(${situation})</span>` : '';
-    
-  const cardMaybePronunciation = pronunciation ? `${newLine}<span class="lta-pronunciation">[${pronunciation}]</span>` : '';
+	const cardDefinition = `<span class="lta-definition">${definition}</span>`;
 
-  const cardMaybeSynonym = synonym ? `${newLine}<span class="lta-synonym">(synonym: ${synonym})</span>` : '';
-  
-  const cardMaybeAntonym = antonym ? `${newLine}<span class="lta-antonym">(antonym: ${antonym})</span>` : '';
+	const cardForm = `<span class="lta-form">${form}</span>`;
 
-  
-  // card sides
+	const cardMaybeSituation = situation ? `${newLine}<span class="lta-situation">(${situation})</span>` : '';
 
-  const frontSide = example
-    ? join([
-        cardExample,
-        cardMaybeSituation,
-        verticalOffset,
-        cardForm,
-        cardMaybePronunciation
-      ])
-    : join([
-        cardDefinition,
-        cardMaybeSynonym,
-        cardMaybeAntonym,
-        cardMaybeSituation
-    ])
+	const cardMaybePronunciation = pronunciation ? `${newLine}<span class="lta-pronunciation">[${pronunciation}]</span>` : '';
 
-  const backSide = example
-    ? join([
-        cardDefinition,
-        cardMaybeSynonym,
-        cardMaybeAntonym
-      ])
-    : join([
-        cardForm,
-        cardMaybePronunciation
-    ]);
+	const cardMaybeSynonym = synonym ? `${newLine}<span class="lta-synonym">(synonym: ${synonym})</span>` : '';
 
-  
-  // card
+	const cardMaybeAntonym = antonym ? `${newLine}<span class="lta-antonym">(antonym: ${antonym})</span>` : '';
 
-  const card = join([
-    frontSide,
-    sideDelimiter,
-    backSide
-  ]);  
 
-  return card;
+	// card sides
+
+	const frontSide = example
+		? join([
+			cardExample,
+			cardMaybeSituation,
+			verticalOffset,
+			cardForm,
+			cardMaybePronunciation
+		])
+		: join([
+			cardDefinition,
+			cardMaybeSynonym,
+			cardMaybeAntonym,
+			cardMaybeSituation
+		])
+
+	const backSide = example
+		? join([
+			cardDefinition,
+			cardMaybeSynonym,
+			cardMaybeAntonym
+		])
+		: join([
+			cardForm,
+			cardMaybePronunciation
+		]);
+
+
+	// card
+
+	const card = join([
+		frontSide,
+		sideDelimiter,
+		backSide
+	]);
+
+	return card;
 }
 
 export default makeCard;

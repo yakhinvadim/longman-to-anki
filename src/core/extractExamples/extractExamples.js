@@ -8,23 +8,23 @@ const fixDoubleSpace = R.replace(/ {2}/g, ' ');
 const fixSeparatedPeriod = R.replace(/ \./g, '.');
 
 const cleanse = R.pipe(
-    removeGlossary,
-    fixNbsp,  
-    fixDoubleSpace,
-    fixSeparatedPeriod,
-    R.trim
+	removeGlossary,
+	fixNbsp,
+	fixDoubleSpace,
+	fixSeparatedPeriod,
+	R.trim
 );
 
 const extractExamples = senseOrExampleGroupMarkup => {
-    const examples = R.pipe(
-        splitBySelector({ selector: '.EXAMPLE', onlyChildren: true }),
-        R.map(R.pipe(
-            getCheerioText,
-            cleanse
-        ))
-    )(senseOrExampleGroupMarkup);
+	const examples = R.pipe(
+		splitBySelector({ selector: '.EXAMPLE', onlyChildren: true }),
+		R.map(R.pipe(
+			getCheerioText,
+			cleanse
+		))
+	)(senseOrExampleGroupMarkup);
 
-    return examples;
+	return examples;
 }
 
 export default extractExamples;

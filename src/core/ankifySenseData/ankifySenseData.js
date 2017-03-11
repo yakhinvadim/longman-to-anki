@@ -4,49 +4,49 @@ import makeCard from '../makeCard/makeCard';
 const join = R.join('\n');
 
 const ankifySenseData = R.curry((makeCard, { headword, pronunciation }, senseData) => {
-  const { definition, situation, synonym, antonym, examples, exampleGroups, subsenses } = senseData;
+	const { definition, situation, synonym, antonym, examples, exampleGroups, subsenses } = senseData;
 
-  
-  const ankifyExample = R.pipe(
-    R.objOf('example'),
-    R.merge({ situation, form: headword, pronunciation, definition, synonym, antonym }),
-    makeCard
-  );
-  
-  const ankifyExampleGroup = exampleGroup => {
-    const { form: innerForm, examples: innerExamples } = exampleGroup;
 
-    const cards = R.map(R.pipe(
-      R.objOf('example'),
-      R.merge({ situation, form: innerForm, pronunciation, definition, synonym, antonym }),
-      makeCard
-    ))(innerExamples);
-    
-    return join(cards);
-  }
+	const ankifyExample = R.pipe(
+		R.objOf('example'),
+		R.merge({ situation, form: headword, pronunciation, definition, synonym, antonym }),
+		makeCard
+	);
 
-  const cardsFromExamples = examples
-    ? R.pipe(R.map(ankifyExample), join)(examples)
-    : '';
+	const ankifyExampleGroup = exampleGroup => {
+		const { form: innerForm, examples: innerExamples } = exampleGroup;
 
-  const cardsFromExampleGroups = exampleGroups
-    ? R.pipe(R.map(ankifyExampleGroup), join)(exampleGroups)
-    : '';
+		const cards = R.map(R.pipe(
+			R.objOf('example'),
+			R.merge({ situation, form: innerForm, pronunciation, definition, synonym, antonym }),
+			makeCard
+		))(innerExamples);
 
-  const cardsFromSubsenses = subsenses
-    ? R.pipe(R.map(ankifySenseData(makeCard, { headword, pronunciation })), join)(subsenses)
-    : '';
+		return join(cards);
+	}
 
-  const cardsIfNoExamples = R.all(R.isEmpty)([examples, exampleGroups, subsenses]) && definition !== ''
-    ? makeCard({ definition, synonym, antonym, situation, form: headword, pronunciation })
-    : '';
+	const cardsFromExamples = examples
+		? R.pipe(R.map(ankifyExample), join)(examples)
+		: '';
 
-  const cards = R.pipe(
-    R.reject(R.isEmpty),
-    join
-  )([cardsFromExamples, cardsFromExampleGroups, cardsFromSubsenses, cardsIfNoExamples]);
+	const cardsFromExampleGroups = exampleGroups
+		? R.pipe(R.map(ankifyExampleGroup), join)(exampleGroups)
+		: '';
 
-  return cards;
+	const cardsFromSubsenses = subsenses
+		? R.pipe(R.map(ankifySenseData(makeCard, { headword, pronunciation })), join)(subsenses)
+		: '';
+
+	const cardsIfNoExamples = R.all(R.isEmpty)([examples, exampleGroups, subsenses]) && definition !== ''
+		? makeCard({ definition, synonym, antonym, situation, form: headword, pronunciation })
+		: '';
+
+	const cards = R.pipe(
+		R.reject(R.isEmpty),
+		join
+	)([cardsFromExamples, cardsFromExampleGroups, cardsFromSubsenses, cardsIfNoExamples]);
+
+	return cards;
 });
 
 export {ankifySenseData};

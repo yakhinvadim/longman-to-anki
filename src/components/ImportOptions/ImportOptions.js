@@ -10,16 +10,16 @@ const importOptionsAlt = `
 `;
 
 export default class ImportOptions extends PureComponent {
-    render() {
-        return (
-            <div className='import-options'>
-                Set import options as on the sample
-                <img
-                    className='import-options__image'
-                    alt={importOptionsAlt}
-                    src={importOptionsImg}
-                />
-            </div>
-        );
-    }
+	render() {
+		return (
+			<div className='import-options'>
+				Set import options as on the sample
+				<img
+					className='import-options__image'
+					alt={importOptionsAlt}
+					src={importOptionsImg}
+				/>
+			</div>
+		);
+	}
 }

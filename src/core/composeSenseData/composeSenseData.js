@@ -8,29 +8,29 @@ import extractSituation from '../extractSituation/extractSituation';
 import extractExamples from '../extractExamples/extractExamples';
 
 export default function composeSenseData(senseMarkup) {
-  const definition = extractDefinition(senseMarkup);
-  const situation = extractSituation(senseMarkup);
-  const synonym = extractSynonym(senseMarkup);
-  const antonym = extractAntonym(senseMarkup);
-  const examples = extractExamples(senseMarkup);
-  const exampleGroups = R.pipe(
-      splitBySelector({ selector: '.ColloExa, .GramExa', onlyChildren: true }),
-      R.map(composeExampleGroupData)
-    )(senseMarkup);
-  const subsenses = R.pipe(
-      splitBySelector({ selector: '.Subsense' }),
-      R.map(composeSenseData)
-    )(senseMarkup);
+	const definition = extractDefinition(senseMarkup);
+	const situation = extractSituation(senseMarkup);
+	const synonym = extractSynonym(senseMarkup);
+	const antonym = extractAntonym(senseMarkup);
+	const examples = extractExamples(senseMarkup);
+	const exampleGroups = R.pipe(
+			splitBySelector({ selector: '.ColloExa, .GramExa', onlyChildren: true }),
+			R.map(composeExampleGroupData)
+		)(senseMarkup);
+	const subsenses = R.pipe(
+			splitBySelector({ selector: '.Subsense' }),
+			R.map(composeSenseData)
+		)(senseMarkup);
 
-  const senseData = {
-    definition,
-    situation,
-    synonym,
-    antonym,
-    examples,
-    exampleGroups,
-    subsenses
-  };
+	const senseData = {
+		definition,
+		situation,
+		synonym,
+		antonym,
+		examples,
+		exampleGroups,
+		subsenses
+	};
 
-  return senseData;
+	return senseData;
 }

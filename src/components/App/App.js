@@ -14,89 +14,89 @@ import Totals from '../Totals/Totals';
 import './App.css';
 
 export default class App extends React.Component {
-    state = {
-        inputValue: '',
-        cardsArr: [],
-        showImportOptions: false
-    }
+	state = {
+		inputValue: '',
+		cardsArr: [],
+		showImportOptions: false
+	}
 
-    handleInputChange = async (event) => {
-        const inputValue = event.target.value;
+	handleInputChange = async (event) => {
+		const inputValue = event.target.value;
 
-        this.setState({
-            inputValue
-        })
-        
-        this.debouncedComposeCards();
-    }
+		this.setState({
+			inputValue
+		})
 
-    debouncedComposeCards = debounce(
-        async () => {
-            const words = splitByWord(this.state.inputValue);
+		this.debouncedComposeCards();
+	}
 
-            let cardsArr = [];
-            let i = 0;
+	debouncedComposeCards = debounce(
+		async () => {
+			const words = splitByWord(this.state.inputValue);
 
-            for (let word of words) {
-                const wordCards = await wordToCards(word);
-                cardsArr[i] = wordCards;
-            
-                this.setState({
-                    cardsArr
-                });
+			let cardsArr = [];
+			let i = 0;
 
-                i++;
-            }
-        }, 500
-    )
+			for (let word of words) {
+				const wordCards = await wordToCards(word);
+				cardsArr[i] = wordCards;
 
-    handleDownload = () => {
-        this.setState({
-            showImportOptions: true
-        })
-    }
+				this.setState({
+					cardsArr
+				});
 
-    render() {
-        const cards = R.pipe(
-            R.reject(R.isEmpty),
-            R.join('\n')
-        )(this.state.cardsArr);
-        
-        const wordsTotal = R.pipe(
-            R.reject(R.isEmpty),
-            R.length
-        )(this.state.cardsArr);
+				i++;
+			}
+		}, 500
+	)
 
-        const cardsTotal = R.match(/\n/g)(cards).length;
+	handleDownload = () => {
+		this.setState({
+			showImportOptions: true
+		})
+	}
 
-        return (
-            <div className='App'>
-                <Header />
-                
-                <UserWords
-                    value={this.state.inputValue}
-                    onChange={this.handleInputChange}
-                />
+	render() {
+		const cards = R.pipe(
+			R.reject(R.isEmpty),
+			R.join('\n')
+		)(this.state.cardsArr);
 
-                <ResultCards
-                    value={cards}
-                />
+		const wordsTotal = R.pipe(
+			R.reject(R.isEmpty),
+			R.length
+		)(this.state.cardsArr);
 
-                <div  className='App__download-section'>
-                    <Totals
-                        wordsTotal={wordsTotal}
-                        cardsTotal={cardsTotal}
-                    />
-                    <DownloadButton
-                        fileContent={encodeURIComponent(cards)}
-                        fileName={`longman-to-anki ${this.state.inputValue}`}
-                        onClick={this.handleDownload}
-                        disabled={!cards}
-                    />
-                </div>
+		const cardsTotal = R.match(/\n/g)(cards).length;
 
-                {this.state.showImportOptions && <ImportOptions />}
-            </div>
-        );
-    }
+		return (
+			<div className='App'>
+				<Header />
+
+				<UserWords
+					value={this.state.inputValue}
+					onChange={this.handleInputChange}
+				/>
+
+				<ResultCards
+					value={cards}
+				/>
+
+				<div  className='App__download-section'>
+					<Totals
+						wordsTotal={wordsTotal}
+						cardsTotal={cardsTotal}
+					/>
+					<DownloadButton
+						fileContent={encodeURIComponent(cards)}
+						fileName={`longman-to-anki ${this.state.inputValue}`}
+						onClick={this.handleDownload}
+						disabled={!cards}
+					/>
+				</div>
+
+				{this.state.showImportOptions && <ImportOptions />}
+			</div>
+		);
+	}
 }

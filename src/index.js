@@ -13,19 +13,19 @@ import './index.css';
 injectTapEventPlugin();
 
 const MainPage = () => (
-  <MuiThemeProvider
-    muiTheme={getMuiTheme({
-      palette: {
-        primary1Color: indigo500,
-        primary2Color: indigo700
-      }
-    })}
-  >
-    <App />
-  </MuiThemeProvider>
+	<MuiThemeProvider
+		muiTheme={getMuiTheme({
+			palette: {
+				primary1Color: indigo500,
+				primary2Color: indigo700
+			}
+		})}
+	>
+		<App />
+	</MuiThemeProvider>
 );
 
 ReactDOM.render(
-  <MainPage />,
-  document.getElementById('root')
+	<MainPage />,
+	document.getElementById('root')
 );
