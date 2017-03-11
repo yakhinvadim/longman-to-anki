@@ -16,12 +16,13 @@ const cleanse = R.pipe(
 );
 
 const extractExamples = senseOrExampleGroupMarkup => {
-    const examples =
-        R.pipe(
-            splitBySelector({ selector: '.EXAMPLE', onlyChildren: true }),
-            R.map(getCheerioText),
-            R.map(cleanse)
-        )(senseOrExampleGroupMarkup);
+    const examples = R.pipe(
+        splitBySelector({ selector: '.EXAMPLE', onlyChildren: true }),
+        R.map(R.pipe(
+            getCheerioText,
+            cleanse
+        ))
+    )(senseOrExampleGroupMarkup);
 
     return examples;
 }
