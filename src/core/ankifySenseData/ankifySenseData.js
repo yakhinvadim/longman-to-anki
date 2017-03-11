@@ -4,7 +4,7 @@ import makeCard from '../makeCard/makeCard';
 const join = R.join('\n');
 
 const ankifySenseData = R.curry((makeCard, { headword, pronunciation }, senseData) => {
-  const { definition, situation, synonym, antonym, examples, exampleGroups } = senseData;
+  const { definition, situation, synonym, antonym, examples, exampleGroups, subsenses } = senseData;
 
   
   const ankifyExample = R.pipe(
@@ -27,11 +27,15 @@ const ankifySenseData = R.curry((makeCard, { headword, pronunciation }, senseDat
     ? R.pipe(R.map(ankifyExampleGroup), join)(exampleGroups)
     : '';
 
+  const cardsFromSubsenses = subsenses
+    ? R.pipe(R.map(ankifySenseData(makeCard, { headword, pronunciation })), join)(subsenses)
+    : '';
   
+
   const cards = R.pipe(
     R.reject(R.isEmpty),
     join
-  )([cardsFromExamples, cardsFromExampleGroups]);
+  )([cardsFromExamples, cardsFromExampleGroups, cardsFromSubsenses]);
 
   return cards;
 });
