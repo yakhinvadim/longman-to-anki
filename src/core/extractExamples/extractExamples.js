@@ -1,5 +1,6 @@
 import R from 'ramda';
-import cheerify from '../../helpers/cheerify';
+import getCheerioText from '../../helpers/getCheerioText';
+import splitBySelector from '../../utils/splitBySelector/splitBySelector';
 
 const removeGlossary = R.replace(/\(=.*\)/g, '');
 const fixNbsp = R.replace(/&nbsp;/g, ' ');
@@ -15,18 +16,13 @@ const cleanse = R.pipe(
 );
 
 const extractExamples = senseOrExampleGroupMarkup => {
-    const $ = cheerify(senseOrExampleGroupMarkup);
+    const examples =
+        R.pipe(
+            splitBySelector({ selector: '.EXAMPLE', onlyChildren: true }),
+            R.map(getCheerioText),
+            R.map(cleanse)
+        )(senseOrExampleGroupMarkup);
 
-    const rawExamplesText = 
-        $.root()
-            // We intentionally take only first level examples here.
-            // Examples, located deeper in DOM tree, will be extracted during another function call
-            .children('.EXAMPLE') 
-            .map((i, el) => $(el).text())
-            .get();
-    
-    const examples = R.map(cleanse)(rawExamplesText);
-    
     return examples;
 }
 
