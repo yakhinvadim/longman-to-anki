@@ -14,8 +14,12 @@ export default function composeSenseData(senseMarkup) {
   const antonym = extractAntonym(senseMarkup);
   const examples = extractExamples(senseMarkup);
   const exampleGroups = R.pipe(
-      splitBySelector('.ColloExa, .GramExa'),
+      splitBySelector({ selector: '.ColloExa, .GramExa', onlyChildren: true }),
       R.map(composeExampleGroupData)
+    )(senseMarkup);
+  const subsenses = R.pipe(
+      splitBySelector({ selector: '.Subsense' }),
+      R.map(composeSenseData)
     )(senseMarkup);
 
   const senseData = {
@@ -24,7 +28,8 @@ export default function composeSenseData(senseMarkup) {
     synonym,
     antonym,
     examples,
-    exampleGroups
+    exampleGroups,
+    subsenses
   };
 
   return senseData;
