@@ -1,11 +1,15 @@
 import composeQuery from './composeQuery';
 
+const beforeWord = 'https://query.yahooapis.com/v1/public/yql?q=SELECT%20*%20FROM%20html%20WHERE%20url%3D%22http%3A%2F%2Fwww.ldoceonline.com%2Fdictionary%2F';
+const afterWord = '%22';
+const addFrame = word => `${beforeWord}${word}${afterWord}`
+
 describe('composeQuery', () => {
 	it('composes correct query one simple word', () => {
 		expect(
-			composeQuery('set' )
+			composeQuery('set')
 		).toEqual(
-			'https://query.yahooapis.com/v1/public/yql?q=SELECT%20*%20FROM%20html%20WHERE%20url%3D%22http%3A%2F%2Fwww.ldoceonline.com%2Fdictionary%2Fset%22'
+			addFrame('set')
 		)
 	});
 
@@ -13,7 +17,7 @@ describe('composeQuery', () => {
 		expect(
 			composeQuery('fire alarm')
 		).toEqual(
-			'https://query.yahooapis.com/v1/public/yql?q=SELECT%20*%20FROM%20html%20WHERE%20url%3D%22http%3A%2F%2Fwww.ldoceonline.com%2Fdictionary%2Ffire-alarm%22'
+			addFrame('fire-alarm')
 		)
 	});
 	
@@ -21,7 +25,7 @@ describe('composeQuery', () => {
 		expect(
 			composeQuery('put/set pen to paper')
 		).toEqual(
-			'https://query.yahooapis.com/v1/public/yql?q=SELECT%20*%20FROM%20html%20WHERE%20url%3D%22http%3A%2F%2Fwww.ldoceonline.com%2Fdictionary%2Fput-set-pen-to-paper%22'
+			addFrame('put-set-pen-to-paper')
 		)
 	});
 
@@ -29,7 +33,7 @@ describe('composeQuery', () => {
 		expect(
 			composeQuery('set somebody’s teeth on edge')
 		).toEqual(
-			'https://query.yahooapis.com/v1/public/yql?q=SELECT%20*%20FROM%20html%20WHERE%20url%3D%22http%3A%2F%2Fwww.ldoceonline.com%2Fdictionary%2Fset-somebody-s-teeth-on-edge%22'
+			addFrame('set-somebody-s-teeth-on-edge')
 		)
 	});
 
@@ -37,7 +41,7 @@ describe('composeQuery', () => {
 		expect(
 			composeQuery('that does it!')
 		).toEqual(
-			'https://query.yahooapis.com/v1/public/yql?q=SELECT%20*%20FROM%20html%20WHERE%20url%3D%22http%3A%2F%2Fwww.ldoceonline.com%2Fdictionary%2Fthat-does-it%22'
+			addFrame('that-does-it')
 		)
 	});
 
@@ -45,7 +49,7 @@ describe('composeQuery', () => {
 		expect(
 			composeQuery('what can I do you for?')
 		).toEqual(
-			'https://query.yahooapis.com/v1/public/yql?q=SELECT%20*%20FROM%20html%20WHERE%20url%3D%22http%3A%2F%2Fwww.ldoceonline.com%2Fdictionary%2Fwhat-can-i-do-you-for%22'
+			addFrame('what-can-i-do-you-for')
 		)
 	});
 
@@ -53,7 +57,7 @@ describe('composeQuery', () => {
 		expect(
 			composeQuery('a closed set (of something)')
 		).toEqual(
-			'https://query.yahooapis.com/v1/public/yql?q=SELECT%20*%20FROM%20html%20WHERE%20url%3D%22http%3A%2F%2Fwww.ldoceonline.com%2Fdictionary%2Fa-closed-set-of-something%22'
+			addFrame('a-closed-set-of-something')
 		)
 	});
 
@@ -61,7 +65,7 @@ describe('composeQuery', () => {
 		expect(
 			composeQuery('catch/get some Z’s')
 		).toEqual(
-			'https://query.yahooapis.com/v1/public/yql?q=SELECT%20*%20FROM%20html%20WHERE%20url%3D%22http%3A%2F%2Fwww.ldoceonline.com%2Fdictionary%2Fcatch-get-some-z-s%22'
+			addFrame('catch-get-some-z-s')
 		)
 	});
 
@@ -69,7 +73,7 @@ describe('composeQuery', () => {
 		expect(
 			composeQuery('not ... but rather ...')
 		).toEqual(
-			'https://query.yahooapis.com/v1/public/yql?q=SELECT%20*%20FROM%20html%20WHERE%20url%3D%22http%3A%2F%2Fwww.ldoceonline.com%2Fdictionary%2Fnot-but-rather%22'
+			addFrame('not-but-rather')
 		)
 	});
 
@@ -77,7 +81,7 @@ describe('composeQuery', () => {
 		expect(
 			composeQuery('I don’t want to sound/be ..., but ...')
 		).toEqual(
-			'https://query.yahooapis.com/v1/public/yql?q=SELECT%20*%20FROM%20html%20WHERE%20url%3D%22http%3A%2F%2Fwww.ldoceonline.com%2Fdictionary%2Fi-don-t-want-to-sound-be-but%22'
+			addFrame('i-don-t-want-to-sound-be-but')
 		)
 	});
 });
