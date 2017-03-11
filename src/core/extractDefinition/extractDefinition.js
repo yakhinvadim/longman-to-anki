@@ -1,15 +1,18 @@
-import cheerify from '../../helpers/cheerify';
+import R from 'ramda';
+import splitBySelector from '../../utils/splitBySelector/splitBySelector';
+import getCheerioText from '../../helpers/getCheerioText';
 
-export default function extractDefinition(senseMarkup) {
-  const $ = cheerify(senseMarkup);
-
-  const defs = $('.DEF');
-
-  const definition = defs.length < 2
-    ? defs.text().trim()
-    : defs.toArray().map(
-      (def, i) => `${i+1}) ${$(def).text().trim()}`
-    ).join('<br>');
+const extractDefinition = senseMarkup => {
+  const definition = R.pipe(
+        splitBySelector({ selector: '.DEF', onlyChildren: true }),
+        R.map(R.pipe(
+            getCheerioText,
+            R.trim
+        )),
+        R.head
+    )(senseMarkup);
 
   return definition;
 }
+
+export default extractDefinition;

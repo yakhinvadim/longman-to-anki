@@ -11,12 +11,12 @@ describe('extractDefinition', () => {
   it('extracts correct definition for a crossref sense', () => {
     expect(
       extractDefinition(set.sensesMarkup2[6])
-    ).toEqual('')
+    ).toEqual(undefined)
   });
 
   it('extracts correct definition for a sense with subsenses', () => {
     expect(
       extractDefinition(set.sensesMarkup1[1])
-    ).toEqual('1) if a doctor sets a broken bone, he or she moves it into position so that the bone can grow together again<br>2) if a broken bone sets, it joins together again')
+    ).toEqual(undefined)
   });
 });
