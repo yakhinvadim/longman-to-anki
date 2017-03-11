@@ -1,5 +1,7 @@
 import cheerio from 'cheerio';
 
-export default function cheerify(markup) {
+const cheerify = markup => {
 	return cheerio.load(markup, { decodeEntities: false });
 };
+
+export default cheerify;

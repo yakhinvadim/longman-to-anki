@@ -4,7 +4,7 @@ const someSymbolsDelete = R.replace(/[(!?.,)]/g, '');
 const fixDoubleSpaces = R.replace(/ {2}/g, ' ');
 const someSymbolsToHyphens = R.replace(/[/ ’]/g, '-');
 
-export default function composeQuery(word) {
+const composeQuery = word => {
 	const escapedWord = R.pipe(
 		R.toLower,
 		someSymbolsDelete,
@@ -21,3 +21,5 @@ export default function composeQuery(word) {
 
 	return queryUrl;
 }
+
+export default composeQuery;

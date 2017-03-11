@@ -7,7 +7,7 @@ import extractAntonym from '../extractAntonym/extractAntonym';
 import extractSituation from '../extractSituation/extractSituation';
 import extractExamples from '../extractExamples/extractExamples';
 
-export default function composeSenseData(senseMarkup) {
+const composeSenseData = senseMarkup => {
 	const definition = extractDefinition(senseMarkup);
 	const situation = extractSituation(senseMarkup);
 	const synonym = extractSynonym(senseMarkup);
@@ -34,3 +34,5 @@ export default function composeSenseData(senseMarkup) {
 
 	return senseData;
 }
+
+export default composeSenseData;
