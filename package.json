@@ -1,29 +1,32 @@
 {
-  "name": "longman-to-anki",
-  "version": "1.0.0",
-  "homepage": "https://yakhinvadim.github.io/longman-to-anki/",
-  "private": true,
-  "devDependencies": {
-    "gh-pages": "^0.12.0",
-    "react-scripts": "0.9.4"
-  },
-  "dependencies": {
-    "cheerio": "^0.22.0",
-    "lodash.debounce": "^4.0.8",
-    "material-ui": "^0.17.0",
-    "ramda": "^0.23.0",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2",
-    "react-tap-event-plugin": "^2.0.1"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "deploy": "npm run build&&gh-pages -d build"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  }
+	"name": "longman-to-anki",
+	"version": "1.0.0",
+	"homepage": "https://yakhinvadim.github.io/longman-to-anki/",
+	"private": true,
+	"devDependencies": {
+		"gh-pages": "^0.12.0",
+		"react-scripts": "0.9.4"
+	},
+	"dependencies": {
+		"cheerio": "^0.22.0",
+		"lodash.debounce": "^4.0.8",
+		"material-ui": "^0.17.0",
+		"ramda": "^0.23.0",
+		"react": "^15.4.2",
+		"react-dom": "^15.4.2",
+		"react-tap-event-plugin": "^2.0.1"
+	},
+	"scripts": {
+		"start": "react-scripts start",
+		"build": "react-scripts build",
+		"test": "react-scripts test --env=jsdom",
+		"eject": "react-scripts eject",
+		"deploy": "npm run build&&gh-pages -d build"
+	},
+	"eslintConfig": {
+		"extends": "react-app",
+		"rules": {
+			"indent": ["error", "tab"]
+		}
+	}
 }
