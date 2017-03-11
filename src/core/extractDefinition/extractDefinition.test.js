@@ -11,12 +11,12 @@ describe('extractDefinition', () => {
   it('extracts correct definition for a crossref sense', () => {
     expect(
       extractDefinition(set.sensesMarkup2[6])
-    ).toEqual(undefined)
+    ).toEqual('')
   });
 
   it('extracts correct definition for a sense with subsenses', () => {
     expect(
       extractDefinition(set.sensesMarkup1[1])
-    ).toEqual(undefined)
+    ).toEqual('')
   });
 });
