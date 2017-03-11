@@ -1,22 +1,24 @@
 import extractDefinition from './extractDefinition';
-import set from '../../mocks/set';
+import normalSense from '../../mocks/wordSet-entry1-sense5';
+import crossrefSense from '../../mocks/wordSet-entry1-sense12';
+import subsensesSense from '../../mocks/wordSet-entry1-sense21';
 
 describe('extractDefinition', () => {
 	it('extracts correct definition for a normal sense', () => {
 		expect(
-			extractDefinition(set.sensesMarkup2[0])
-		).toEqual('a group of similar things that belong together or are related in some way')
+			extractDefinition(normalSense)
+		).toEqual('to establish a way of doing something that is then copied or regarded as good')
 	});
 
 	it('extracts correct definition for a crossref sense', () => {
 		expect(
-			extractDefinition(set.sensesMarkup2[6])
+			extractDefinition(crossrefSense)
 		).toEqual('')
 	});
 
 	it('extracts correct definition for a sense with subsenses', () => {
 		expect(
-			extractDefinition(set.sensesMarkup1[1])
+			extractDefinition(subsensesSense)
 		).toEqual('')
 	});
 });
