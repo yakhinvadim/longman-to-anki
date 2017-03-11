@@ -4,11 +4,11 @@ import TextField from 'material-ui/TextField';
 export default class ResultCards extends PureComponent {
 	static propTypes = {
 		value: PropTypes.string
-	}
+	};
 
 	static defaultProps = {
 		value: ''
-	}
+	};
 
 	render() {
 		return (

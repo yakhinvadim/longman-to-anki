@@ -3,14 +3,14 @@ import TextField from 'material-ui/TextField';
 
 export default class UserWords extends PureComponent {
 	static propTypes = {
-		onChange:PropTypes.func,
+		onChange: PropTypes.func,
 		value: PropTypes.string
-	}
+	};
 
 	static defaultProps = {
 		onChange: () => { },
 		value: ''
-	}
+	};
 
 	render() {
 		const {

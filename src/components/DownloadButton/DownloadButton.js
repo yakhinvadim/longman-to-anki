@@ -7,14 +7,14 @@ export default class DownloadButton extends PureComponent {
 		fileName: PropTypes.string,
 		onClick: PropTypes.func,
 		disabled: PropTypes.bool
-	}
+	};
 
 	static defaultProps = {
 		fileContent: '',
 		fileName: 'longman-to-anki',
 		onClick: () => { },
 		disabled: false
-	}
+	};
 
 	render() {
 		const {

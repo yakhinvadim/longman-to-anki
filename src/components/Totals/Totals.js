@@ -5,12 +5,12 @@ export default class Totals extends PureComponent {
 	static propTypes = {
 		wordsTotal: PropTypes.number,
 		cardsTotal: PropTypes.number
-	}
+	};
 
 	static defaultProps = {
 		wordsTotal: 0,
 		cardsTotal: 0
-	}
+	};
 
 	render() {
 		const wordsTotal = maybePluralize(this.props.wordsTotal, 'word');
