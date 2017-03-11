@@ -1,11 +1,19 @@
 import extractExamples from './extractExamples';
-import set from '../../mocks/set';
+import senseMarkup from '../../mocks/wordSet-entry1-sense5';
+import senseMarkupWithSingleExample from '../../mocks/wordSet-entry2-sense9';
 import exampleGroupMarkup from '../../mocks/wordSet-entry1-sense5-exampleGroup'
 
 describe('extractExamples', () => {
+	it('extracts correct single example from sense markup', () => {
+		expect(
+			extractExamples(senseMarkupWithSingleExample)
+		).toEqual([
+			'The set (x, y) has two members.'
+		])
+	});
 	it('extracts correct examples from sense markup', () => {
 		expect(
-			extractExamples(set.sensesMarkup1[3])
+			extractExamples(senseMarkup)
 		).toEqual([
 			'It is important that parents set an example.',
 			'The outcome of the case will set a legal precedent.',
