@@ -3,8 +3,13 @@ import maybePluralize from '../../utils/maybePluralize/maybePluralize';
 
 export default class Totals extends PureComponent {
 	static propTypes = {
-		wordsTotal: PropTypes.number.isRequired,
-		cardsTotal: PropTypes.number.isRequired
+		wordsTotal: PropTypes.number,
+		cardsTotal: PropTypes.number
+	}
+
+	static defaultProps = {
+		wordsTotal: 0,
+		cardsTotal: 0
 	}
 
 	render() {
