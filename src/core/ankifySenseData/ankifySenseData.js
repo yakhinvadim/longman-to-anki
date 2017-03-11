@@ -36,13 +36,15 @@ const ankifySenseData = R.curry((makeCard, { headword, pronunciation }, senseDat
   const cardsFromSubsenses = subsenses
     ? R.pipe(R.map(ankifySenseData(makeCard, { headword, pronunciation })), join)(subsenses)
     : '';
-  
-  // TODO add cards if no examples
+
+  const cardsIfNoExamples = R.all(R.isEmpty)([examples, exampleGroups, subsenses])
+    ? makeCard({ definition, synonym, antonym, situation, form: headword, pronunciation })
+    : '';
 
   const cards = R.pipe(
     R.reject(R.isEmpty),
     join
-  )([cardsFromExamples, cardsFromExampleGroups, cardsFromSubsenses]);
+  )([cardsFromExamples, cardsFromExampleGroups, cardsFromSubsenses, cardsIfNoExamples]);
 
   return cards;
 });
