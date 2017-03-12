@@ -1,53 +1,59 @@
 import R from 'ramda';
-import makeCard from '../makeCard/makeCard';
-
-const join = R.join('\n');
+import realMakeCard from '../makeCard/makeCard';
 
 const ankifySenseData = R.curry((makeCard, { headword, pronunciation }, senseData) => {
 	const { definition, situation, synonym, antonym, examples, exampleGroups, subsenses } = senseData;
 
+	const commonData = {
+		definition,
+		situation,
+		synonym,
+		antonym,
+		pronunciation
+	};
 
-	const ankifyExample = R.pipe(
-		R.objOf('example'),
-		R.merge({ situation, form: headword, pronunciation, definition, synonym, antonym }),
-		makeCard
-	);
+	
+	const ankifyExample = (form = headword) => example =>
+		makeCard({ example, form, ...commonData})
 
 	const ankifyExampleGroup = exampleGroup => {
-		const { form: innerForm, examples: innerExamples } = exampleGroup;
-
-		const cards = R.map(R.pipe(
-			R.objOf('example'),
-			R.merge({ situation, form: innerForm, pronunciation, definition, synonym, antonym }),
-			makeCard
-		))(innerExamples);
-
-		return join(cards);
+		const { form, examples: exampleGroupExamples } = exampleGroup;
+		const cards = exampleGroupExamples.map(ankifyExample(form));
+		return cards;
 	}
 
-	const cardsFromExamples = examples
-		? R.pipe(R.map(ankifyExample), join)(examples)
-		: '';
+	
+	const cardsFromExamples = R.map(
+		ankifyExample()
+	)(examples);
 
-	const cardsFromExampleGroups = exampleGroups
-		? R.pipe(R.map(ankifyExampleGroup), join)(exampleGroups)
-		: '';
+	const cardsFromExampleGroups = R.map(
+		ankifyExampleGroup
+	)(exampleGroups);
+	
+	const cardsFromSubsenses = R.map(
+		ankifySenseData(makeCard, { headword, pronunciation })
+	)(subsenses);
 
-	const cardsFromSubsenses = subsenses
-		? R.pipe(R.map(ankifySenseData(makeCard, { headword, pronunciation })), join)(subsenses)
-		: '';
+	const cardFromDefinition =
+		R.all(R.isEmpty, [examples, exampleGroups, subsenses]) && definition
+			? makeCard({ form: headword, ...commonData })
+			: '';
 
-	const cardsIfNoExamples = R.all(R.isEmpty)([examples, exampleGroups, subsenses]) && definition !== ''
-		? makeCard({ definition, synonym, antonym, situation, form: headword, pronunciation })
-		: '';
-
+	
 	const cards = R.pipe(
+		R.flatten,
 		R.reject(R.isEmpty),
-		join
-	)([cardsFromExamples, cardsFromExampleGroups, cardsFromSubsenses, cardsIfNoExamples]);
+		R.join('\n')
+	)([
+		cardsFromExamples,
+		cardsFromExampleGroups,
+		cardsFromSubsenses,
+		cardFromDefinition
+	]);
 
 	return cards;
 });
 
 export {ankifySenseData};
-export default ankifySenseData(makeCard);
+export default ankifySenseData(realMakeCard);
