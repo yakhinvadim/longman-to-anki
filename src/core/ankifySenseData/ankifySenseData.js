@@ -2,6 +2,9 @@ import R from 'ramda';
 import realMakeCard from '../makeCard/makeCard';
 
 const ankifySenseData = R.curry((makeCard, { headword, pronunciation }, senseData) => {
+	
+	// data
+
 	const { definition, situation, synonym, antonym, examples, exampleGroups, subsenses } = senseData;
 
 	const commonData = {
@@ -12,7 +15,9 @@ const ankifySenseData = R.curry((makeCard, { headword, pronunciation }, senseDat
 		pronunciation
 	};
 
-	
+
+	// ankify... functions
+
 	const ankifyExample = (form = headword) => example =>
 		makeCard({ example, form, ...commonData})
 
@@ -22,7 +27,9 @@ const ankifySenseData = R.curry((makeCard, { headword, pronunciation }, senseDat
 		return cards;
 	}
 
-	
+
+	// different card types
+
 	const cardsFromExamples = R.map(
 		ankifyExample()
 	)(examples);
@@ -40,7 +47,9 @@ const ankifySenseData = R.curry((makeCard, { headword, pronunciation }, senseDat
 			? makeCard({ form: headword, ...commonData })
 			: '';
 
-	
+
+	// all cards
+
 	const cards = R.pipe(
 		R.flatten,
 		R.reject(R.isEmpty),
