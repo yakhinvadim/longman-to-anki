@@ -2,8 +2,8 @@ language: node_js
 node_js:
 - '6'
 cache:
-	directories:
-	- node_modules
+    directories:
+    - node_modules
 before_script:
 - git config --global user.email "yakhin.v@gmail.com"
 - git config --global user.name "yakhinvadim"
@@ -13,5 +13,5 @@ script:
 - npm test
 - npm run deploy
 env:
-	global:
-		secure: VeLFcaNGqYJEjz+Y6G9i/EL3GHNAWgifM1nGBUat3zp5jbDbq5+S9XiW93hf5DAooWzx4cmK3igKbM1BRu/JJDmZXjVdJ5eFIio5HIt01LhE0azQwqEWwxYFaXe6Rin77DiLu9KFLyqZq5G1zIhz6WYlSzyzEZmottkexMl+PF+E4zZ/z2O4jxWcx+dK73EjXC8KRdE9yRfwhZKGycM3RbTjAfKXcih8ZTiZrnu35hfExYr0tUeX3/6/Oz21E9GMNpjILC4NKup85XkcH/P8RuxkFxxuYmoPkODaFLTDtyVHsSq4wR/7occgPQC79eHS80BHBPLoQ5/qb2i9Xt3zuPwLm65uMcOrxm58MRHIsc2hfRgLpWgEEqTUrDCoIV613rlIgHKcvIUT/XMFxnEE1Z7bACW3Uc3NvPEL8sNlXSSjPXx8+asEqB0G1IIYOE3lUgB+49xskYRnDi5arrcgDT9gN98ZGaGBrKjL13LgCbkJ/mG4hTS2OVpsErz8kU4Wo9s5GBMmTnnvXZFm3sipUmLB14C39XKiv41WCYJ9Z7Q7/3fNoFsqcwYTTb6KbPUNnhTntA1V4QYYxxGbeD2XUIG2MEQ0h+ZSuOMR2+WoTNe1tlrTxunCd1p3wRJp535jixB5OrHyFOSbO+4Scik62qq2OEcm+KnX3PcoaHSrMJ4=
+    global:
+        secure: VeLFcaNGqYJEjz+Y6G9i/EL3GHNAWgifM1nGBUat3zp5jbDbq5+S9XiW93hf5DAooWzx4cmK3igKbM1BRu/JJDmZXjVdJ5eFIio5HIt01LhE0azQwqEWwxYFaXe6Rin77DiLu9KFLyqZq5G1zIhz6WYlSzyzEZmottkexMl+PF+E4zZ/z2O4jxWcx+dK73EjXC8KRdE9yRfwhZKGycM3RbTjAfKXcih8ZTiZrnu35hfExYr0tUeX3/6/Oz21E9GMNpjILC4NKup85XkcH/P8RuxkFxxuYmoPkODaFLTDtyVHsSq4wR/7occgPQC79eHS80BHBPLoQ5/qb2i9Xt3zuPwLm65uMcOrxm58MRHIsc2hfRgLpWgEEqTUrDCoIV613rlIgHKcvIUT/XMFxnEE1Z7bACW3Uc3NvPEL8sNlXSSjPXx8+asEqB0G1IIYOE3lUgB+49xskYRnDi5arrcgDT9gN98ZGaGBrKjL13LgCbkJ/mG4hTS2OVpsErz8kU4Wo9s5GBMmTnnvXZFm3sipUmLB14C39XKiv41WCYJ9Z7Q7/3fNoFsqcwYTTb6KbPUNnhTntA1V4QYYxxGbeD2XUIG2MEQ0h+ZSuOMR2+WoTNe1tlrTxunCd1p3wRJp535jixB5OrHyFOSbO+4Scik62qq2OEcm+KnX3PcoaHSrMJ4=
