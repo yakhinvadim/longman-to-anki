@@ -2,6 +2,7 @@ import extractExamples from './extractExamples';
 import senseMarkup from '../../mocks/wordSet-entry1-sense5';
 import senseWithSingleExampleMarkup from '../../mocks/wordSet-entry2-sense9';
 import exampleGroupMarkup from '../../mocks/wordSet-entry1-sense5-exampleGroup'
+import senseWithExamplesWithDoubleSpaces from '../../mocks/wordRival-entry1-sense1'
 
 describe('extractExamples', () => {
 	it('extracts correct single example from sense markup', () => {
@@ -29,5 +30,13 @@ describe('extractExamples', () => {
 			'Art and literature flourished and this set the pattern for the whole of Europe.',
 			'The prime minister’s fierce speech set the tone for the rest of the conference.'
 		])
+	});
+
+	it('removes newline and double spaces', () => {
+		expect(
+			extractExamples(senseWithExamplesWithDoubleSpaces)[4]
+		).toEqual(
+			'They still remain bitter rivals.'
+		)
 	});
 });
