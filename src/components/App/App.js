@@ -1,7 +1,8 @@
 import React from 'react';
 import R from 'ramda';
 import debounce from 'lodash.debounce';
-import wordToCards from '../../core/wordToCards/wordToCards';
+import ankifyWordData from '../../core/ankifyWordData/ankifyWordData';
+import wordToData from '../../core/wordToData/wordToData';
 import splitByWord from '../../utils/splitByWord/splitByWord';
 import maybePluralize from '../../utils/maybePluralize/maybePluralize';
 
@@ -43,7 +44,8 @@ export default class App extends React.Component {
 			let i = 0;
 
 			for (let word of words) {
-				const wordCards = await wordToCards(word);
+				const wordData = await wordToData(word);
+				const wordCards = ankifyWordData(wordData)
 				cardsArr[i] = wordCards;
 
 				this.setState({
