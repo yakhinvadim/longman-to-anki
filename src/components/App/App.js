@@ -4,6 +4,7 @@ import debounce from 'lodash.debounce';
 
 import ankifyWordData from '../../core/ankifyWordData/ankifyWordData';
 import composeWordData from '../../core/composeWordData/composeWordData';
+import makeCard from '../../core/makeCard/makeCard'
 
 import splitByWord from '../../utils/splitByWord/splitByWord';
 import maybePluralize from '../../utils/maybePluralize/maybePluralize';
@@ -74,15 +75,17 @@ export default class App extends React.Component {
 	}
 
 	render() {
-		const wordsTotalNumber = this.state.wordsDataArr.length
-
-		const cards = R.pipe(
+		const cardsArr = R.pipe(
 			R.map(ankifyWordData),
+			R.flatten,
 			R.reject(R.isEmpty),
-			R.join('\n')
+			R.map(makeCard)
 		)(this.state.wordsDataArr);
-		
-		const cardsTotalNumber = R.match(/\n/g)(cards).length;
+
+		const cards = R.join('\n')(cardsArr);
+
+		const wordsTotalNumber = this.state.wordsDataArr.length
+		const cardsTotalNumber = cardsArr.length;
 
 		const wordsTotal = maybePluralize(wordsTotalNumber, 'word');
 		const cardsTotal = maybePluralize(cardsTotalNumber, 'card');

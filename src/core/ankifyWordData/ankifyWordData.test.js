@@ -1,4 +1,3 @@
-import R from 'ramda';
 import { ankifyWordData } from './ankifyWordData';
 
 const fakeAnkifyEntryData = ({ headword, pronunciation }) => entryData =>
@@ -14,11 +13,9 @@ describe('ankifyWordData', () => {
 
 		expect(
 			ankifyWordData(fakeAnkifyEntryData, wordData)
-		).toBe(
-			R.join('\n')([
-				'entry1 headword pronunciation',
-				'entry2 headword pronunciation'
-			])
-		);
+		).toEqual([
+			'entry1 headword pronunciation',
+			'entry2 headword pronunciation'
+		]);
 	});
 });

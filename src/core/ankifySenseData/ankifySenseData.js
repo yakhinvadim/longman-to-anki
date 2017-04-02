@@ -1,7 +1,6 @@
 import R from 'ramda';
-import realMakeCard from '../makeCard/makeCard';
 
-const ankifySenseData = R.curry((makeCard, { headword, pronunciation }, senseData) => {
+const ankifySenseData = R.curry(({ headword, pronunciation }, senseData) => {
 	
 	// data
 
@@ -19,7 +18,7 @@ const ankifySenseData = R.curry((makeCard, { headword, pronunciation }, senseDat
 	// ankify... functions
 
 	const ankifyExample = form => example =>
-		makeCard({ example, form, ...commonData})
+		({ ...commonData, example, form })
 
 	const ankifyExampleGroup = exampleGroup => {
 		const { form, examples: exampleGroupExamples } = exampleGroup;
@@ -39,21 +38,20 @@ const ankifySenseData = R.curry((makeCard, { headword, pronunciation }, senseDat
 	)(exampleGroups);
 	
 	const cardsFromSubsenses = R.map(
-		ankifySenseData(makeCard, { headword, pronunciation })
+		ankifySenseData({ headword, pronunciation })
 	)(subsenses);
 
 	const cardFromDefinition =
 		R.all(R.isEmpty, [examples, exampleGroups, subsenses]) && definition
-			? makeCard({ form: headword, ...commonData })
-			: '';
+			? { ...commonData, form: headword }
+			: {};
 
 
 	// all cards
 
 	const cards = R.pipe(
 		R.flatten,
-		R.reject(R.isEmpty),
-		R.join('\n')
+		R.reject(R.isEmpty)
 	)([
 		cardsFromExamples,
 		cardsFromExampleGroups,
@@ -64,5 +62,4 @@ const ankifySenseData = R.curry((makeCard, { headword, pronunciation }, senseDat
 	return cards;
 });
 
-export {ankifySenseData};
-export default ankifySenseData(realMakeCard);
+export default ankifySenseData;

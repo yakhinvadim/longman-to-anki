@@ -1,9 +1,4 @@
-import R from 'ramda';
-import { ankifySenseData } from './ankifySenseData';
-
-const join = R.join('\n');
-const fakeMakeCard = ({ example = '', situation = '', form = '', pronunciation = '', definition = '', synonym = '', antonym = '' }) =>
-	`${example} ${situation} ${form} ${pronunciation} ${definition} ${synonym} ${antonym}`;
+import ankifySenseData from './ankifySenseData';
 
 const headword = 'headword';
 const pronunciation = 'pronunciation';
@@ -18,6 +13,14 @@ const basicSenseData = {
 	subsenses: []
 }
 
+const basicCardData = {
+	situation: 'situation',
+	pronunciation: 'pronunciation',
+	definition: 'definition',
+	synonym: 'synonym',
+	antonym: 'antonym'
+}
+
 describe('ankifySenseData', () => {
 	it('composes correct ankiCards from single example', () => {
 		const senseData = {
@@ -26,10 +29,14 @@ describe('ankifySenseData', () => {
 		};
 
 		expect(
-			ankifySenseData(fakeMakeCard, {headword, pronunciation}, senseData)
-		).toEqual(
-			'example situation headword pronunciation definition synonym antonym'
-		);
+			ankifySenseData({headword, pronunciation}, senseData)
+		).toEqual([
+			{
+				...basicCardData,
+				form: 'headword',
+				example: 'example'
+			}
+		]);
 	});
 
 	it('composes correct ankiCards from several examples', () => {
@@ -39,13 +46,19 @@ describe('ankifySenseData', () => {
 		};
 
 		expect(
-			ankifySenseData(fakeMakeCard, {headword, pronunciation}, senseData)
-		).toEqual(
-			join([
-				'example1 situation headword pronunciation definition synonym antonym',
-				'example2 situation headword pronunciation definition synonym antonym'
-			]
-		));
+			ankifySenseData({headword, pronunciation}, senseData)
+		).toEqual([
+			{
+				...basicCardData,
+				form: 'headword',
+				example: 'example1'
+			},
+			{
+				...basicCardData,
+				form: 'headword',
+				example: 'example2'
+			}
+		]);
 	});
 
 	it('composes correct ankiCards from single exampleGroup', () => {
@@ -60,10 +73,14 @@ describe('ankifySenseData', () => {
 		};
 
 		expect(
-			ankifySenseData(fakeMakeCard, {headword, pronunciation}, senseData)
-		).toEqual(
-			'example situation form pronunciation definition synonym antonym'
-		);
+			ankifySenseData({headword, pronunciation}, senseData)
+		).toEqual([
+			{
+				...basicCardData,
+				form: 'form',
+				example: 'example'
+			}
+		]);
 	});
 
 	it('composes correct ankiCards from several exampleGroups', () => {
@@ -82,14 +99,24 @@ describe('ankifySenseData', () => {
 		};
 
 		expect(
-			ankifySenseData(fakeMakeCard, {headword, pronunciation}, senseData)
-		).toEqual(
-			join([
-				'example11 situation form1 pronunciation definition synonym antonym',
-				'example12 situation form1 pronunciation definition synonym antonym',
-				'example2 situation form2 pronunciation definition synonym antonym'
-			])
-		);
+			ankifySenseData({headword, pronunciation}, senseData)
+		).toEqual([
+			{
+				...basicCardData,
+				form: 'form1',
+				example: 'example11'
+			},
+			{
+				...basicCardData,
+				form: 'form1',
+				example: 'example12'
+			},
+			{
+				...basicCardData,
+				form: 'form2',
+				example: 'example2'
+			}
+		]);
 	});
 
 	it('composes correct ankiCards from subsenses', () => {
@@ -108,13 +135,19 @@ describe('ankifySenseData', () => {
 		};
 
 		expect(
-			ankifySenseData(fakeMakeCard, {headword, pronunciation}, senseData)
-		).toEqual(
-			join([
-				'example1 situation headword pronunciation definition synonym antonym',
-				'example2 situation headword pronunciation definition synonym antonym'
-			])
-		);
+			ankifySenseData({headword, pronunciation}, senseData)
+		).toEqual([
+			{
+				...basicCardData,
+				form: 'headword',
+				example: 'example1'
+			},
+			{
+				...basicCardData,
+				form: 'headword',
+				example: 'example2'
+			}
+		]);
 	});
 
 	it('composes correct ankiCards from examples, exampleGroups and subsenses', () => {
@@ -144,18 +177,44 @@ describe('ankifySenseData', () => {
 		};
 
 		expect(
-			ankifySenseData(fakeMakeCard, {headword, pronunciation}, senseData)
-		).toEqual(
-			join([
-				'example1 situation headword pronunciation definition synonym antonym',
-				'example2 situation headword pronunciation definition synonym antonym',
-				'example31 situation form3 pronunciation definition synonym antonym',
-				'example32 situation form3 pronunciation definition synonym antonym',
-				'example4 situation form4 pronunciation definition synonym antonym',
-				'example5 situation headword pronunciation definition synonym antonym',
-				'example6 situation headword pronunciation definition synonym antonym'
-			])
-		);
+			ankifySenseData({headword, pronunciation}, senseData)
+		).toEqual([
+			{
+				...basicCardData,
+				form: 'headword',
+				example: 'example1'
+			},
+			{
+				...basicCardData,
+				form: 'headword',
+				example: 'example2'
+			},
+			{
+				...basicCardData,
+				form: 'form3',
+				example: 'example31'
+			},
+			{
+				...basicCardData,
+				form: 'form3',
+				example: 'example32'
+			},
+			{
+				...basicCardData,
+				form: 'form4',
+				example: 'example4'
+			},
+			{
+				...basicCardData,
+				form: 'headword',
+				example: 'example5'
+			},
+			{
+				...basicCardData,
+				form: 'headword',
+				example: 'example6'
+			}
+		]);
 	});
 
 	it('composes correct ankiCards if there are no examples, exampleGroups and subsenses', () => {
@@ -164,9 +223,16 @@ describe('ankifySenseData', () => {
 		};
 
 		expect(
-			ankifySenseData(fakeMakeCard, {headword, pronunciation}, senseData)
-		).toEqual(
-			' situation headword pronunciation definition synonym antonym'
-		);
+			ankifySenseData({headword, pronunciation}, senseData)
+		).toEqual([
+			{
+				situation: 'situation',
+				form: 'headword',
+				pronunciation: 'pronunciation',
+				definition: 'definition',
+				synonym: 'synonym',
+				antonym: 'antonym'
+			}
+		]);
 	});
 });

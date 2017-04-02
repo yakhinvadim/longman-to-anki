@@ -4,10 +4,8 @@ import realAnkifySenseData from '../ankifySenseData/ankifySenseData';
 const ankifyEntryData = R.curry((ankifySenseData, { headword, pronunciation }, entryData) => {
 	const { senses } = entryData;
 
-	const cards = R.pipe(
-		R.map(ankifySenseData({ headword, pronunciation })),
-		R.reject(R.isEmpty),
-		R.join('\n')
+	const cards = R.map(
+		ankifySenseData({ headword, pronunciation })
 	)(senses);
 
 	return cards;
