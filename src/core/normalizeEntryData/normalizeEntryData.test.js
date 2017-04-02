@@ -1,19 +1,19 @@
-import { ankifyEntryData } from './ankifyEntryData';
+import { normalizeEntryData } from './normalizeEntryData';
 
-const fakeAnkifySenseData = ({ headword, pronunciation }) => senseData =>
+const fakeNormalizeSenseData = ({ headword, pronunciation }) => senseData =>
 	`${senseData} ${headword} ${pronunciation}`;
 
 const headword = 'headword';
 const pronunciation = 'pronunciation';
 
-describe('ankifyEntryData', () => {
+describe('normalizeEntryData', () => {
 	it('composes correct ankiCards ', () => {
 		const entryData = {
 			senses: ['sense1', 'sense2']
 		};
 
 		expect(
-			ankifyEntryData(fakeAnkifySenseData, {headword, pronunciation}, entryData)
+			normalizeEntryData(fakeNormalizeSenseData, {headword, pronunciation}, entryData)
 		).toEqual([
 			'sense1 headword pronunciation',
 			'sense2 headword pronunciation'

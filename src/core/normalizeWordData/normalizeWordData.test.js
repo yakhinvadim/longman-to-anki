@@ -1,9 +1,9 @@
-import { ankifyWordData } from './ankifyWordData';
+import { normalizeWordData } from './normalizeWordData';
 
-const fakeAnkifyEntryData = ({ headword, pronunciation }) => entryData =>
+const fakeNormalizeEntryData = ({ headword, pronunciation }) => entryData =>
 	`${entryData} ${headword} ${pronunciation}`;
 
-describe('ankifyWordData', () => {
+describe('normalizeWordData', () => {
 	it('composes correct ankiCards ', () => {
 		const wordData = {
 			headword: 'headword',
@@ -12,7 +12,7 @@ describe('ankifyWordData', () => {
 		};
 
 		expect(
-			ankifyWordData(fakeAnkifyEntryData, wordData)
+			normalizeWordData(fakeNormalizeEntryData, wordData)
 		).toEqual([
 			'entry1 headword pronunciation',
 			'entry2 headword pronunciation'

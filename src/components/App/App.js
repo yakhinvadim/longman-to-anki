@@ -2,7 +2,7 @@ import React from 'react';
 import R from 'ramda';
 import debounce from 'lodash.debounce';
 
-import ankifyWordData from '../../core/ankifyWordData/ankifyWordData';
+import normalizeWordData from '../../core/normalizeWordData/normalizeWordData';
 import composeWordData from '../../core/composeWordData/composeWordData';
 import makeCard from '../../core/makeCard/makeCard'
 
@@ -76,7 +76,7 @@ export default class App extends React.Component {
 
 	render() {
 		const cardsArr = R.pipe(
-			R.map(ankifyWordData),
+			R.map(normalizeWordData),
 			R.flatten,
 			R.reject(R.isEmpty),
 			R.map(makeCard)

@@ -1,6 +1,6 @@
 import R from 'ramda';
 
-const ankifySenseData = R.curry(({ headword, pronunciation }, senseData) => {
+const normalizeSenseData = R.curry(({ headword, pronunciation }, senseData) => {
 	
 	// data
 
@@ -15,14 +15,14 @@ const ankifySenseData = R.curry(({ headword, pronunciation }, senseData) => {
 	};
 
 
-	// ankify... functions
+	// normalize... functions
 
-	const ankifyExample = form => example =>
+	const normalizeExample = form => example =>
 		({ ...commonData, example, form })
 
-	const ankifyExampleGroup = exampleGroup => {
+	const normalizeExampleGroup = exampleGroup => {
 		const { form, examples: exampleGroupExamples } = exampleGroup;
-		const cards = exampleGroupExamples.map(ankifyExample(form));
+		const cards = exampleGroupExamples.map(normalizeExample(form));
 		return cards;
 	}
 
@@ -30,15 +30,15 @@ const ankifySenseData = R.curry(({ headword, pronunciation }, senseData) => {
 	// different card types
 
 	const cardsFromExamples = R.map(
-		ankifyExample(headword)
+		normalizeExample(headword)
 	)(examples);
 
 	const cardsFromExampleGroups = R.map(
-		ankifyExampleGroup
+		normalizeExampleGroup
 	)(exampleGroups);
 	
 	const cardsFromSubsenses = R.map(
-		ankifySenseData({ headword, pronunciation })
+		normalizeSenseData({ headword, pronunciation })
 	)(subsenses);
 
 	const cardFromDefinition =
@@ -62,4 +62,4 @@ const ankifySenseData = R.curry(({ headword, pronunciation }, senseData) => {
 	return cards;
 });
 
-export default ankifySenseData;
+export default normalizeSenseData;

@@ -1,4 +1,4 @@
-import ankifySenseData from './ankifySenseData';
+import normalizeSenseData from './normalizeSenseData';
 
 const headword = 'headword';
 const pronunciation = 'pronunciation';
@@ -21,7 +21,7 @@ const basicCardData = {
 	antonym: 'antonym'
 }
 
-describe('ankifySenseData', () => {
+describe('normalizeSenseData', () => {
 	it('composes correct ankiCards from single example', () => {
 		const senseData = {
 			...basicSenseData,
@@ -29,7 +29,7 @@ describe('ankifySenseData', () => {
 		};
 
 		expect(
-			ankifySenseData({headword, pronunciation}, senseData)
+			normalizeSenseData({headword, pronunciation}, senseData)
 		).toEqual([
 			{
 				...basicCardData,
@@ -46,7 +46,7 @@ describe('ankifySenseData', () => {
 		};
 
 		expect(
-			ankifySenseData({headword, pronunciation}, senseData)
+			normalizeSenseData({headword, pronunciation}, senseData)
 		).toEqual([
 			{
 				...basicCardData,
@@ -73,7 +73,7 @@ describe('ankifySenseData', () => {
 		};
 
 		expect(
-			ankifySenseData({headword, pronunciation}, senseData)
+			normalizeSenseData({headword, pronunciation}, senseData)
 		).toEqual([
 			{
 				...basicCardData,
@@ -99,7 +99,7 @@ describe('ankifySenseData', () => {
 		};
 
 		expect(
-			ankifySenseData({headword, pronunciation}, senseData)
+			normalizeSenseData({headword, pronunciation}, senseData)
 		).toEqual([
 			{
 				...basicCardData,
@@ -135,7 +135,7 @@ describe('ankifySenseData', () => {
 		};
 
 		expect(
-			ankifySenseData({headword, pronunciation}, senseData)
+			normalizeSenseData({headword, pronunciation}, senseData)
 		).toEqual([
 			{
 				...basicCardData,
@@ -177,7 +177,7 @@ describe('ankifySenseData', () => {
 		};
 
 		expect(
-			ankifySenseData({headword, pronunciation}, senseData)
+			normalizeSenseData({headword, pronunciation}, senseData)
 		).toEqual([
 			{
 				...basicCardData,
@@ -223,7 +223,7 @@ describe('ankifySenseData', () => {
 		};
 
 		expect(
-			ankifySenseData({headword, pronunciation}, senseData)
+			normalizeSenseData({headword, pronunciation}, senseData)
 		).toEqual([
 			{
 				situation: 'situation',
