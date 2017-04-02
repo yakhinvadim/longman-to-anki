@@ -22,7 +22,7 @@ const basicCardData = {
 }
 
 describe('normalizeSenseData', () => {
-	it('composes correct ankiCards from single example', () => {
+	it('correctly normalizes senseData with single example', () => {
 		const senseData = {
 			...basicSenseData,
 			examples: ['example']
@@ -39,7 +39,7 @@ describe('normalizeSenseData', () => {
 		]);
 	});
 
-	it('composes correct ankiCards from several examples', () => {
+	it('correctly normalizes senseData with several examples', () => {
 		const senseData = {
 			...basicSenseData,
 			examples: ['example1', 'example2']
@@ -61,7 +61,7 @@ describe('normalizeSenseData', () => {
 		]);
 	});
 
-	it('composes correct ankiCards from single exampleGroup', () => {
+	it('correctly normalizes senseData with single exampleGroup', () => {
 		const senseData = {
 			...basicSenseData,
 			exampleGroups: [
@@ -83,7 +83,7 @@ describe('normalizeSenseData', () => {
 		]);
 	});
 
-	it('composes correct ankiCards from several exampleGroups', () => {
+	it('correctly normalizes senseData with several exampleGroups', () => {
 		const senseData = {
 			...basicSenseData,
 			exampleGroups: [
@@ -119,7 +119,7 @@ describe('normalizeSenseData', () => {
 		]);
 	});
 
-	it('composes correct ankiCards from subsenses', () => {
+	it('correctly normalizes senseData with subsenses', () => {
 		const senseData = {
 			...basicSenseData,
 			subsenses: [
@@ -150,7 +150,7 @@ describe('normalizeSenseData', () => {
 		]);
 	});
 
-	it('composes correct ankiCards from examples, exampleGroups and subsenses', () => {
+	it('correctly normalizes senseData with examples, exampleGroups and subsenses', () => {
 		const senseData = {
 			...basicSenseData,
 			examples: ['example1', 'example2'],
@@ -217,7 +217,7 @@ describe('normalizeSenseData', () => {
 		]);
 	});
 
-	it('composes correct ankiCards if there are no examples, exampleGroups and subsenses', () => {
+	it('correctly normalizes senseData with no examples, exampleGroups and subsenses', () => {
 		const senseData = {
 			...basicSenseData,
 		};

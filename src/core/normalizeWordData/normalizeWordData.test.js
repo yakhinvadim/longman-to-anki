@@ -4,7 +4,7 @@ const fakeNormalizeEntryData = ({ headword, pronunciation }) => entryData =>
 	`${entryData} ${headword} ${pronunciation}`;
 
 describe('normalizeWordData', () => {
-	it('composes correct ankiCards ', () => {
+	it('correctly normalizes wordData', () => {
 		const wordData = {
 			headword: 'headword',
 			pronunciation: 'pronunciation',

@@ -7,7 +7,7 @@ const headword = 'headword';
 const pronunciation = 'pronunciation';
 
 describe('normalizeEntryData', () => {
-	it('composes correct ankiCards ', () => {
+	it('correctly normalizes entryData', () => {
 		const entryData = {
 			senses: ['sense1', 'sense2']
 		};
