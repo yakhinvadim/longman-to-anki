@@ -1,10 +1,13 @@
 import React from 'react';
 import R from 'ramda';
 import debounce from 'lodash.debounce';
+
 import ankifyWordData from '../../core/ankifyWordData/ankifyWordData';
-import wordToData from '../../core/wordToData/wordToData';
+import composeWordData from '../../core/composeWordData/composeWordData';
+
 import splitByWord from '../../utils/splitByWord/splitByWord';
 import maybePluralize from '../../utils/maybePluralize/maybePluralize';
+import composeQuery from '../../utils/composeQuery/composeQuery';
 
 import Header from '../Header/Header';
 import ImportOptions from '../ImportOptions/ImportOptions';
@@ -13,6 +16,14 @@ import ResultCards from '../ResultCards/ResultCards';
 import UserWords from '../UserWords/UserWords';
 
 import './App.css';
+
+const wordToData = R.memoize(async word => {
+	const query = composeQuery(word);
+	const markup = await fetch(query).then(response => response.text());
+	const wordData = composeWordData(markup);
+
+	return wordData;
+})
 
 const sanitizeForFilename = R.pipe(
 	R.replace(/ /g, ''),
