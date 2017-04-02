@@ -4,11 +4,12 @@ const normalizeSenseData = R.curry(({ headword, pronunciation }, senseData) => {
 	
 	// data
 
-	const { definition, situation, synonym, antonym, examples, exampleGroups, subsenses } = senseData;
+	const { definition, situation, geography, synonym, antonym, examples, exampleGroups, subsenses } = senseData;
 
 	const commonData = {
 		definition,
 		situation,
+		geography,
 		synonym,
 		antonym,
 		pronunciation

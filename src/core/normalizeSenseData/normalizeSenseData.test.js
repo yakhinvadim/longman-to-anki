@@ -5,6 +5,7 @@ const pronunciation = 'pronunciation';
 
 const basicSenseData = {
 	situation: 'situation',
+	geography: 'geography',
 	definition: 'definition',
 	synonym: 'synonym',
 	antonym: 'antonym',
@@ -15,6 +16,7 @@ const basicSenseData = {
 
 const basicCardData = {
 	situation: 'situation',
+	geography: 'geography',
 	pronunciation: 'pronunciation',
 	definition: 'definition',
 	synonym: 'synonym',
@@ -226,12 +228,8 @@ describe('normalizeSenseData', () => {
 			normalizeSenseData({headword, pronunciation}, senseData)
 		).toEqual([
 			{
-				situation: 'situation',
-				form: 'headword',
-				pronunciation: 'pronunciation',
-				definition: 'definition',
-				synonym: 'synonym',
-				antonym: 'antonym'
+				...basicCardData,
+				form: 'headword'
 			}
 		]);
 	});

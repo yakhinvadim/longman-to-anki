@@ -6,7 +6,7 @@ const verticalOffset = '<br><br>'; // I don't use css-margins for offset, becaus
 
 const join = R.join('');
 
-const makeCard = ({example = '', situation = '', form = '', pronunciation = '', definition = '', synonym = '', antonym = ''}) => {
+const makeCard = ({example = '', situation = '', geography = '', form = '', pronunciation = '', definition = '', synonym = '', antonym = ''}) => {
 
 	// card parts
 
@@ -17,6 +17,8 @@ const makeCard = ({example = '', situation = '', form = '', pronunciation = '', 
 	const cardForm = `<span class="lta-form">${form}</span>`;
 
 	const cardMaybeSituation = situation ? `${newLine}<span class="lta-situation">(${situation})</span>` : '';
+
+	const cardMaybeGeography = geography ? `${newLine}<span class="lta-geography">(${geography})</span>` : '';
 
 	const cardMaybePronunciation = pronunciation ? `${newLine}<span class="lta-pronunciation">[${pronunciation}]</span>` : '';
 
@@ -31,6 +33,7 @@ const makeCard = ({example = '', situation = '', form = '', pronunciation = '', 
 		? join([
 			cardExample,
 			cardMaybeSituation,
+			cardMaybeGeography,
 			verticalOffset,
 			cardForm,
 			cardMaybePronunciation
@@ -39,7 +42,8 @@ const makeCard = ({example = '', situation = '', form = '', pronunciation = '', 
 			cardDefinition,
 			cardMaybeSynonym,
 			cardMaybeAntonym,
-			cardMaybeSituation
+			cardMaybeSituation,
+			cardMaybeGeography
 		])
 
 	const backSide = example
