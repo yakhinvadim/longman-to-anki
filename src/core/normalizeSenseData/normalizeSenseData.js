@@ -1,7 +1,6 @@
 import R from 'ramda';
-import realMakeCard from '../makeCard/makeCard';
 
-const ankifySenseData = R.curry((makeCard, { headword, pronunciation }, senseData) => {
+const normalizeSenseData = R.curry(({ headword, pronunciation }, senseData) => {
 	
 	// data
 
@@ -16,14 +15,14 @@ const ankifySenseData = R.curry((makeCard, { headword, pronunciation }, senseDat
 	};
 
 
-	// ankify... functions
+	// normalize... functions
 
-	const ankifyExample = form => example =>
-		makeCard({ example, form, ...commonData})
+	const normalizeExample = form => example =>
+		({ ...commonData, example, form })
 
-	const ankifyExampleGroup = exampleGroup => {
+	const normalizeExampleGroup = exampleGroup => {
 		const { form, examples: exampleGroupExamples } = exampleGroup;
-		const cards = exampleGroupExamples.map(ankifyExample(form));
+		const cards = exampleGroupExamples.map(normalizeExample(form));
 		return cards;
 	}
 
@@ -31,29 +30,28 @@ const ankifySenseData = R.curry((makeCard, { headword, pronunciation }, senseDat
 	// different card types
 
 	const cardsFromExamples = R.map(
-		ankifyExample(headword)
+		normalizeExample(headword)
 	)(examples);
 
 	const cardsFromExampleGroups = R.map(
-		ankifyExampleGroup
+		normalizeExampleGroup
 	)(exampleGroups);
 	
 	const cardsFromSubsenses = R.map(
-		ankifySenseData(makeCard, { headword, pronunciation })
+		normalizeSenseData({ headword, pronunciation })
 	)(subsenses);
 
 	const cardFromDefinition =
 		R.all(R.isEmpty, [examples, exampleGroups, subsenses]) && definition
-			? makeCard({ form: headword, ...commonData })
-			: '';
+			? { ...commonData, form: headword }
+			: {};
 
 
 	// all cards
 
 	const cards = R.pipe(
 		R.flatten,
-		R.reject(R.isEmpty),
-		R.join('\n')
+		R.reject(R.isEmpty)
 	)([
 		cardsFromExamples,
 		cardsFromExampleGroups,
@@ -64,5 +62,4 @@ const ankifySenseData = R.curry((makeCard, { headword, pronunciation }, senseDat
 	return cards;
 });
 
-export {ankifySenseData};
-export default ankifySenseData(realMakeCard);
+export default normalizeSenseData;
