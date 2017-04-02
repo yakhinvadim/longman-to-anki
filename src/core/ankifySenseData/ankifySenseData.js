@@ -18,7 +18,7 @@ const ankifySenseData = R.curry((makeCard, { headword, pronunciation }, senseDat
 
 	// ankify... functions
 
-	const ankifyExample = (form = headword) => example =>
+	const ankifyExample = form => example =>
 		makeCard({ example, form, ...commonData})
 
 	const ankifyExampleGroup = exampleGroup => {
@@ -31,7 +31,7 @@ const ankifySenseData = R.curry((makeCard, { headword, pronunciation }, senseDat
 	// different card types
 
 	const cardsFromExamples = R.map(
-		ankifyExample()
+		ankifyExample(headword)
 	)(examples);
 
 	const cardsFromExampleGroups = R.map(

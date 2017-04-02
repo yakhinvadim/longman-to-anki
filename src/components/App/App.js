@@ -1,9 +1,13 @@
 import React from 'react';
 import R from 'ramda';
 import debounce from 'lodash.debounce';
-import wordToCards from '../../core/wordToCards/wordToCards';
+
+import ankifyWordData from '../../core/ankifyWordData/ankifyWordData';
+import composeWordData from '../../core/composeWordData/composeWordData';
+
 import splitByWord from '../../utils/splitByWord/splitByWord';
 import maybePluralize from '../../utils/maybePluralize/maybePluralize';
+import composeQuery from '../../utils/composeQuery/composeQuery';
 
 import Header from '../Header/Header';
 import ImportOptions from '../ImportOptions/ImportOptions';
@@ -13,6 +17,14 @@ import UserWords from '../UserWords/UserWords';
 
 import './App.css';
 
+const wordToData = R.memoize(async word => {
+	const query = composeQuery(word);
+	const markup = await fetch(query).then(response => response.text());
+	const wordData = composeWordData(markup);
+
+	return wordData;
+})
+
 const sanitizeForFilename = R.pipe(
 	R.replace(/ /g, ''),
 	R.replace(/,/g, '_')
@@ -21,7 +33,7 @@ const sanitizeForFilename = R.pipe(
 export default class App extends React.Component {
 	state = {
 		inputValue: '',
-		cardsArr: [],
+		wordsDataArr: [],
 		showImportOptions: false
 	}
 
@@ -39,15 +51,15 @@ export default class App extends React.Component {
 		async () => {
 			const words = splitByWord(this.state.inputValue);
 
-			let cardsArr = [];
+			let wordsDataArr = [];
 			let i = 0;
 
 			for (let word of words) {
-				const wordCards = await wordToCards(word);
-				cardsArr[i] = wordCards;
+				const wordData = await wordToData(word)
+				wordsDataArr[i] = wordData;
 
 				this.setState({
-					cardsArr
+					wordsDataArr
 				});
 
 				i++;
@@ -62,15 +74,13 @@ export default class App extends React.Component {
 	}
 
 	render() {
-		const wordsTotalNumber = R.pipe(
-			R.reject(R.isEmpty),
-			R.length
-		)(this.state.cardsArr);
+		const wordsTotalNumber = this.state.wordsDataArr.length
 
 		const cards = R.pipe(
+			R.map(ankifyWordData),
 			R.reject(R.isEmpty),
 			R.join('\n')
-		)(this.state.cardsArr);
+		)(this.state.wordsDataArr);
 		
 		const cardsTotalNumber = R.match(/\n/g)(cards).length;
 
