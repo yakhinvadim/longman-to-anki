@@ -22,7 +22,7 @@ const sanitizeForFilename = R.pipe(
 export default class App extends React.Component {
 	state = {
 		inputValue: '',
-		cardsArr: [],
+		wordsDataArr: [],
 		showImportOptions: false
 	}
 
@@ -40,16 +40,15 @@ export default class App extends React.Component {
 		async () => {
 			const words = splitByWord(this.state.inputValue);
 
-			let cardsArr = [];
+			let wordsDataArr = [];
 			let i = 0;
 
 			for (let word of words) {
-				const wordData = await wordToData(word);
-				const wordCards = ankifyWordData(wordData)
-				cardsArr[i] = wordCards;
+				const wordData = await wordToData(word)
+				wordsDataArr[i] = wordData;
 
 				this.setState({
-					cardsArr
+					wordsDataArr
 				});
 
 				i++;
@@ -64,15 +63,13 @@ export default class App extends React.Component {
 	}
 
 	render() {
-		const wordsTotalNumber = R.pipe(
-			R.reject(R.isEmpty),
-			R.length
-		)(this.state.cardsArr);
+		const wordsTotalNumber = this.state.wordsDataArr.length
 
 		const cards = R.pipe(
+			R.map(ankifyWordData),
 			R.reject(R.isEmpty),
 			R.join('\n')
-		)(this.state.cardsArr);
+		)(this.state.wordsDataArr);
 		
 		const cardsTotalNumber = R.match(/\n/g)(cards).length;
 
