@@ -49,22 +49,21 @@ export default class App extends React.Component {
 	}
 
 	debouncedComposeCards = debounce(
-		async () => {
+		() => {
 			const words = splitByWord(this.state.inputValue);
+			words
+				.map(wordToData)
+				.forEach(async (request, i) => {
+					const wordData = await request;
 
-			let wordsDataArr = [];
-			let i = 0;
-
-			for (let word of words) {
-				const wordData = await wordToData(word)
-				wordsDataArr[i] = wordData;
-
-				this.setState({
-					wordsDataArr
+					this.setState(prevState => {
+						const newWordsDataArr = [...prevState.wordsDataArr];
+						newWordsDataArr[i] = wordData;
+						return {
+							wordsDataArr: newWordsDataArr
+						}
+					})
 				});
-
-				i++;
-			}
 		}, 500
 	)
 
@@ -76,6 +75,7 @@ export default class App extends React.Component {
 
 	render() {
 		const cardsArr = R.pipe(
+			R.filter(Boolean), // reject items from wordsDataArr, which didn't recieve response yet
 			R.map(normalizeWordData),
 			R.flatten,
 			R.reject(R.isEmpty),
