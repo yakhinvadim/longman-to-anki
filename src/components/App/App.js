@@ -10,6 +10,7 @@ import splitByWord from '../../utils/splitByWord/splitByWord';
 import maybePluralize from '../../utils/maybePluralize/maybePluralize';
 import composeQuery from '../../utils/composeQuery/composeQuery';
 
+import LinearProgress from 'material-ui/LinearProgress';
 import Header from '../Header/Header';
 import ImportOptions from '../ImportOptions/ImportOptions';
 import DownloadButton from '../DownloadButton/DownloadButton';
@@ -94,9 +95,18 @@ export default class App extends React.Component {
 
 		const date = new Date().toISOString().slice(0, 10);
 
+		const wordsAmount = splitByWord(this.state.inputValue).length
+		const wordsFetched = R.filter(Boolean)(this.state.wordsDataArr).length;
+
 		return (
 			<div className='App'>
 				<Header />
+
+				<LinearProgress
+					mode="determinate"
+					value={wordsFetched}
+					max={wordsAmount}
+				/>
 
 				<UserWords
 					value={this.state.inputValue}
