@@ -3,6 +3,7 @@ import makeCard from './makeCard';
 
 const example = 'example';
 const situation = 'situation';
+const geography = 'geography';
 const form = 'form';
 const pronunciation = 'pronunciation';
 const definition = 'definition';
@@ -26,10 +27,11 @@ describe('makeCard', () => {
 
 	it('make correct card if example is passed (maximum card parts)', () => {
 		expect(
-			makeCard({example, situation, form, pronunciation, definition, synonym, antonym})
+			makeCard({example, situation, geography, form, pronunciation, definition, synonym, antonym})
 		).toBe(join([
 			`<span class="lta-example">example</span>`,
 			`<br><span class="lta-situation">(situation)</span>`,
+			`<br><span class="lta-geography">(geography)</span>`,
 			`<br><br>`,
 			`<span class="lta-form">form</span>`,
 			`<br><span class="lta-pronunciation">[pronunciation]</span>`,
@@ -52,12 +54,13 @@ describe('makeCard', () => {
 
 	it('make correct card if no example passed (maximum card parts)', () => {
 		expect(
-			makeCard({situation, form, pronunciation, definition, synonym, antonym})
+			makeCard({situation, form, geography, pronunciation, definition, synonym, antonym})
 		).toBe(join([
 			`<span class="lta-definition">definition</span>`,
 			`<br><span class="lta-synonym">(synonym: synonym)</span>`,
 			`<br><span class="lta-antonym">(antonym: antonym)</span>`,
 			`<br><span class="lta-situation">(situation)</span>`,
+			`<br><span class="lta-geography">(geography)</span>`,
 			`#`,
 			`<span class="lta-form">form</span>`,
 			`<br><span class="lta-pronunciation">[pronunciation]</span>`
