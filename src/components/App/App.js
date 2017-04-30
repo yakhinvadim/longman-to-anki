@@ -10,6 +10,7 @@ import splitByWord from '../../utils/splitByWord/splitByWord';
 import maybePluralize from '../../utils/maybePluralize/maybePluralize';
 import composeQuery from '../../utils/composeQuery/composeQuery';
 import wordToData from '../../utils/wordToData/wordToData';
+import getDateString from '../../utils/getDateString/getDateString';
 
 import LinearProgress from 'material-ui/LinearProgress';
 import Header from '../Header/Header';
@@ -86,7 +87,7 @@ export default class App extends React.Component {
 
 		const totals = `${wordsTotal}, ${cardsTotal}`;
 
-		const date = new Date().toISOString().slice(0, 10);
+		const date = getDateString();
 
 		const wordsAmount = splitByWord(this.state.inputValue).length
 		const wordsFetched = R.filter(Boolean)(this.state.wordsDataArr).length;
