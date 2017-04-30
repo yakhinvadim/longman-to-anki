@@ -3,12 +3,10 @@ import R from 'ramda';
 import debounce from 'lodash.debounce';
 
 import normalizeWordData from '../../core/normalizeWordData/normalizeWordData';
-import composeWordData from '../../core/composeWordData/composeWordData';
 import makeCard from '../../core/makeCard/makeCard'
 
 import splitByWord from '../../utils/splitByWord/splitByWord';
 import maybePluralize from '../../utils/maybePluralize/maybePluralize';
-import composeQuery from '../../utils/composeQuery/composeQuery';
 import wordToData from '../../utils/wordToData/wordToData';
 import getDateString from '../../utils/getDateString/getDateString';
 
