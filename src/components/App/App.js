@@ -9,6 +9,7 @@ import makeCard from '../../core/makeCard/makeCard'
 import splitByWord from '../../utils/splitByWord/splitByWord';
 import maybePluralize from '../../utils/maybePluralize/maybePluralize';
 import composeQuery from '../../utils/composeQuery/composeQuery';
+import wordToData from '../../utils/wordToData/wordToData';
 
 import LinearProgress from 'material-ui/LinearProgress';
 import Header from '../Header/Header';
@@ -18,14 +19,6 @@ import ResultCards from '../ResultCards/ResultCards';
 import UserWords from '../UserWords/UserWords';
 
 import './App.css';
-
-const wordToData = R.memoize(async word => {
-	const query = composeQuery(word);
-	const markup = await fetch(query).then(response => response.text());
-	const wordData = composeWordData(markup);
-
-	return wordData;
-})
 
 const sanitizeForFilename = R.pipe(
 	R.replace(/ /g, ''),
