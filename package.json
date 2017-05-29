@@ -11,7 +11,7 @@
     "react-scripts": "^0.9.5"
   },
   "dependencies": {
-    "cheerio": "^0.22.0",
+    "cheerio": "^1.0.0-rc.1",
     "lodash.debounce": "^4.0.8",
     "material-ui": "^0.17.0",
     "ramda": "^0.23.0",
