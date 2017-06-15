@@ -5,7 +5,7 @@
   "private": true,
   "devDependencies": {
     "enzyme": "^2.7.1",
-    "gh-pages": "1.0.0",
+    "gh-pages": "^1.0.0",
     "prop-types": "^15.5.8",
     "react-addons-test-utils": "^15.4.2",
     "react-scripts": "^1.0.7"
@@ -15,8 +15,8 @@
     "he": "^1.1.1",
     "html-minifier": "^3.5.2",
     "lodash.debounce": "^4.0.8",
-    "material-ui": "^0.17.0",
     "ramda": "^0.24.1",
+    "material-ui": "^0.18.3",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-tap-event-plugin": "^2.0.1"
