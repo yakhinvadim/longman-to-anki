@@ -4,16 +4,9 @@ node_js:
 cache:
   directories:
   - node_modules
-before_script:
-- git config --global user.email "yakhin.v@gmail.com"
-- git config --global user.name "yakhinvadim"
-- git remote rm origin
-- git remote add origin https://yakhinvadim:${GH_TOKEN}@github.com/yakhinvadim/longman-to-anki.git
-script:
-- npm test
-- npm run deploy
-git:
-  depth: 99999
-env:
-  global:
-    secure: dI72ubZs/WDEgWf2ashdbYQVl0jq1e5iKVUs3hpw315ABKqtGs4k9dZBEJFJflXHRsT0/DjrlBXZdAXbl1XsKKyW5SAEAKH0OiALTfxGV8izW27hoiTYhKmz+627UBjjCBEnXzZsL5xRsjHYEzEq0gh67zVmZ+YpTAtU1aYIjTOfKihDT1zcLu7wkj3D2cspiFEjLlZ/epl5iJ67ruylcl+2+xaoi14rLZ2pOoYJtaqy9DRDUWz4LbpiADrzTrdRQS1zVFxs773mAlh/j6e8BLrw6pE1RTzoaActb7JyKyJBYY5Tb8pns9k1xNZ96KfECQvK9i6czbVijuQAzMZr22EJHz9Ofn2t2O9+di7DBDgp0+BIb804y9WeC7zSFKhmUyfcoC+DQuiZESKBM1dEdXsk99avTxS3+wfWaUsaQZBK/VtewX5pR0pnqfQJrXrAzvSresFGuHsBPEWbY9hhYxWLwr0fz2rb0Nw1G3EptOpVRUHoS5BCJK6pE5cUqHYq4ClBtJQFWeRP+qbv/KZET0Piz32FUJZxTaCTgHZ5kd2tFF82e1X5xUPG0Nyb70cdxDT73hIxeAxkHSdjQK2lVia2D3p7jd+OdFmj5VrSkqDFonIDu2Q40i33uj7K8z6VWl3WoUsMFxk6x88ItL4Fqa6Oky68n9/3ssxBaKp0BuI=
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  on:
+    branch: master
