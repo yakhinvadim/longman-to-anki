@@ -1,7 +1,7 @@
 import composeQuery from './composeQuery';
 
-const beforeWord = 'https://query.yahooapis.com/v1/public/yql?q=SELECT%20*%20FROM%20html%20WHERE%20url%3D%22http%3A%2F%2Fwww.ldoceonline.com%2Fdictionary%2F';
-const afterWord = '%22';
+const beforeWord = 'https://query.yahooapis.com/v1/public/yql?q=SELECT%20*%20FROM%20htmlstring%20WHERE%20url%3D%22http%3A%2F%2Fwww.ldoceonline.com%2Fdictionary%2F';
+const afterWord = '%22&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys';
 const addFrame = word => `${beforeWord}${word}${afterWord}`
 
 describe('composeQuery', () => {
