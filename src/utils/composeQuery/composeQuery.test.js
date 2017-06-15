@@ -4,7 +4,7 @@ const beforeWord = 'https://query.yahooapis.com/v1/public/yql?q=SELECT%20*%20FRO
 const afterWord = '%22';
 const addFrame = word => `${beforeWord}${word}${afterWord}`
 
-describe('composeQuery', () => {
+xdescribe('composeQuery', () => {
 	it('composes correct query one simple word', () => {
 		expect(
 			composeQuery('set')
