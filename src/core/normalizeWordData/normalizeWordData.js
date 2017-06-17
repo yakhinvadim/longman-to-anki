@@ -1,7 +1,7 @@
 import R from 'ramda';
-import realNormalizeEntryData from '../normalizeEntryData/normalizeEntryData';
+import normalizeEntryData from '../normalizeEntryData/normalizeEntryData';
 
-const normalizeWordData = R.curry((normalizeEntryData, wordData) => {
+const normalizeWordData = (wordData) => {
 	const { headword, pronunciation, entries } = wordData;
 
 	const cards = R.map(
@@ -9,7 +9,6 @@ const normalizeWordData = R.curry((normalizeEntryData, wordData) => {
 	)(entries);
 
 	return cards;
-})
+}
 
-export {normalizeWordData};
-export default normalizeWordData(realNormalizeEntryData);
+export default normalizeWordData;

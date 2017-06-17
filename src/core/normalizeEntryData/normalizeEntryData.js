@@ -1,7 +1,7 @@
 import R from 'ramda';
-import realNormalizeSenseData from '../normalizeSenseData/normalizeSenseData';
+import normalizeSenseData from '../normalizeSenseData/normalizeSenseData';
 
-const normalizeEntryData = R.curry((normalizeSenseData, { headword, pronunciation }, entryData) => {
+const normalizeEntryData = R.curry(({ headword, pronunciation }, entryData) => {
 	const { senses } = entryData;
 
 	const cards = R.map(
@@ -11,5 +11,4 @@ const normalizeEntryData = R.curry((normalizeSenseData, { headword, pronunciatio
 	return cards;
 });
 
-export {normalizeEntryData};
-export default normalizeEntryData(realNormalizeSenseData);
+export default normalizeEntryData;

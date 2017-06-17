@@ -1,7 +1,7 @@
-import { normalizeWordData } from './normalizeWordData';
-
-const fakeNormalizeEntryData = ({ headword, pronunciation }) => entryData =>
-	`${entryData} ${headword} ${pronunciation}`;
+import normalizeWordData from './normalizeWordData';
+jest.mock('../normalizeEntryData/normalizeEntryData', () => (
+	({ headword, pronunciation }) => entryData => `${entryData} ${headword} ${pronunciation}`
+))
 
 describe('normalizeWordData', () => {
 	it('correctly normalizes wordData', () => {
@@ -12,7 +12,7 @@ describe('normalizeWordData', () => {
 		};
 
 		expect(
-			normalizeWordData(fakeNormalizeEntryData, wordData)
+			normalizeWordData(wordData)
 		).toEqual([
 			'entry1 headword pronunciation',
 			'entry2 headword pronunciation'
