@@ -4,6 +4,7 @@ import composeQuery from '../composeQuery/composeQuery';
 import composeWordData from '../../core/composeWordData/composeWordData';
 
 const removeNewLines = R.replace(/\n/gm, '');
+const removeDoubleSpace = R.replace(/ {2}/gm, '');
 
 const wordToData = R.memoize(async word => {
 	const query = composeQuery(word);
@@ -11,6 +12,7 @@ const wordToData = R.memoize(async word => {
 	
 	const wordData = R.pipe(
 		unescape,
+		removeDoubleSpace,
 		removeNewLines,
 		composeWordData
 	)(escapedMarkup)

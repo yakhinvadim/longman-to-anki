@@ -14,7 +14,6 @@
   "dependencies": {
     "cheerio": "^0.22.0",
     "he": "^1.1.1",
-    "html-minifier": "^3.5.2",
     "lodash.debounce": "^4.0.8",
     "ramda": "^0.24.1",
     "material-ui": "^0.18.3",
