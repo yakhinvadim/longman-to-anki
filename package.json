@@ -6,6 +6,9 @@
   "devDependencies": {
     "enzyme": "^2.8.2",
     "gh-pages": "^1.0.0",
+    "husky": "^0.13.4",
+    "lint-staged": "^3.6.1",
+    "prettier": "^1.4.4",
     "prop-types": "^15.5.10",
     "react-addons-test-utils": "^15.6.0",
     "react-scripts": "^1.0.7",
@@ -26,16 +29,14 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
+		"precommit": "lint-staged",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-  "eslintConfig": {
-    "extends": "react-app",
-    "rules": {
-      "indent": [
-        "error",
-        "tab"
-      ]
-    }
-  }
+	"lint-staged": {
+		"src/**/*.js": [
+			"prettier --single-quote --tab-width 4 --no-semi --write",
+			"git add"
+		]
+	}
 }
