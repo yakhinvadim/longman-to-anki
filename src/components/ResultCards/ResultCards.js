@@ -19,6 +19,7 @@ export default class ResultCards extends PureComponent {
 				fullWidth
 				value={this.props.value}
 				rowsMax={10}
+				textareaStyle={{ whiteSpace: 'pre' }}
 			/>
 		);
 	}
