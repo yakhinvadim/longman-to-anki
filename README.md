@@ -1,4 +1,5 @@
-# longman-to-anki
+# longman-to-anki 
+[![Build Status](https://travis-ci.org/yakhinvadim/longman-to-anki.svg?branch=master)](https://travis-ci.org/yakhinvadim/longman-to-anki) [![Coverage Status]
 
 **longman-to-anki** is a web app which helps you learn English words. Type the words you want to learn, click *compose cards* and download the file with a list of flash cards for these words. File is ready to import by [Anki](http://ankisrs.net/) - most popular flash cards software.
 
