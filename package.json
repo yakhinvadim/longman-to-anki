@@ -4,11 +4,12 @@
   "homepage": "https://yakhinvadim.github.io/longman-to-anki/",
   "private": true,
   "devDependencies": {
-    "enzyme": "^2.7.1",
+    "enzyme": "^2.8.2",
     "gh-pages": "^1.0.0",
     "prop-types": "^15.5.10",
-    "react-addons-test-utils": "^15.4.2",
-    "react-scripts": "^1.0.7"
+    "react-addons-test-utils": "^15.6.0",
+    "react-scripts": "^1.0.7",
+    "react-test-renderer": "^15.6.1"
   },
   "dependencies": {
     "cheerio": "^0.22.0",
