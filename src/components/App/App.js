@@ -10,6 +10,7 @@ import maybePluralize from '../../utils/maybePluralize/maybePluralize'
 import wordToData from '../../utils/wordToData/wordToData'
 import getDateString from '../../utils/getDateString/getDateString'
 
+import GithubCorner from 'react-github-corner'
 import LinearProgress from 'material-ui/LinearProgress'
 import Header from '../Header/Header'
 import ImportOptions from '../ImportOptions/ImportOptions'
@@ -85,6 +86,11 @@ export default class App extends React.Component {
 
         return (
             <div className="App">
+                <GithubCorner
+                    href="https://github.com/yakhinvadim/longman-to-anki"
+                    bannerColor="#3f51b5"
+                />
+
                 <Header />
 
                 <LinearProgress
