@@ -18,10 +18,11 @@
     "cheerio": "^0.22.0",
     "he": "^1.1.1",
     "lodash.debounce": "^4.0.8",
-    "ramda": "^0.24.1",
     "material-ui": "^0.18.3",
+    "ramda": "^0.24.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
+    "react-github-corner": "^0.3.0",
     "react-tap-event-plugin": "^2.0.1"
   },
   "scripts": {
@@ -29,14 +30,14 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-		"precommit": "lint-staged",
+    "precommit": "lint-staged",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-	"lint-staged": {
-		"src/**/*.js": [
-			"prettier --single-quote --tab-width 4 --no-semi --write",
-			"git add"
-		]
-	}
+  "lint-staged": {
+    "src/**/*.js": [
+      "prettier --single-quote --tab-width 4 --no-semi --write",
+      "git add"
+    ]
+  }
 }
