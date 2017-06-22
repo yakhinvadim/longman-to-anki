@@ -6,7 +6,7 @@
   "devDependencies": {
     "enzyme": "^2.8.2",
     "gh-pages": "^1.0.0",
-    "husky": "^0.13.4",
+    "husky": "^0.14.0",
     "lint-staged": "^4.0.0",
     "prettier": "^1.4.4",
     "prop-types": "^15.5.10",
