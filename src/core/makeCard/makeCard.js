@@ -1,72 +1,76 @@
-import R from 'ramda';
+import R from 'ramda'
 
-const sideDelimiter = '#';
-const newLine = '<br>';
-const verticalOffset = '<br><br>'; // I don't use css-margins for offset, because I want cards to be styled "out of box", even without css styles
+const newLine = '<br>'
+const verticalOffset = '<br><br>' // I don't use css-margins for offset, because I want cards to be styled "out of box", even without css styles
 
-const join = R.join('');
+const join = R.join('')
 
-const makeCard = ({example = '', situation = '', geography = '', form = '', pronunciation = '', definition = '', synonym = '', antonym = ''}) => {
+const makeCard = ({
+    example = '',
+    situation = '',
+    geography = '',
+    form = '',
+    pronunciation = '',
+    definition = '',
+    synonym = '',
+    antonym = ''
+}) => {
+    // card parts
 
-	// card parts
+    const cardExample = `<span class="lta-example">${example}</span>`
 
-	const cardExample = `<span class="lta-example">${example}</span>`;
+    const cardDefinition = `<span class="lta-definition">${definition}</span>`
 
-	const cardDefinition = `<span class="lta-definition">${definition}</span>`;
+    const cardForm = `<span class="lta-form">${form}</span>`
 
-	const cardForm = `<span class="lta-form">${form}</span>`;
+    const cardMaybeSituation = situation
+        ? `${newLine}<span class="lta-situation">(${situation})</span>`
+        : ''
 
-	const cardMaybeSituation = situation ? `${newLine}<span class="lta-situation">(${situation})</span>` : '';
+    const cardMaybeGeography = geography
+        ? `${newLine}<span class="lta-geography">(${geography})</span>`
+        : ''
 
-	const cardMaybeGeography = geography ? `${newLine}<span class="lta-geography">(${geography})</span>` : '';
+    const cardMaybePronunciation = pronunciation
+        ? `${newLine}<span class="lta-pronunciation">[${pronunciation}]</span>`
+        : ''
 
-	const cardMaybePronunciation = pronunciation ? `${newLine}<span class="lta-pronunciation">[${pronunciation}]</span>` : '';
+    const cardMaybeSynonym = synonym
+        ? `${newLine}<span class="lta-synonym">(synonym: ${synonym})</span>`
+        : ''
 
-	const cardMaybeSynonym = synonym ? `${newLine}<span class="lta-synonym">(synonym: ${synonym})</span>` : '';
+    const cardMaybeAntonym = antonym
+        ? `${newLine}<span class="lta-antonym">(antonym: ${antonym})</span>`
+        : ''
 
-	const cardMaybeAntonym = antonym ? `${newLine}<span class="lta-antonym">(antonym: ${antonym})</span>` : '';
+    // card sides
 
+    const front = example
+        ? join([
+              cardExample,
+              cardMaybeSituation,
+              cardMaybeGeography,
+              verticalOffset,
+              cardForm,
+              cardMaybePronunciation
+          ])
+        : join([
+              cardDefinition,
+              cardMaybeSynonym,
+              cardMaybeAntonym,
+              cardMaybeSituation,
+              cardMaybeGeography
+          ])
 
-	// card sides
+    const back = example
+        ? join([cardDefinition, cardMaybeSynonym, cardMaybeAntonym])
+        : join([cardForm, cardMaybePronunciation])
 
-	const frontSide = example
-		? join([
-			cardExample,
-			cardMaybeSituation,
-			cardMaybeGeography,
-			verticalOffset,
-			cardForm,
-			cardMaybePronunciation
-		])
-		: join([
-			cardDefinition,
-			cardMaybeSynonym,
-			cardMaybeAntonym,
-			cardMaybeSituation,
-			cardMaybeGeography
-		])
+    // card
 
-	const backSide = example
-		? join([
-			cardDefinition,
-			cardMaybeSynonym,
-			cardMaybeAntonym
-		])
-		: join([
-			cardForm,
-			cardMaybePronunciation
-		]);
+    const card = { front, back }
 
-
-	// card
-
-	const card = join([
-		frontSide,
-		sideDelimiter,
-		backSide
-	]);
-
-	return card;
+    return card
 }
 
-export default makeCard;
+export default makeCard

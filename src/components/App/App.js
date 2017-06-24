@@ -1,8 +1,9 @@
 import React from 'react'
 import R from 'ramda'
 import debounce from 'lodash.debounce'
+import AnkiExport from 'anki-apkg-export'
+import { saveAs } from 'file-saver'
 
-import normalizeWordData from '../../core/normalizeWordData/normalizeWordData'
 import makeCard from '../../core/makeCard/makeCard'
 
 import splitByWord from '../../utils/splitByWord/splitByWord'
@@ -17,6 +18,7 @@ import ImportOptions from '../ImportOptions/ImportOptions'
 import DownloadButton from '../DownloadButton/DownloadButton'
 import ResultCards from '../ResultCards/ResultCards'
 import UserWords from '../UserWords/UserWords'
+import DeckName from '../DeckName/DeckName'
 
 import './App.css'
 
@@ -26,7 +28,16 @@ export default class App extends React.Component {
     state = {
         inputValue: '',
         wordsDataArr: [],
-        showImportOptions: false
+        showImportOptions: false,
+        deckName: 'English words'
+    }
+
+    handleDeckNameChange = event => {
+        const deckName = event.target.value
+
+        this.setState({
+            deckName
+        })
     }
 
     handleInputChange = async event => {
@@ -54,19 +65,36 @@ export default class App extends React.Component {
         })
     }, 500)
 
-    handleDownload = () => {
-        this.setState({
-            showImportOptions: true
+    handleDownload = event => {
+        event.preventDefault()
+
+        const deck = new AnkiExport(this.state.deckName)
+
+        const cardsArr = R.pipe(
+            R.filter(Boolean), // reject items from wordsDataArr, which didn't recieve response yet
+            R.flatten,
+            R.map(makeCard)
+        )(this.state.wordsDataArr)
+
+        cardsArr.forEach(card => {
+            deck.addCard(card.front, card.back)
         })
+
+        deck
+            .save()
+            .then(file => {
+                saveAs(file, 'output.apkg')
+            })
+            .catch(err => console.log(err.stack || err))
     }
 
     render() {
         const cardsArr = R.pipe(
             R.filter(Boolean), // reject items from wordsDataArr, which didn't recieve response yet
-            R.map(normalizeWordData),
             R.flatten,
             R.reject(R.isEmpty),
-            R.map(makeCard)
+            R.map(makeCard),
+            R.map(card => `${card.front}#${card.back}`)
         )(this.state.wordsDataArr)
 
         const cards = R.join('\n')(cardsArr)
@@ -105,6 +133,11 @@ export default class App extends React.Component {
                 />
 
                 {cards && <ResultCards value={cards} />}
+
+                <DeckName
+                    value={this.state.deckName}
+                    onChange={this.handleDeckNameChange}
+                />
 
                 <div className="App__download-section">
                     <span className="App__total">
