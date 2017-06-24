@@ -1,14 +1,13 @@
-import cheerify from '../../utils/cheerify/cheerify';
+import domify from '../../utils/domify/domify'
 
 const extractSituation = senseMarkup => {
-	const $ = cheerify(senseMarkup);
+    const elements = [...domify(senseMarkup).querySelectorAll('.REGISTERLAB')]
 
-	const situation =
-		$('.REGISTERLAB')
-			.text()
-			.trim()
+    const situation = elements
+        .map(element => element.textContent.trim())
+        .join(' ')
 
-	return situation;
+    return situation
 }
 
-export default extractSituation;
+export default extractSituation
