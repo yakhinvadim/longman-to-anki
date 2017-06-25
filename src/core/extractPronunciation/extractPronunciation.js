@@ -1,21 +1,15 @@
-import cheerify from '../../utils/cheerify/cheerify';
+import domify from '../../utils/domify/domify'
 
 const extractPronunciation = pageMarkup => {
-	const $ = cheerify(pageMarkup);
+    const pronunciationWrapper = domify(pageMarkup).querySelector('.PronCodes')
 
-	const pronunciationWrapper = $('.PronCodes').first();
+    const pronunciation = [
+        ...pronunciationWrapper.querySelectorAll('.PRON, .AMEVARPRON')
+    ]
+        .map(element => element.textContent.trim())
+        .join(' ')
 
-	const britPronunciation =
-		pronunciationWrapper
-			.children('.PRON') // pronunciation
-			.text();
-
-	const amerPronunciation =
-		pronunciationWrapper
-			.children('.AMEVARPRON') // american variant pronunciation
-			.text();
-
-	return britPronunciation + amerPronunciation;
+    return pronunciation
 }
 
-export default extractPronunciation;
+export default extractPronunciation
