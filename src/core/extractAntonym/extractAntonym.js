@@ -1,16 +1,20 @@
-import cheerify from '../../utils/cheerify/cheerify';
+import domify from '../../utils/domify/domify'
 
 const extractAntonym = senseMarkup => {
-	const $ = cheerify(senseMarkup);
+    const wrapper = domify(senseMarkup).querySelector('.OPP') // opposite
 
-	const antonym =
-		$('.OPP') // opposite
-			.contents()
-			.not('.synopp') // element with text "SYN" or "OPP"
-			.text()
-			.trim();
+    const antonym = wrapper
+        ? [...wrapper.childNodes]
+              .filter(
+                  child =>
+                      !child.classList || !child.classList.contains('synopp')
+              ) // element with text "SYN" or "OPP"
+              .map(child => child.textContent)
+              .join(' ')
+              .trim()
+        : ''
 
-	return antonym;
+    return antonym
 }
 
-export default extractAntonym;
+export default extractAntonym
