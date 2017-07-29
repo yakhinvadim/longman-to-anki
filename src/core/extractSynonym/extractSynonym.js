@@ -1,16 +1,22 @@
-import cheerify from '../../utils/cheerify/cheerify';
+import domify from '../../utils/domify/domify'
+
+const notBadgeNode = node =>
+    !(node.classList && node.classList.contains('synopp')) // badge with text "SYN" or "OPP"
 
 const extractSynonym = senseMarkup => {
-	const $ = cheerify(senseMarkup);
+    const synonymWrapper = domify(senseMarkup).querySelector('.SYN')
 
-	const synonym =
-		$('.SYN') // synonym
-			.contents()
-			.not('.synopp') // element with text "SYN" or "OPP"
-			.text()
-			.trim();
+    if (!synonymWrapper) {
+        return ''
+    }
 
-	return synonym;
+    const synonym = [...synonymWrapper.childNodes]
+        .filter(notBadgeNode)
+        .map(child => child.textContent)
+        .join(' ')
+        .trim()
+
+    return synonym
 }
 
-export default extractSynonym;
+export default extractSynonym
