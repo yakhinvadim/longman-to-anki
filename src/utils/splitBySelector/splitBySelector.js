@@ -1,19 +1,16 @@
-import R from 'ramda';
-import cheerify from '../../utils/cheerify/cheerify';
+import R from 'ramda'
+import domify from '../../utils/domify/domify'
 
 const splitBySelector = ({ selector, onlyChildren = false }, markup) => {
-	const $ = cheerify(markup);
+    const rootNode = domify(markup)
 
-	const markups = onlyChildren
-		? $.root()
-			.children(selector)
-			.map((i, el) => $(el).html())
-			.get()
-		: $(selector)
-			.map((i, el) => $(el).html())
-			.get();
+    const markups = onlyChildren
+        ? [...rootNode.children]
+              .filter(node => node.matches(selector))
+              .map(node => node.innerHTML)
+        : [...rootNode.querySelectorAll(selector)].map(node => node.innerHTML)
 
-	return markups;
-};
+    return markups
+}
 
-export default R.curry(splitBySelector);
+export default R.curry(splitBySelector)
