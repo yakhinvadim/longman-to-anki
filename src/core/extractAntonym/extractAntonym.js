@@ -1,18 +1,20 @@
 import domify from '../../utils/domify/domify'
 
-const extractAntonym = senseMarkup => {
-    const wrapper = domify(senseMarkup).querySelector('.OPP') // opposite
+const notBadgeNode = node =>
+    !(node.classList && node.classList.contains('synopp')) // badge with text "SYN" or "OPP"
 
-    const antonym = wrapper
-        ? [...wrapper.childNodes]
-              .filter(
-                  child =>
-                      !child.classList || !child.classList.contains('synopp')
-              ) // element with text "SYN" or "OPP"
-              .map(child => child.textContent)
-              .join(' ')
-              .trim()
-        : ''
+const extractAntonym = senseMarkup => {
+    const antonymWrapper = domify(senseMarkup).querySelector('.OPP') // opposite
+
+    if (!antonymWrapper) {
+        return ''
+    }
+
+    const antonym = [...antonymWrapper.childNodes]
+        .filter(notBadgeNode)
+        .map(child => child.textContent)
+        .join(' ')
+        .trim()
 
     return antonym
 }

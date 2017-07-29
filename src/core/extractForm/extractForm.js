@@ -1,14 +1,12 @@
 import domify from '../../utils/domify/domify'
 
 const extractAntonym = exampleGroupMarkup => {
-    const elements = [
+    const antonym = [
         ...domify(exampleGroupMarkup).querySelectorAll(
-            '.PROPFORM, .PROPFORMPREP, .COLLO, .LINKWORD, .LEXUNIT'
+            '.PROPFORM, .PROPFORMPREP, .COLLO, .LINKWORD, .LEXUNIT' // all kinds of form classes
         )
-    ] // all kinds of form classes
-
-    const antonym = elements
-        .map(element => element.textContent.trim())
+    ]
+        .map(node => node.textContent.trim())
         .join(' ')
 
     return antonym

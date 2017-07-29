@@ -1,10 +1,8 @@
 import domify from '../../utils/domify/domify'
 
 const extractSituation = senseMarkup => {
-    const elements = [...domify(senseMarkup).querySelectorAll('.REGISTERLAB')]
-
-    const situation = elements
-        .map(element => element.textContent.trim())
+    const situation = [...domify(senseMarkup).querySelectorAll('.REGISTERLAB')]
+        .map(node => node.textContent.trim())
         .join(' ')
 
     return situation
