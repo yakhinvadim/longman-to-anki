@@ -1,23 +1,28 @@
-import R from 'ramda';
-import { unescape } from 'he';
-import composeQuery from '../composeQuery/composeQuery';
-import composeWordData from '../../core/composeWordData/composeWordData';
+import R from 'ramda'
+import { unescape } from 'he'
+import composeQuery from '../composeQuery/composeQuery'
+import composeWordData from '../../core/composeWordData/composeWordData'
+import extractHeadword from '../../core/extractHeadword/extractHeadword'
 
-const removeNewLines = R.replace(/\n/gm, '');
-const removeDoubleSpace = R.replace(/ {2}/gm, '');
+const removeDoubleSpace = R.replace(/ {2}/gm, '')
+const removeNewLines = R.replace(/\n/gm, '')
+const normalizeMarkup = R.pipe(unescape, removeDoubleSpace, removeNewLines)
 
-const wordToData = R.memoize(async word => {
-	const query = composeQuery(word);
-	const escapedMarkup = await fetch(query).then(response => response.text());
-	
-	const wordData = R.pipe(
-		unescape,
-		removeDoubleSpace,
-		removeNewLines,
-		composeWordData
-	)(escapedMarkup)
+const isNotWordPage = markup => extractHeadword(markup) === null
 
-	return wordData;
-})
+const wordToData = async word => {
+    const query = composeQuery(word)
+    const escapedMarkup = await fetch(query).then(response => response.text())
+    const markup = normalizeMarkup(escapedMarkup)
 
-export default wordToData;
+    if (isNotWordPage(markup)) {
+        return null
+    }
+
+    const wordData = composeWordData(markup)
+
+    return wordData
+}
+
+export { normalizeMarkup }
+export default wordToData

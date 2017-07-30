@@ -62,7 +62,7 @@ export default class App extends React.Component {
 
     render() {
         const cardsArr = R.pipe(
-            R.filter(Boolean), // reject items from wordsDataArr, which didn't recieve response yet
+            R.filter(Boolean), // reject non-existent word items and items, which didn't recieve response yet
             R.map(normalizeWordData),
             R.flatten,
             R.reject(R.isEmpty),

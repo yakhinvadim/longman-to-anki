@@ -1,42 +1,46 @@
 {
-  "name": "longman-to-anki",
-  "version": "1.0.0",
-  "homepage": "https://yakhinvadim.github.io/longman-to-anki/",
-  "private": true,
-  "devDependencies": {
-    "enzyme": "^2.8.2",
-    "gh-pages": "^1.0.0",
-    "husky": "^0.14.0",
-    "lint-staged": "^4.0.0",
-    "prettier": "^1.4.4",
-    "prop-types": "^15.5.10",
-    "react-addons-test-utils": "^15.6.0",
-    "react-scripts": "^1.0.7",
-    "react-test-renderer": "^15.6.1"
-  },
-  "dependencies": {
-    "he": "^1.1.1",
-    "lodash.debounce": "^4.0.8",
-    "material-ui": "^0.18.3",
-    "ramda": "^0.24.1",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
-    "react-github-corner": "^0.3.0",
-    "react-tap-event-plugin": "^2.0.1"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "precommit": "lint-staged",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
-  },
-  "lint-staged": {
-    "src/**/*.js": [
-      "prettier --single-quote --tab-width 4 --no-semi --write",
-      "git add"
-    ]
-  }
+    "name": "longman-to-anki",
+    "version": "1.0.0",
+    "homepage": "https://yakhinvadim.github.io/longman-to-anki/",
+    "private": true,
+    "devDependencies": {
+        "enzyme": "^2.8.2",
+        "fetch-mock": "^5.12.1",
+        "gh-pages": "^1.0.0",
+        "husky": "^0.14.0",
+        "lint-staged": "^4.0.0",
+        "prettier": "^1.4.4",
+        "prop-types": "^15.5.10",
+        "react-addons-test-utils": "^15.6.0",
+        "react-scripts": "^1.0.7",
+        "react-test-renderer": "^15.6.1"
+    },
+    "dependencies": {
+        "he": "^1.1.1",
+        "lodash.debounce": "^4.0.8",
+        "material-ui": "^0.18.3",
+        "ramda": "^0.24.1",
+        "react": "^15.6.1",
+        "react-dom": "^15.6.1",
+        "react-github-corner": "^0.3.0",
+        "react-tap-event-plugin": "^2.0.1"
+    },
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test --env=jsdom",
+        "eject": "react-scripts eject",
+        "precommit": "lint-staged",
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d build"
+    },
+    "lint-staged": {
+        "src/**/*.js": [
+            "prettier --single-quote --tab-width 4 --no-semi --write",
+            "git add"
+        ]
+    },
+    "eslintConfig": {
+        "extends": "react-app"
+    }
 }
