@@ -1,14 +1,11 @@
-import cheerify from '../../utils/cheerify/cheerify';
+import domify from '../../utils/domify/domify'
 
 const extractHeadword = pageMarkup => {
-	const $ = cheerify(pageMarkup);
+    const headword = domify(pageMarkup)
+        .querySelector('h1.pagetitle') // I'm adding h1 in selector, because page has two .pagetitle elements, and one of them is span
+        .textContent.trim()
 
-	const headword =
-		$('h1.pagetitle') // I add h1 in selector, because page has two .pagetitle elements, and one of them is span
-			.text()
-			.trim();
-
-	return headword;
+    return headword
 }
 
-export default extractHeadword;
+export default extractHeadword

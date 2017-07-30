@@ -1,14 +1,15 @@
-import cheerify from '../../utils/cheerify/cheerify';
+import domify from '../../utils/domify/domify'
 
 const extractAntonym = exampleGroupMarkup => {
-	const $ = cheerify(exampleGroupMarkup);
+    const antonym = [
+        ...domify(exampleGroupMarkup).querySelectorAll(
+            '.PROPFORM, .PROPFORMPREP, .COLLO, .LINKWORD, .LEXUNIT' // all kinds of form classes
+        )
+    ]
+        .map(node => node.textContent.trim())
+        .join(' ')
 
-	const antonym =
-		$('.PROPFORM, .PROPFORMPREP, .COLLO, .LINKWORD, .LEXUNIT') // all kinds of form classes
-			.text()
-			.trim();
-
-	return antonym;
+    return antonym
 }
 
-export default extractAntonym;
+export default extractAntonym

@@ -15,7 +15,6 @@
     "react-test-renderer": "^15.6.1"
   },
   "dependencies": {
-    "cheerio": "^0.22.0",
     "he": "^1.1.1",
     "lodash.debounce": "^4.0.8",
     "material-ui": "^0.18.3",

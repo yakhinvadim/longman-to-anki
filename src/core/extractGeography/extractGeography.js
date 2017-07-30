@@ -1,14 +1,15 @@
-import cheerify from '../../utils/cheerify/cheerify';
+import domify from '../../utils/domify/domify'
 
 const extractGeography = senseMarkup => {
-	const $ = cheerify(senseMarkup);
+    const geographyNode = domify(senseMarkup).querySelector('.GEO')
 
-	const geography =
-		$('.GEO')
-			.text()
-			.trim()
+    if (!geographyNode) {
+        return ''
+    }
 
-	return geography;
+    const geography = geographyNode.textContent.trim()
+
+    return geography
 }
 
-export default extractGeography;
+export default extractGeography
