@@ -1,4 +1,5 @@
 import domify from '../../utils/domify/domify'
+import R from 'ramda'
 
 const notBadgeNode = node =>
     !(node.classList && node.classList.contains('synopp')) // badge with text "SYN" or "OPP"
@@ -12,7 +13,7 @@ const extractSynonym = senseMarkup => {
 
     const synonym = [...synonymWrapper.childNodes]
         .filter(notBadgeNode)
-        .map(child => child.textContent)
+        .map(R.prop('textContent'))
         .join(' ')
         .trim()
 

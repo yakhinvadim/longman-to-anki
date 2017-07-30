@@ -3,7 +3,7 @@ import splitBySelector from '../../utils/splitBySelector/splitBySelector'
 import domify from '../../utils/domify/domify'
 
 const getDefinition = R.pipe(
-    R.map(R.pipe(domify, node => node.textContent, R.trim)),
+    R.map(R.pipe(domify, R.prop('textContent'), R.trim)),
     R.head
 )
 

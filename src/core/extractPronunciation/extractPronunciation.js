@@ -3,10 +3,10 @@ import domify from '../../utils/domify/domify'
 const extractPronunciation = pageMarkup => {
     const pronunciation = [
         ...domify(pageMarkup)
-            .querySelector('.PronCodes')
+            .querySelector('.PronCodes') // there are several .PronCodes on each page, we need the first one
             .querySelectorAll('.PRON, .AMEVARPRON')
     ]
-        .map(element => element.textContent.trim())
+        .map(node => node.textContent.trim())
         .join(' ')
 
     return pronunciation
