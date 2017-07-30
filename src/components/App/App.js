@@ -40,7 +40,10 @@ export default class App extends React.Component {
     }
 
     debouncedComposeCards = debounce(() => {
+        this.setState({ wordsDataArr: [] })
+
         const words = splitByWord(this.state.inputValue)
+
         R.map(wordToData, words).forEach(async (request, i) => {
             const wordData = await request
 
