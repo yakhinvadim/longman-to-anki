@@ -21,7 +21,7 @@
         "material-ui": "^0.18.3",
         "ramda": "^0.24.1",
         "react": "^15.6.1",
-        "react-dom": "^15.6.1",
+        "react-dom": "^16.0.0",
         "react-github-corner": "^0.3.0",
         "react-tap-event-plugin": "^2.0.1"
     },
