@@ -4,7 +4,7 @@
     "homepage": "https://yakhinvadim.github.io/longman-to-anki/",
     "private": true,
     "devDependencies": {
-        "enzyme": "^2.8.2",
+        "enzyme": "^3.0.0",
         "fetch-mock": "^5.12.1",
         "gh-pages": "^1.0.0",
         "husky": "^0.14.0",
