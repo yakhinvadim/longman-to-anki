@@ -4,8 +4,9 @@
     "homepage": "https://yakhinvadim.github.io/longman-to-anki/",
     "private": true,
     "devDependencies": {
-        "enzyme": "^2.8.2",
-        "fetch-mock": "^5.12.1",
+        "enzyme": "^3.2.0",
+        "enzyme-adapter-react-16": "^1.1.0",
+        "fetch-mock": "^5.13.1",
         "gh-pages": "^1.0.0",
         "husky": "^0.14.0",
         "lint-staged": "^4.0.0",
@@ -18,12 +19,11 @@
     "dependencies": {
         "he": "^1.1.1",
         "lodash.debounce": "^4.0.8",
-        "material-ui": "^0.18.3",
+        "material-ui": "^0.20.0",
         "ramda": "^0.24.1",
-        "react": "^15.6.1",
-        "react-dom": "^15.6.1",
-        "react-github-corner": "^2.0.0",
-        "react-tap-event-plugin": "^2.0.1"
+        "react": "^16.2.0",
+        "react-dom": "^16.2.0",
+        "react-github-corner": "^2.0.0"
     },
     "scripts": {
         "start": "react-scripts start",

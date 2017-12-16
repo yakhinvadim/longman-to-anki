@@ -1,7 +1,10 @@
-import React from 'react';
-import UserWords from './UserWords';
-import { shallow } from 'enzyme';
+import React from 'react'
+import UserWords from './UserWords'
+import Enzyme from 'enzyme'
+import Adapter from 'enzyme-adapter-react-16'
+
+Enzyme.configure({ adapter: new Adapter() })
 
 it('renders without crashing', () => {
-	shallow(<UserWords />);
-});
+    Enzyme.shallow(<UserWords />)
+})
