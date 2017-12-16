@@ -22,7 +22,7 @@
         "ramda": "^0.25.0",
         "react": "^16.2.0",
         "react-dom": "^16.2.0",
-        "react-github-corner": "^0.3.0"
+        "react-github-corner": "^2.0.0"
     },
     "scripts": {
         "start": "react-scripts start",
