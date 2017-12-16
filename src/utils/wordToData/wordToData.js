@@ -1,4 +1,4 @@
-import R from 'ramda'
+import * as R from 'ramda'
 import { unescape } from 'he'
 import composeQuery from '../composeQuery/composeQuery'
 import composeWordData from '../../core/composeWordData/composeWordData'

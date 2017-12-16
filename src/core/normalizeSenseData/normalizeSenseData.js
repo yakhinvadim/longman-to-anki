@@ -1,66 +1,70 @@
-import R from 'ramda';
+import * as R from 'ramda'
 
 const normalizeSenseData = R.curry(({ headword, pronunciation }, senseData) => {
-	
-	// data
+    // data
 
-	const { definition, situation, geography, synonym, antonym, examples, exampleGroups, subsenses } = senseData;
+    const {
+        definition,
+        situation,
+        geography,
+        synonym,
+        antonym,
+        examples,
+        exampleGroups,
+        subsenses
+    } = senseData
 
-	const commonData = {
-		definition,
-		situation,
-		geography,
-		synonym,
-		antonym,
-		pronunciation
-	};
+    const commonData = {
+        definition,
+        situation,
+        geography,
+        synonym,
+        antonym,
+        pronunciation
+    }
 
+    // normalize... functions
 
-	// normalize... functions
+    const normalizeExample = form => example => ({
+        ...commonData,
+        example,
+        form
+    })
 
-	const normalizeExample = form => example =>
-		({ ...commonData, example, form })
+    const normalizeExampleGroup = exampleGroup => {
+        const { form, examples: exampleGroupExamples } = exampleGroup
+        const cards = exampleGroupExamples.map(normalizeExample(form))
+        return cards
+    }
 
-	const normalizeExampleGroup = exampleGroup => {
-		const { form, examples: exampleGroupExamples } = exampleGroup;
-		const cards = exampleGroupExamples.map(normalizeExample(form));
-		return cards;
-	}
+    // different card types
 
+    const cardsFromExamples = R.map(normalizeExample(headword))(examples)
 
-	// different card types
+    const cardsFromExampleGroups = R.map(normalizeExampleGroup)(exampleGroups)
 
-	const cardsFromExamples = R.map(
-		normalizeExample(headword)
-	)(examples);
+    const cardsFromSubsenses = R.map(
+        normalizeSenseData({ headword, pronunciation })
+    )(subsenses)
 
-	const cardsFromExampleGroups = R.map(
-		normalizeExampleGroup
-	)(exampleGroups);
-	
-	const cardsFromSubsenses = R.map(
-		normalizeSenseData({ headword, pronunciation })
-	)(subsenses);
+    const cardFromDefinition = R.all(R.isEmpty, [
+        examples,
+        exampleGroups,
+        subsenses
+    ]) && definition
+        ? { ...commonData, form: headword }
+        : {}
 
-	const cardFromDefinition =
-		R.all(R.isEmpty, [examples, exampleGroups, subsenses]) && definition
-			? { ...commonData, form: headword }
-			: {};
+    // all cards
 
+    const cards = R.pipe(R.flatten, R.reject(R.isEmpty))([
+        cardsFromExamples,
+        cardsFromExampleGroups,
+        cardsFromSubsenses,
+        cardFromDefinition
+    ])
 
-	// all cards
+    return cards
+})
 
-	const cards = R.pipe(
-		R.flatten,
-		R.reject(R.isEmpty)
-	)([
-		cardsFromExamples,
-		cardsFromExampleGroups,
-		cardsFromSubsenses,
-		cardFromDefinition
-	]);
-
-	return cards;
-});
-
-export default normalizeSenseData;
+export default normalizeSenseData

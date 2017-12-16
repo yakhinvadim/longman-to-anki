@@ -1,5 +1,5 @@
 import React from 'react'
-import R from 'ramda'
+import * as R from 'ramda'
 import debounce from 'lodash.debounce'
 
 import normalizeWordData from '../../core/normalizeWordData/normalizeWordData'

@@ -1,4 +1,4 @@
-import R from 'ramda'
+import * as R from 'ramda'
 import splitBySelector from '../../utils/splitBySelector/splitBySelector'
 import domify from '../../utils/domify/domify'
 

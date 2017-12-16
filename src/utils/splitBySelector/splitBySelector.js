@@ -1,4 +1,4 @@
-import R from 'ramda'
+import * as R from 'ramda'
 import domify from '../../utils/domify/domify'
 
 const splitBySelector = ({ selector, onlyChildren = false }, markup) => {

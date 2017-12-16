@@ -1,5 +1,5 @@
 import domify from '../../utils/domify/domify'
-import R from 'ramda'
+import * as R from 'ramda'
 
 const notBadgeNode = node =>
     !(node.classList && node.classList.contains('synopp')) // badge with text "SYN" or "OPP"

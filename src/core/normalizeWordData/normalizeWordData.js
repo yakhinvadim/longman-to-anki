@@ -1,14 +1,14 @@
-import R from 'ramda';
-import normalizeEntryData from '../normalizeEntryData/normalizeEntryData';
+import * as R from 'ramda'
+import normalizeEntryData from '../normalizeEntryData/normalizeEntryData'
 
-const normalizeWordData = (wordData) => {
-	const { headword, pronunciation, entries } = wordData;
+const normalizeWordData = wordData => {
+    const { headword, pronunciation, entries } = wordData
 
-	const cards = R.map(
-		normalizeEntryData({ headword, pronunciation })
-	)(entries);
+    const cards = R.map(normalizeEntryData({ headword, pronunciation }))(
+        entries
+    )
 
-	return cards;
+    return cards
 }
 
-export default normalizeWordData;
+export default normalizeWordData
