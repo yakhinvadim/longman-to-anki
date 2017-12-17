@@ -1,6 +1,8 @@
 import React from 'react'
 import * as R from 'ramda'
 import debounce from 'lodash.debounce'
+import AnkiExport from 'anki-apkg-export'
+import { saveAs } from 'file-saver'
 
 import normalizeWordData from '../../core/normalizeWordData/normalizeWordData'
 import makeCard from '../../core/makeCard/makeCard'
@@ -17,16 +19,31 @@ import ImportOptions from '../ImportOptions/ImportOptions'
 import DownloadButton from '../DownloadButton/DownloadButton'
 import ResultCards from '../ResultCards/ResultCards'
 import UserWords from '../UserWords/UserWords'
+import DeckName from '../DeckName/DeckName'
 
 import './App.css'
 
 const sanitizeForFilename = R.pipe(R.replace(/ /g, ''), R.replace(/,/g, '_'))
 
+const template = {
+    css: `
+			.card { font-family: arial; font-size: 20px; text-align: center; color: black; background-color: white; }
+			.lta-example { font-style: italic; } 
+			.lta-form { font-weight: bold; }
+		`
+}
+
 export default class App extends React.Component {
     state = {
         inputValue: '',
         wordsDataArr: [],
-        showImportOptions: false
+        deckName: 'English words'
+    }
+
+    handleDeckNameChange = event => {
+        this.setState({
+            deckName: event.target.value
+        })
     }
 
     handleInputChange = async event => {
@@ -57,10 +74,27 @@ export default class App extends React.Component {
         })
     }, 500)
 
-    handleDownload = () => {
-        this.setState({
-            showImportOptions: true
+    handleDownload = event => {
+        event.preventDefault()
+
+        const deck = new AnkiExport(this.state.deckName, template)
+
+        const cardsArr = R.pipe(
+            R.filter(Boolean), // reject items from wordsDataArr, which didn't recieve response yet
+            R.map(normalizeWordData),
+            R.flatten,
+            R.reject(R.isEmpty),
+            R.map(makeCard)
+        )(this.state.wordsDataArr)
+
+        cardsArr.forEach(card => {
+            deck.addCard(card.front, card.back)
         })
+
+        deck
+            .save()
+            .then(file => saveAs(file, `${this.state.deckName}.apkg`))
+            .catch(console.error)
     }
 
     render() {
@@ -69,7 +103,8 @@ export default class App extends React.Component {
             R.map(normalizeWordData),
             R.flatten,
             R.reject(R.isEmpty),
-            R.map(makeCard)
+            R.map(makeCard),
+            R.map(card => `${card.front}#${card.back}`)
         )(this.state.wordsDataArr)
 
         const cards = R.join('\n')(cardsArr)
@@ -109,6 +144,11 @@ export default class App extends React.Component {
 
                 {cards && <ResultCards value={cards} />}
 
+                <DeckName
+                    value={this.state.deckName}
+                    onChange={this.handleDeckNameChange}
+                />
+
                 <div className="App__download-section">
                     <span className="App__total">
                         {totals}
@@ -122,8 +162,6 @@ export default class App extends React.Component {
                         disabled={!cards}
                     />
                 </div>
-
-                {this.state.showImportOptions && <ImportOptions />}
             </div>
         )
     }
