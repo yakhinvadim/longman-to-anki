@@ -1,6 +1,5 @@
 import * as R from 'ramda'
 
-const sideDelimiter = '#'
 const newLine = '<br>'
 const verticalOffset = '<br><br>' // I don't use css-margins for offset, because I want cards to be styled "out of box", even without css styles
 
@@ -46,7 +45,7 @@ const makeCard = ({
 
     // card sides
 
-    const frontSide = example
+    const front = example
         ? join([
               cardExample,
               cardMaybeSituation,
@@ -63,13 +62,13 @@ const makeCard = ({
               cardMaybeGeography
           ])
 
-    const backSide = example
+    const back = example
         ? join([cardDefinition, cardMaybeSynonym, cardMaybeAntonym])
         : join([cardForm, cardMaybePronunciation])
 
     // card
 
-    const card = join([frontSide, sideDelimiter, backSide])
+    const card = { front, back }
 
     return card
 }

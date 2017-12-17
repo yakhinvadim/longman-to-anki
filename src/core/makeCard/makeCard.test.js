@@ -14,15 +14,14 @@ const join = R.join('')
 
 describe('makeCard', () => {
     it('make correct card if example passed (minimum card parts)', () => {
-        expect(makeCard({ example, definition, form })).toBe(
-            join([
+        expect(makeCard({ example, definition, form })).toEqual({
+            front: join([
                 `<span class="lta-example">example</span>`,
                 `<br><br>`,
-                `<span class="lta-form">form</span>`,
-                `#`,
-                `<span class="lta-definition">definition</span>`
-            ])
-        )
+                `<span class="lta-form">form</span>`
+            ]),
+            back: '<span class="lta-definition">definition</span>'
+        })
     })
 
     it('make correct card if example is passed (maximum card parts)', () => {
@@ -37,30 +36,28 @@ describe('makeCard', () => {
                 synonym,
                 antonym
             })
-        ).toBe(
-            join([
+        ).toEqual({
+            front: join([
                 `<span class="lta-example">example</span>`,
                 `<br><span class="lta-situation">(situation)</span>`,
                 `<br><span class="lta-geography">(geography)</span>`,
                 `<br><br>`,
                 `<span class="lta-form">form</span>`,
-                `<br><span class="lta-pronunciation">[pronunciation]</span>`,
-                `#`,
+                `<br><span class="lta-pronunciation">[pronunciation]</span>`
+            ]),
+            back: join([
                 `<span class="lta-definition">definition</span>`,
                 `<br><span class="lta-synonym">(synonym: synonym)</span>`,
                 `<br><span class="lta-antonym">(antonym: antonym)</span>`
             ])
-        )
+        })
     })
 
     it('make correct card if no example passed (minimum card parts)', () => {
-        expect(makeCard({ definition, form })).toBe(
-            join([
-                `<span class="lta-definition">definition</span>`,
-                `#`,
-                `<span class="lta-form">form</span>`
-            ])
-        )
+        expect(makeCard({ definition, form })).toEqual({
+            front: '<span class="lta-definition">definition</span>',
+            back: '<span class="lta-form">form</span>'
+        })
     })
 
     it('make correct card if no example passed (maximum card parts)', () => {
@@ -74,17 +71,18 @@ describe('makeCard', () => {
                 synonym,
                 antonym
             })
-        ).toBe(
-            join([
+        ).toEqual({
+            front: join([
                 `<span class="lta-definition">definition</span>`,
                 `<br><span class="lta-synonym">(synonym: synonym)</span>`,
                 `<br><span class="lta-antonym">(antonym: antonym)</span>`,
                 `<br><span class="lta-situation">(situation)</span>`,
-                `<br><span class="lta-geography">(geography)</span>`,
-                `#`,
+                `<br><span class="lta-geography">(geography)</span>`
+            ]),
+            back: join([
                 `<span class="lta-form">form</span>`,
                 `<br><span class="lta-pronunciation">[pronunciation]</span>`
             ])
-        )
+        })
     })
 })
