@@ -39,15 +39,32 @@ export default class App extends React.Component {
         deckName: 'English words'
     }
 
+    componentDidMount() {
+        const storageInputValue = localStorage.getItem('inputValue')
+        if (storageInputValue) {
+            this.setState({ inputValue: storageInputValue })
+            this.debouncedComposeCards()
+        }
+
+        const storageDeckName = localStorage.getItem('deckName')
+        if (storageDeckName) {
+            this.setState({ deckName: storageDeckName })
+        }
+    }
+
     handleDeckNameChange = event => {
+        const deckName = event.target.value
+
+        localStorage.setItem('deckName', deckName)
         this.setState({
-            deckName: event.target.value
+            deckName
         })
     }
 
     handleInputChange = async event => {
         const inputValue = event.target.value
 
+        localStorage.setItem('inputValue', inputValue)
         this.setState({
             inputValue
         })
