@@ -2,8 +2,10 @@ import * as R from 'ramda'
 import splitBySelector from '../../utils/splitBySelector/splitBySelector'
 import composeExampleGroupData from '../composeExampleGroupData/composeExampleGroupData'
 import extractDefinition from '../extractDefinition/extractDefinition'
-import extractSynonym from '../extractSynonym/extractSynonym'
-import extractAntonym from '../extractAntonym/extractAntonym'
+import {
+    extractSynonym,
+    extractAntonym
+} from '../extractSynonymOrAntonym/extractSynonymOrAntonym'
 import extractSituation from '../extractSituation/extractSituation'
 import extractGeography from '../extractGeography/extractGeography'
 import extractExamples from '../extractExamples/extractExamples'
