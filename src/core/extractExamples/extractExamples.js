@@ -7,13 +7,11 @@ import {
 } from '../../utils/stringNormalizers/stringNormalizers'
 
 const removeGlossary = R.replace(/\(=.*\)/g, '')
-const fixNbsp = R.replace(/&nbsp;/g, ' ')
 const fixSeparatedPeriod = R.replace(/ \./g, '.')
 
 const cleanse = R.pipe(
     removeGlossary,
     replaceNewlineWithSpace,
-    fixNbsp,
     fixDoubleWhitespace,
     fixSeparatedPeriod,
     R.trim
