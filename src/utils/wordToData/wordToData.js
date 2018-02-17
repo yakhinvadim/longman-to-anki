@@ -3,10 +3,16 @@ import { unescape } from 'he'
 import composeQuery from '../composeQuery/composeQuery'
 import composeWordData from '../../core/composeWordData/composeWordData'
 import extractHeadword from '../../core/extractHeadword/extractHeadword'
+import {
+    fixDoubleWhitespace,
+    replaceNewlineWithSpace
+} from '../stringNormalizers/stringNormalizers'
 
-const removeDoubleSpace = R.replace(/ {2}/gm, '')
-const removeNewLines = R.replace(/\n/gm, '')
-const normalizeMarkup = R.pipe(unescape, removeDoubleSpace, removeNewLines)
+const normalizeMarkup = R.pipe(
+    unescape,
+    fixDoubleWhitespace,
+    replaceNewlineWithSpace
+)
 
 const isNotWordPage = markup => extractHeadword(markup) === null
 

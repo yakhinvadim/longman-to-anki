@@ -1,7 +1,7 @@
 import * as R from 'ramda'
+import { fixDoubleWhitespace } from '../stringNormalizers/stringNormalizers'
 
 const someSymbolsDelete = R.replace(/[(!?.,)]/g, '')
-const fixDoubleSpaces = R.replace(/ {2}/g, ' ')
 const someSymbolsToHyphens = R.replace(/[/ ’]/g, '-')
 
 const composeQuery = word => {
@@ -9,7 +9,7 @@ const composeQuery = word => {
         R.toLower,
         someSymbolsDelete,
         R.trim,
-        fixDoubleSpaces,
+        fixDoubleWhitespace,
         someSymbolsToHyphens
     )(word)
 
