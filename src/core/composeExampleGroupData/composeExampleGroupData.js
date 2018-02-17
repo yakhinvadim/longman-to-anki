@@ -1,16 +1,16 @@
-import extractExamples from '../extractExamples/extractExamples';
-import extractForm from '../extractForm/extractForm';
+import extractExamples from '../extractExamples/extractExamples'
+import extractForm from '../extractForm/extractForm'
 
 const composeExampleGroupData = exampleGroupMarkup => {
-	const form = extractForm(exampleGroupMarkup);
-	const examples = extractExamples(exampleGroupMarkup)
+    const form = extractForm(exampleGroupMarkup)
+    const examples = extractExamples(exampleGroupMarkup)
 
-	const exampleGroupData = {
-		form,
-		examples
-	};
+    const exampleGroupData = {
+        form,
+        examples
+    }
 
-	return exampleGroupData;
+    return exampleGroupData
 }
 
-export default composeExampleGroupData;
+export default composeExampleGroupData
