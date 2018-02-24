@@ -2,11 +2,13 @@ import * as R from 'ramda'
 import normalizeEntryData from '../normalizeEntryData/normalizeEntryData'
 
 const normalizeWordData = wordData => {
-    const { headword, pronunciation, entries } = wordData
+    const { headword, pronunciation, frequency, entries } = wordData
 
-    const cards = R.map(normalizeEntryData({ headword, pronunciation }))(
-        entries
-    )
+    const cards = R.pipe(
+        R.map(normalizeEntryData({ headword, pronunciation, frequency })),
+        R.flatten,
+        R.reject(R.isEmpty)
+    )(entries)
 
     return cards
 }

@@ -1,6 +1,4 @@
 import React from 'react'
-import * as R from 'ramda'
-import debounce from 'lodash.debounce'
 import AnkiExport from 'anki-apkg-export'
 import { saveAs } from 'file-saver'
 
@@ -10,10 +8,9 @@ import makeCard from '../../core/makeCard/makeCard'
 import splitByWord from '../../utils/splitByWord/splitByWord'
 import maybePluralize from '../../utils/maybePluralize/maybePluralize'
 import wordToData from '../../utils/wordToData/wordToData'
-import getDateString from '../../utils/getDateString/getDateString'
 
 import GithubCorner from 'react-github-corner'
-import LinearProgress from 'material-ui/LinearProgress'
+// import LinearProgress from 'material-ui/LinearProgress'
 import Header from '../Header/Header'
 import DownloadButton from '../DownloadButton/DownloadButton'
 import ResultCards from '../ResultCards/ResultCards'
@@ -21,8 +18,6 @@ import UserWords from '../UserWords/UserWords'
 import DeckName from '../DeckName/DeckName'
 
 import './App.css'
-
-const sanitizeForFilename = R.pipe(R.replace(/ /g, ''), R.replace(/,/g, '_'))
 
 const template = {
     css: `
@@ -34,74 +29,100 @@ const template = {
 
 export default class App extends React.Component {
     state = {
+        words: [],
         inputValue: '',
-        wordsDataArr: [],
+        wordsCards: {},
         deckName: 'English words'
     }
 
     componentDidMount() {
-        const storageInputValue = localStorage.getItem('inputValue')
-        if (storageInputValue) {
-            this.setState({ inputValue: storageInputValue })
-            this.debouncedComposeCards()
-        }
-
-        const storageDeckName = localStorage.getItem('deckName')
-        if (storageDeckName) {
-            this.setState({ deckName: storageDeckName })
+        try {
+            if (localStorage.state) {
+                this.setState(JSON.parse(localStorage.state))
+            }
+        } catch (error) {
+            console.error(error)
         }
     }
 
-    handleDeckNameChange = event => {
-        const deckName = event.target.value
+    componentDidUpdate(prevProps, prevState) {
+        localStorage.state = JSON.stringify(this.state)
+    }
 
-        localStorage.setItem('deckName', deckName)
+    handleDeckNameChange = event => {
         this.setState({
-            deckName
+            deckName: event.target.value
         })
     }
 
     handleInputChange = async event => {
-        const inputValue = event.target.value
-
-        localStorage.setItem('inputValue', inputValue)
         this.setState({
-            inputValue
+            inputValue: event.target.value
         })
-
-        this.debouncedComposeCards()
     }
 
-    debouncedComposeCards = debounce(() => {
-        this.setState({ wordsDataArr: [] })
+    handleDeleteButtonClick = wordToDelete => () => {
+        this.setState(prevState => ({
+            words: prevState.words.filter(word => word !== wordToDelete),
+            wordsCards: { ...prevState.wordsCards, [wordToDelete]: undefined }
+        }))
+    }
 
-        const words = splitByWord(this.state.inputValue)
+    handleSubmit = event => {
+        event.preventDefault()
 
-        R.map(wordToData, words).forEach(async (request, i) => {
-            const wordData = await request
+        if (this.state.inputValue === '') {
+            return
+        }
 
-            this.setState(prevState => {
-                const newWordsDataArr = [...prevState.wordsDataArr]
-                newWordsDataArr[i] = wordData
-                return {
-                    wordsDataArr: newWordsDataArr
-                }
-            })
-        })
-    }, 500)
+        const isMultilineInputValue = /\n/.test(this.state.inputValue)
+        const newWords = isMultilineInputValue
+            ? splitByWord(this.state.inputValue)
+            : [this.state.inputValue]
+
+        this.setState(
+            prevState => ({
+                words: [...newWords, ...prevState.words],
+                inputValue: ''
+            }),
+            () => {
+                this.state.words.map(async word => {
+                    const wordData = await wordToData(word)
+
+                    if (!wordData) {
+                        this.setState(prevState => ({
+                            wordsCards: {
+                                ...prevState.wordsCards,
+                                [word]: null
+                            }
+                        }))
+                        return
+                    }
+
+                    this.setState(prevState => ({
+                        wordsCards: {
+                            ...prevState.wordsCards,
+                            [wordData.headword]: normalizeWordData(wordData)
+                        },
+                        words: prevState.words.map(
+                            item => (item === word ? wordData.headword : item)
+                        )
+                    }))
+                })
+            }
+        )
+    }
 
     handleDownload = event => {
         event.preventDefault()
 
         const deck = new AnkiExport(this.state.deckName, template)
 
-        const cardsArr = R.pipe(
-            R.filter(Boolean), // reject items from wordsDataArr, which didn't recieve response yet
-            R.map(normalizeWordData),
-            R.flatten,
-            R.reject(R.isEmpty),
-            R.map(makeCard)
-        )(this.state.wordsDataArr)
+        const cardsArr = this.state.words
+            .reverse()
+            .map(word => this.state.wordsCards[word])
+            .reduce((acc, curr) => (curr ? acc.concat(...curr) : acc), [])
+            .map(makeCard)
 
         cardsArr.forEach(card => {
             deck.addCard(card.front, card.back)
@@ -113,30 +134,25 @@ export default class App extends React.Component {
             .catch(console.error)
     }
 
+    handleEnterPress = event => {
+        if (event.key === 'Enter' && event.shiftKey === false) {
+            event.preventDefault()
+            this.handleSubmit(event)
+        }
+    }
+
     render() {
-        const cardsArr = R.pipe(
-            R.filter(Boolean), // reject non-existent word items and items, which didn't recieve response yet
-            R.map(normalizeWordData),
-            R.flatten,
-            R.reject(R.isEmpty),
-            R.map(makeCard),
-            R.map(card => `${card.front}#${card.back}`)
-        )(this.state.wordsDataArr)
-
-        const cards = R.join('\n')(cardsArr)
-
-        const wordsTotalNumber = this.state.wordsDataArr.length
-        const cardsTotalNumber = cardsArr.length
+        const wordsTotalNumber = this.state.words.length
+        const cardsTotalNumber = Object.values(
+            this.state.wordsCards
+        ).reduce((acc, curr) => {
+            return acc + (curr ? curr.length : 0)
+        }, 0)
 
         const wordsTotal = maybePluralize(wordsTotalNumber, 'word')
         const cardsTotal = maybePluralize(cardsTotalNumber, 'card')
 
         const totals = `${wordsTotal}, ${cardsTotal}`
-
-        const date = getDateString()
-
-        const wordsAmount = splitByWord(this.state.inputValue).length
-        const wordsFetched = R.filter(Boolean)(this.state.wordsDataArr).length
 
         return (
             <div className="App">
@@ -147,18 +163,25 @@ export default class App extends React.Component {
 
                 <Header />
 
-                <LinearProgress
-                    mode="determinate"
-                    value={wordsFetched}
-                    max={wordsAmount}
-                />
+                <form onSubmit={this.handleSubmit}>
+                    <UserWords
+                        value={this.state.inputValue}
+                        onChange={this.handleInputChange}
+                        onKeyDown={this.handleEnterPress}
+                    />
+                </form>
 
-                <UserWords
-                    value={this.state.inputValue}
-                    onChange={this.handleInputChange}
-                />
+                {/* <LinearProgress
+					mode="determinate"
+					value={Object.keys(this.state.wordsCards).length}
+					max={this.state.words.length}
+				/> */}
 
-                {cards && <ResultCards value={cards} />}
+                <ResultCards
+                    words={this.state.words}
+                    wordsCards={this.state.wordsCards}
+                    onDeleteButtonClick={this.handleDeleteButtonClick}
+                />
 
                 <DeckName
                     value={this.state.deckName}
@@ -170,12 +193,8 @@ export default class App extends React.Component {
                         {totals}
                     </span>
                     <DownloadButton
-                        fileContent={encodeURIComponent(cards)}
-                        fileName={`longman-to-anki_${date}_${sanitizeForFilename(
-                            totals
-                        )}`}
                         onClick={this.handleDownload}
-                        disabled={!cards}
+                        disabled={!cardsTotalNumber}
                     />
                 </div>
             </div>
