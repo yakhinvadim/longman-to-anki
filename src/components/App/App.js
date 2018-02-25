@@ -39,6 +39,8 @@ export default class App extends React.Component {
         try {
             if (localStorage.state) {
                 this.setState(JSON.parse(localStorage.state))
+            } else {
+                this.setState({ inputValue: localStorage.inputValue })
             }
         } catch (error) {
             console.error(error)
