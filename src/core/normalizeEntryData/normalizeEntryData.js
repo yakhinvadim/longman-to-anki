@@ -1,12 +1,16 @@
 import * as R from 'ramda'
 import normalizeSenseData from '../normalizeSenseData/normalizeSenseData'
 
-const normalizeEntryData = R.curry(({ headword, pronunciation }, entryData) => {
-    const { senses } = entryData
+const normalizeEntryData = R.curry(
+    ({ headword, pronunciation, frequency }, entryData) => {
+        const { senses } = entryData
 
-    const cards = R.map(normalizeSenseData({ headword, pronunciation }))(senses)
+        const cards = R.map(
+            normalizeSenseData({ headword, pronunciation, frequency })
+        )(senses)
 
-    return cards
-})
+        return cards
+    }
+)
 
 export default normalizeEntryData

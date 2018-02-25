@@ -5,15 +5,12 @@ import TextField from 'material-ui/TextField'
 export default class UserWords extends PureComponent {
     static propTypes = {
         onChange: PropTypes.func.isRequired,
-        value: PropTypes.string
-    }
-
-    static defaultProps = {
-        value: ''
+        value: PropTypes.string.isRequired,
+        onKeyDown: PropTypes.func.isRequired
     }
 
     render() {
-        const { onChange, value } = this.props
+        const { onChange, value, onKeyDown } = this.props
 
         return (
             <TextField
@@ -26,6 +23,7 @@ export default class UserWords extends PureComponent {
                 multiLine
                 rows={3}
                 rowsMax={20}
+                onKeyDown={onKeyDown}
             />
         )
     }
