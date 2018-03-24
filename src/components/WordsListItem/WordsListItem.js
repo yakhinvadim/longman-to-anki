@@ -1,10 +1,16 @@
+import SvgIcon from 'material-ui-next/SvgIcon'
+
+// Tells `material-ui-icons` to use `material-ui-next/SvgIcon` module
+// instead of `material-ui/SvgIcon`.
+global.__MUI_SvgIcon__ = SvgIcon
+/* eslint-disable import/first */
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 import { ListItem } from 'material-ui/List'
 import Paper from 'material-ui/Paper'
 import CircularProgress from 'material-ui/CircularProgress'
-import Delete from 'material-ui/svg-icons/action/delete'
-import Clear from 'material-ui/svg-icons/content/clear'
+import Delete from 'material-ui-icons/Delete'
+import Clear from 'material-ui-icons/Clear'
 import IconButton from 'material-ui/IconButton'
 import {
     Table,
@@ -87,10 +93,7 @@ export default class WordsListItem extends PureComponent {
                         {cards[0].frequency}
                     </div>
                     <div className="WordsListItem__listItemWord">
-                        <span>
-                            {cards[0].headword}
-                        </span>
-                        {' '}
+                        <span>{cards[0].headword}</span>{' '}
                         <span className="WordsListItem__listItemCounter">
                             ({cards.length})
                         </span>
@@ -112,12 +115,8 @@ export default class WordsListItem extends PureComponent {
             leftIcon={<CircularProgress size={24} thickness={2} />}
             primaryText={
                 <div className="WordsListItem__listItemHeader">
-                    <div className="WordsListItem__listItemWord">
-                        {word}
-                    </div>
-                    <div className="WordsListItem__listItemDefinition">
-                        ...
-                    </div>
+                    <div className="WordsListItem__listItemWord">{word}</div>
+                    <div className="WordsListItem__listItemDefinition">...</div>
                 </div>
             }
             rightIconButton={this.renderDeleteButton(word)}
@@ -130,9 +129,7 @@ export default class WordsListItem extends PureComponent {
             leftIcon={<Clear />}
             primaryText={
                 <div className="WordsListItem__listItemHeader">
-                    <div className="WordsListItem__listItemWord">
-                        {word}
-                    </div>
+                    <div className="WordsListItem__listItemWord">{word}</div>
                     <div className="WordsListItem__listItemDefinition">
                         {reason}
                     </div>
