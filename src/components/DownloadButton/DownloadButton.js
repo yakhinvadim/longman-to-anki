@@ -1,22 +1,23 @@
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
-import RaisedButton from 'material-ui/RaisedButton'
+import Button from 'material-ui-next/Button'
 
 export default class DownloadButton extends PureComponent {
-    static propTypes = {
-        onClick: PropTypes.func.isRequired,
-        disabled: PropTypes.bool.isRequired
-    }
+	static propTypes = {
+		onClick: PropTypes.func.isRequired,
+		disabled: PropTypes.bool.isRequired
+	}
 
-    render() {
-        return (
-            <RaisedButton
-                label="Download anki deck"
-                onClick={this.props.onClick}
-                disabled={this.props.disabled}
-                primary
-                buttonStyle={{ verticalAlign: 'initial' }}
-            />
-        )
-    }
+	render() {
+		return (
+			<Button
+				variant="raised"
+				onClick={this.props.onClick}
+				disabled={this.props.disabled}
+				color="primary"
+			>
+				Download anki deck
+			</Button>
+		)
+	}
 }
