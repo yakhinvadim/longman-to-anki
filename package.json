@@ -7,7 +7,7 @@
         "enzyme": "^3.2.0",
         "enzyme-adapter-react-16": "^1.1.0",
         "fetch-mock": "^6.0.0",
-        "gh-pages": "^1.0.0",
+        "gh-pages": "^2.0.0",
         "husky": "^0.14.0",
         "lint-staged": "^7.0.0",
         "prettier": "^1.4.4",
