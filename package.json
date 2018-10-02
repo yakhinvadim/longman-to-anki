@@ -13,7 +13,7 @@
         "prettier": "^1.4.4",
         "prop-types": "^15.5.10",
         "react-addons-test-utils": "^15.6.0",
-        "react-scripts": "^1.0.17"
+        "react-scripts": "^2.0.3"
     },
     "dependencies": {
         "anki-apkg-export": "^4.0.2",
