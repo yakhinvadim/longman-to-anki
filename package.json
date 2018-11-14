@@ -17,7 +17,7 @@
     },
     "dependencies": {
         "anki-apkg-export": "^4.0.2",
-        "file-saver": "^1.3.3",
+        "file-saver": "^2.0.0",
         "he": "^1.1.1",
         "lodash.debounce": "^4.0.8",
         "material-ui": "^0.20.0",
