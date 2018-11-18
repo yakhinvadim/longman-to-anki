@@ -21,7 +21,7 @@
         "he": "^1.1.1",
         "lodash.debounce": "^4.0.8",
         "material-ui": "^0.20.0",
-        "ramda": "^0.25.0",
+        "ramda": "^0.26.0",
         "react": "^16.2.0",
         "react-dom": "^16.2.0",
         "react-github-corner": "^2.0.0",
