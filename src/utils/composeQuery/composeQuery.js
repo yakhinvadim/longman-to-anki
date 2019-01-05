@@ -13,11 +13,9 @@ const composeQuery = word => {
         someSymbolsToHyphens
     )(word)
 
-    const dictionaryUrl = `http://www.ldoceonline.com/dictionary/${escapedWord}`
+    const dictionaryUrl = `https://www.ldoceonline.com/dictionary/${escapedWord}`
 
-    const queryUrl = `https://query.yahooapis.com/v1/public/yql?q=${encodeURIComponent(
-        `SELECT * FROM htmlstring WHERE url="${dictionaryUrl}"`
-    )}&env=${encodeURIComponent('store://datatables.org/alltableswithkeys')}`
+    const queryUrl = `https://cors-anywhere.herokuapp.com/${dictionaryUrl}`
 
     return queryUrl
 }
