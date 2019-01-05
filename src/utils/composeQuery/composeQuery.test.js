@@ -1,15 +1,14 @@
 import composeQuery from './composeQuery';
 
-const beforeWord = 'https://query.yahooapis.com/v1/public/yql?q=SELECT%20*%20FROM%20htmlstring%20WHERE%20url%3D%22http%3A%2F%2Fwww.ldoceonline.com%2Fdictionary%2F';
-const afterWord = '%22&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys';
-const addFrame = word => `${beforeWord}${word}${afterWord}`
+const path = 'https://cors-anywhere.herokuapp.com/https://www.ldoceonline.com/dictionary/';
+const makeUrl = word => `${path}${word}`
 
 describe('composeQuery', () => {
 	it('composes correct query one simple word', () => {
 		expect(
 			composeQuery('set')
 		).toEqual(
-			addFrame('set')
+			makeUrl('set')
 		)
 	});
 
@@ -17,7 +16,7 @@ describe('composeQuery', () => {
 		expect(
 			composeQuery('fire alarm')
 		).toEqual(
-			addFrame('fire-alarm')
+			makeUrl('fire-alarm')
 		)
 	});
 	
@@ -25,7 +24,7 @@ describe('composeQuery', () => {
 		expect(
 			composeQuery('put/set pen to paper')
 		).toEqual(
-			addFrame('put-set-pen-to-paper')
+			makeUrl('put-set-pen-to-paper')
 		)
 	});
 
@@ -33,7 +32,7 @@ describe('composeQuery', () => {
 		expect(
 			composeQuery('set somebody’s teeth on edge')
 		).toEqual(
-			addFrame('set-somebody-s-teeth-on-edge')
+			makeUrl('set-somebody-s-teeth-on-edge')
 		)
 	});
 
@@ -41,7 +40,7 @@ describe('composeQuery', () => {
 		expect(
 			composeQuery('that does it!')
 		).toEqual(
-			addFrame('that-does-it')
+			makeUrl('that-does-it')
 		)
 	});
 
@@ -49,7 +48,7 @@ describe('composeQuery', () => {
 		expect(
 			composeQuery('what can I do you for?')
 		).toEqual(
-			addFrame('what-can-i-do-you-for')
+			makeUrl('what-can-i-do-you-for')
 		)
 	});
 
@@ -57,7 +56,7 @@ describe('composeQuery', () => {
 		expect(
 			composeQuery('a closed set (of something)')
 		).toEqual(
-			addFrame('a-closed-set-of-something')
+			makeUrl('a-closed-set-of-something')
 		)
 	});
 
@@ -65,7 +64,7 @@ describe('composeQuery', () => {
 		expect(
 			composeQuery('catch/get some Z’s')
 		).toEqual(
-			addFrame('catch-get-some-z-s')
+			makeUrl('catch-get-some-z-s')
 		)
 	});
 
@@ -73,7 +72,7 @@ describe('composeQuery', () => {
 		expect(
 			composeQuery('not ... but rather ...')
 		).toEqual(
-			addFrame('not-but-rather')
+			makeUrl('not-but-rather')
 		)
 	});
 
@@ -81,7 +80,7 @@ describe('composeQuery', () => {
 		expect(
 			composeQuery('I don’t want to sound/be ..., but ...')
 		).toEqual(
-			addFrame('i-don-t-want-to-sound-be-but')
+			makeUrl('i-don-t-want-to-sound-be-but')
 		)
 	});
 });
