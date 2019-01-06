@@ -25,4 +25,4 @@ const wordToData = async word => {
 }
 
 export { normalizeMarkup }
-export default R.memoize(wordToData)
+export default R.memoizeWith(R.toString, wordToData)
