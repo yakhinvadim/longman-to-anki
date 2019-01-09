@@ -1,61 +1,42 @@
-.WordsListItem__listItemHeader {
+.WordsListItem__header {
 	display: flex;
+	flex: 1;
+	align-items: center;
 }
 
-.WordsListItem__listItemFrequency {
+.WordsListItem__icon {
 	color: red;
 	flex: 0 0 56px;
 }
 
-.WordsListItem__listItemWord {
+.WordsListItem__word {
 	flex: 0 0 180px;
 }
 
-.WordsListItem__listItemCounter {
+.WordsListItem__counter {
 	color: #757575;
 }
 
-.WordsListItem__listItemDefinition {
+.WordsListItem__description {
 	flex: auto;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-	overflow: hidden;
 	font-size: 13px;
 	margin-right: 50px;
 }
 
-.WordsListItem__listItemDeleteButton {
+.WordsListItem__delete {
 	visibility: hidden;
-	opacity: 0;
-	transition: opacity 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, visibility 0ms 450ms;
 }
 
-.WordsListItem__listItem:hover .WordsListItem__listItemDeleteButton{
+.WordsListItem__listItem:hover .WordsListItem__delete {
 	visibility: visible;
-	transition: opacity 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, visibility 0ms 0ms;
-	opacity: 1;
-}
-
-.WordsListItem__tableWrapper {
-	max-height: 300px;
-	overflow: auto !important;
-	margin: 0px 16px 8px 16px !important
-}
-
-.WordsListItem__tableColumn {
-	white-space: unset !important;
-	padding-top: 5px !important;
-	padding-bottom: 5px !important;
 }
 
 @media (max-width: 600px) {
-	.WordsListItem__listItemDefinition {
+	.WordsListItem__description {
 		display: none;
 	}
 
-	.WordsListItem__listItemWord {
+	.WordsListItem__word {
 		flex: auto;
 	}
 }
-
-

@@ -9,12 +9,14 @@ import maybePluralize from '../../utils/maybePluralize/maybePluralize'
 import wordToData from '../../utils/wordToData/wordToData'
 
 import GithubCorner from 'react-github-corner'
-// import LinearProgress from 'material-ui/LinearProgress'
+
 import Header from '../Header/Header'
 import DownloadButton from '../DownloadButton/DownloadButton'
 import ResultCards from '../ResultCards/ResultCards'
 import UserWords from '../UserWords/UserWords'
 import DeckName from '../DeckName/DeckName'
+
+import Grid from '@material-ui/core/Grid'
 
 import './App.css'
 
@@ -105,8 +107,8 @@ export default class App extends React.Component {
 							...prevState.wordsCards,
 							[wordData.headword]: normalizeWordData(wordData)
 						},
-						words: prevState.words.map(
-							item => (item === word ? wordData.headword : item)
+						words: prevState.words.map(item =>
+							item === word ? wordData.headword : item
 						)
 					}))
 				})
@@ -146,11 +148,12 @@ export default class App extends React.Component {
 
 	render() {
 		const wordsTotalNumber = this.state.words.length
-		const cardsTotalNumber = Object.values(
-			this.state.wordsCards
-		).reduce((acc, curr) => {
-			return acc + (curr ? curr.length : 0)
-		}, 0)
+		const cardsTotalNumber = Object.values(this.state.wordsCards).reduce(
+			(acc, curr) => {
+				return acc + (curr ? curr.length : 0)
+			},
+			0
+		)
 
 		const wordsTotal = maybePluralize(wordsTotalNumber, 'word')
 		const cardsTotal = maybePluralize(cardsTotalNumber, 'card')
@@ -164,42 +167,46 @@ export default class App extends React.Component {
 					bannerColor="#3f51b5"
 				/>
 
-				<Header />
+				<Grid container spacing={16}>
+					<Grid item xs={12}>
+						<Header />
+					</Grid>
 
-				<form onSubmit={this.handleSubmit}>
-					<UserWords
-						value={this.state.inputValue}
-						onChange={this.handleInputChange}
-						onKeyDown={this.handleEnterPress}
-					/>
-				</form>
+					<Grid item xs={12}>
+						<form onSubmit={this.handleSubmit}>
+							<UserWords
+								value={this.state.inputValue}
+								onChange={this.handleInputChange}
+								onKeyDown={this.handleEnterPress}
+							/>
+						</form>
+					</Grid>
 
-				{/* <LinearProgress
-					mode="determinate"
-					value={Object.keys(this.state.wordsCards).length}
-					max={this.state.words.length}
-				/> */}
+					<Grid item xs={12}>
+						<ResultCards
+							words={this.state.words}
+							wordsCards={this.state.wordsCards}
+							onDeleteButtonClick={this.handleDeleteButtonClick}
+						/>
+					</Grid>
 
-				<ResultCards
-					words={this.state.words}
-					wordsCards={this.state.wordsCards}
-					onDeleteButtonClick={this.handleDeleteButtonClick}
-				/>
+					<Grid item xs={12}>
+						<DeckName
+							value={this.state.deckName}
+							onChange={this.handleDeckNameChange}
+						/>
+					</Grid>
 
-				<DeckName
-					value={this.state.deckName}
-					onChange={this.handleDeckNameChange}
-				/>
-
-				<div className="App__download-section">
-					<span className="App__total">
-						{totals}
-					</span>
-					<DownloadButton
-						onClick={this.handleDownload}
-						disabled={!cardsTotalNumber}
-					/>
-				</div>
+					<Grid item xs={12}>
+						<div className="App__download-section">
+							<span className="App__total">{totals}</span>
+							<DownloadButton
+								onClick={this.handleDownload}
+								disabled={!cardsTotalNumber}
+							/>
+						</div>
+					</Grid>
+				</Grid>
 			</div>
 		)
 	}
