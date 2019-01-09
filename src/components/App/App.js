@@ -1,5 +1,4 @@
 import React from 'react'
-import AnkiExport from 'anki-apkg-export'
 import { saveAs } from 'file-saver'
 
 import normalizeWordData from '../../core/normalizeWordData/normalizeWordData'
@@ -118,21 +117,23 @@ export default class App extends React.Component {
     handleDownload = event => {
         event.preventDefault()
 
-        const deck = new AnkiExport(this.state.deckName, template)
-
         const cardsArr = this.state.words
             .reverse()
             .map(word => this.state.wordsCards[word])
             .reduce((acc, curr) => (curr ? acc.concat(...curr) : acc), [])
             .map(makeCard)
 
-        cardsArr.forEach(card => {
-            deck.addCard(card.front, card.back)
+        fetch('https://micro-anki-yakhinvadim.now.sh/', {
+            method: 'POST',
+            headers: new Headers({ 'Content-Type': 'application/json' }),
+            body: JSON.stringify({
+                cards: cardsArr,
+                deckName: this.state.deckName,
+                template: template
+            })
         })
-
-        deck
-            .save()
-            .then(file => saveAs(file, `${this.state.deckName}.apkg`))
+            .then(res => res.blob())
+            .then(blob => saveAs(blob, `${this.state.deckName}.apkg`))
             .catch(console.error)
     }
 

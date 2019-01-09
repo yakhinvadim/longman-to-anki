@@ -1,49 +1,54 @@
 {
-	"name": "longman-to-anki",
-	"version": "1.0.0",
-	"homepage": "https://yakhinvadim.github.io/longman-to-anki/",
-	"private": true,
-	"devDependencies": {
-		"enzyme": "^3.2.0",
-		"enzyme-adapter-react-16": "^1.1.0",
-		"fetch-mock": "^6.0.0",
-		"gh-pages": "^1.0.0",
-		"husky": "^0.14.0",
-		"lint-staged": "^6.0.0",
-		"prettier": "^1.4.4",
-		"prop-types": "^15.5.10",
-		"react-addons-test-utils": "^15.6.0",
-		"react-scripts": "^1.0.17"
-	},
-	"dependencies": {
-		"anki-apkg-export": "^4.0.2",
-		"file-saver": "^1.3.3",
-		"he": "^1.1.1",
-		"lodash.debounce": "^4.0.8",
-		"material-ui": "^1.0.0-beta.38",
-		"material-ui-icons": "^1.0.0-beta.36",
-		"ramda": "^0.25.0",
-		"react": "^16.2.0",
-		"react-dom": "^16.2.0",
-		"react-github-corner": "^2.0.0",
-		"script-loader": "^0.7.2"
-	},
-	"scripts": {
-		"start": "react-scripts start",
-		"build": "react-scripts build",
-		"test": "react-scripts test --env=jsdom",
-		"eject": "react-scripts eject",
-		"precommit": "lint-staged",
-		"predeploy": "npm run build",
-		"deploy": "gh-pages -d build"
-	},
-	"lint-staged": {
-		"src/**/*.js": [
-			"prettier --single-quote --tab-width 4 --no-semi --write",
-			"git add"
-		]
-	},
-	"eslintConfig": {
-		"extends": "react-app"
-	}
+ "name": "longman-to-anki",
+ "version": "1.0.0",
+ "homepage": "https://yakhinvadim.github.io/longman-to-anki/",
+ "private": true,
+ "devDependencies": {
+  "enzyme": "^3.2.0",
+  "enzyme-adapter-react-16": "^1.1.0",
+  "fetch-mock": "^7.3.0",
+  "gh-pages": "^2.0.1",
+  "husky": "^1.3.1",
+  "lint-staged": "^8.1.0",
+  "prettier": "^1.4.4",
+  "prop-types": "^15.5.10",
+  "react-addons-test-utils": "^15.6.0",
+  "react-scripts": "^2.1.3"
+ },
+ "dependencies": {
+  "file-saver": "^2.0.0",
+  "he": "^1.1.1",
+  "lodash.debounce": "^4.0.8",
+  "material-ui": "^1.0.0-beta.38",
+  "material-ui-icons": "^1.0.0-beta.36",
+  "ramda": "^0.26.1",
+  "react": "^16.2.0",
+  "react-dom": "^16.2.0",
+  "react-github-corner": "^2.0.0",
+  "script-loader": "^0.7.2"
+ },
+ "scripts": {
+  "start": "react-scripts --max_old_space_size=4096 start",
+  "build": "react-scripts --max_old_space_size=4096 build",
+  "test": "react-scripts test",
+  "eject": "react-scripts eject",
+  "precommit": "lint-staged",
+  "predeploy": "npm run build",
+  "deploy": "gh-pages -d build"
+ },
+ "lint-staged": {
+  "src/**/*.js": [
+   "prettier --single-quote --tab-width 4 --no-semi --write",
+   "git add"
+  ]
+ },
+ "eslintConfig": {
+  "extends": "react-app"
+ },
+ "browserslist": [
+  ">0.2%",
+  "not dead",
+  "not ie <= 11",
+  "not op_mini all"
+ ]
 }
