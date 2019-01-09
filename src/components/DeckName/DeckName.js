@@ -18,6 +18,8 @@ export default class DeckName extends PureComponent {
 		return (
 			<TextField
 				label="Deck name"
+				helperText="You can add “::” to create a nested deck. For example: English::Words"
+				variant="outlined"
 				value={value}
 				onChange={onChange}
 				fullWidth

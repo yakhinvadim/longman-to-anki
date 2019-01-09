@@ -14,11 +14,12 @@ export default class UserWords extends PureComponent {
 
 		return (
 			<TextField
-				label="Type some words, you want to learn"
-				placeholder="example&#10;bear&#10;fire alarm"
+				label="Type the word, you want to learn"
+				placeholder="example"
+				helperText="You can enter several words at once. Type one word per line using 'Shift + Enter' to add new lines"
+				variant="outlined"
 				fullWidth
 				multiline
-				rows={3}
 				rowsMax={20}
 				value={value}
 				onChange={onChange}
