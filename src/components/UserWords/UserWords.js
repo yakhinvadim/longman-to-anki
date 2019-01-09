@@ -16,7 +16,7 @@ export default class UserWords extends PureComponent {
 			<TextField
 				label="Type the word, you want to learn"
 				placeholder="example"
-				helperText="You can enter several words at once. Type one word per line using 'Shift + Enter' to add new lines"
+				helperText="You can enter several words. Type one word per line using 'Shift + Enter' to add new lines"
 				variant="outlined"
 				fullWidth
 				multiline
