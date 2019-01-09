@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
-import Button from 'material-ui/Button'
+import Button from '@material-ui/core/Button'
 
 export default class DownloadButton extends PureComponent {
 	static propTypes = {

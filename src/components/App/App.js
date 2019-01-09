@@ -9,7 +9,7 @@ import maybePluralize from '../../utils/maybePluralize/maybePluralize'
 import wordToData from '../../utils/wordToData/wordToData'
 
 import GithubCorner from 'react-github-corner'
-// import LinearProgress from 'material-ui/LinearProgress'
+// import LinearProgress from '@material-ui/core/LinearProgress'
 import Header from '../Header/Header'
 import DownloadButton from '../DownloadButton/DownloadButton'
 import ResultCards from '../ResultCards/ResultCards'

@@ -1,19 +1,17 @@
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
-import { CircularProgress } from 'material-ui/Progress'
-import DeleteIcon from 'material-ui-icons/Delete'
-import Clear from 'material-ui-icons/Clear'
-import IconButton from 'material-ui/IconButton'
-import ExpansionPanel, {
-	ExpansionPanelDetails,
-	ExpansionPanelSummary
-} from 'material-ui/ExpansionPanel'
-import Table, {
-	TableBody,
-	TableHead,
-	TableCell,
-	TableRow
-} from 'material-ui/Table'
+import CircularProgress from '@material-ui/core/CircularProgress';
+import DeleteIcon from '@material-ui/icons/Delete'
+import Clear from '@material-ui/icons/Clear'
+import IconButton from '@material-ui/core/IconButton'
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 import './WordsListItem.css'
 
 const frequencyTooltip = `●●● high frequency words – indicates the top 3000 words
