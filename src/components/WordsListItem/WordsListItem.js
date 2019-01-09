@@ -1,23 +1,23 @@
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
-import CircularProgress from '@material-ui/core/CircularProgress';
+
+import CircularProgress from '@material-ui/core/CircularProgress'
+import IconButton from '@material-ui/core/IconButton'
+import ExpansionPanel from '@material-ui/core/ExpansionPanel'
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import Table from '@material-ui/core/Table'
+import TableBody from '@material-ui/core/TableBody'
+import TableCell from '@material-ui/core/TableCell'
+import TableHead from '@material-ui/core/TableHead'
+import TableRow from '@material-ui/core/TableRow'
+import Tooltip from '@material-ui/core/Tooltip'
+
 import DeleteIcon from '@material-ui/icons/Delete'
 import Clear from '@material-ui/icons/Clear'
-import IconButton from '@material-ui/core/IconButton'
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import './WordsListItem.css'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
-const frequencyTooltip = `●●● high frequency words – indicates the top 3000 words
-●●○ mid frequency words – indicates the next most important 3000 words 
-●○○ lower frequency words – indicates the less frequent yet important 3000 words
-○○○ low frequency words – indicates other words`
+import './WordsListItem.css'
 
 export default class WordsListItem extends PureComponent {
 	static propTypes = {
@@ -39,18 +39,16 @@ export default class WordsListItem extends PureComponent {
 	)
 
 	renderTable = arr => (
-		<div className="WordsListItem__tableWrapper">
-			<Table>
-				<TableHead>
-					<TableRow>
-						<TableCell>Form</TableCell>
-						<TableCell>Example</TableCell>
-						<TableCell>Definition</TableCell>
-					</TableRow>
-				</TableHead>
-				<TableBody>{arr.map(this.renderRow)}</TableBody>
-			</Table>
-		</div>
+		<Table>
+			<TableHead>
+				<TableRow>
+					<TableCell>Form</TableCell>
+					<TableCell>Example</TableCell>
+					<TableCell>Definition</TableCell>
+				</TableRow>
+			</TableHead>
+			<TableBody>{arr.map(this.renderRow)}</TableBody>
+		</Table>
 	)
 
 	renderDeleteButton = word => (
@@ -67,19 +65,26 @@ export default class WordsListItem extends PureComponent {
 			className="WordsListItem__listItem"
 			key={`${cards[0].headword} loaded`}
 		>
-			<ExpansionPanelSummary>
+			<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
 				<div className="WordsListItem__header">
-					<div
-						className="WordsListItem__icon"
-						title={frequencyTooltip}
+					<Tooltip
+						title={
+							<>
+								●●● – indicates the top 3000 words
+								<br />
+								●●○ – indicates the next most important 3000 words
+								<br />
+								●○○ – indicates the less frequent yet important 3000 words
+								<br />
+								○○○ – indicates other words
+							</>
+						}
 					>
-						{cards[0].frequency}
-					</div>
+						<div className="WordsListItem__icon">{cards[0].frequency}</div>
+					</Tooltip>
 					<div className="WordsListItem__word">
 						<span>{cards[0].headword}</span>{' '}
-						<span className="WordsListItem__counter">
-							({cards.length})
-						</span>
+						<span className="WordsListItem__counter">({cards.length})</span>
 					</div>
 					<div className="WordsListItem__description">
 						{cards[0].definition}
@@ -87,18 +92,13 @@ export default class WordsListItem extends PureComponent {
 					{this.renderDeleteButton(cards[0].headword)}
 				</div>
 			</ExpansionPanelSummary>
-			<ExpansionPanelDetails>
-				{this.renderTable(cards)}
-			</ExpansionPanelDetails>
+			<ExpansionPanelDetails>{this.renderTable(cards)}</ExpansionPanelDetails>
 		</ExpansionPanel>
 	)
 
 	renderLoadingWord = word => (
-		<ExpansionPanel
-			className="WordsListItem__listItem"
-			key={`${word} load`}
-		>
-			<ExpansionPanelSummary>
+		<ExpansionPanel className="WordsListItem__listItem" key={`${word} load`}>
+			<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
 				<div className="WordsListItem__header">
 					<div className="WordsListItem__icon">
 						<CircularProgress size={24} thickness={2} />
@@ -112,11 +112,8 @@ export default class WordsListItem extends PureComponent {
 	)
 
 	renderFailedWord = (word, reason) => (
-		<ExpansionPanel
-			className="WordsListItem__listItem"
-			key={`${word} fail`}
-		>
-			<ExpansionPanelSummary>
+		<ExpansionPanel className="WordsListItem__listItem" key={`${word} fail`}>
+			<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
 				<div className="WordsListItem__header">
 					<div className="WordsListItem__icon">
 						<Clear />

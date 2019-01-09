@@ -19,6 +19,6 @@ export default class ResultCards extends PureComponent {
 	)
 
 	render() {
-		return <div>{this.props.words.map(this.renderWord)}</div>
+		return <>{this.props.words.map(this.renderWord)}</>
 	}
 }

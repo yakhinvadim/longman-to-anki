@@ -1,7 +1,6 @@
 .WordsListItem__header {
 	display: flex;
-	flex: auto;
-	padding-right: 0 !important;
+	flex: 1;
 	align-items: center;
 }
 
@@ -20,26 +19,16 @@
 
 .WordsListItem__description {
 	flex: auto;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-	overflow: hidden;
 	font-size: 13px;
 	margin-right: 50px;
 }
 
 .WordsListItem__delete {
 	visibility: hidden;
-	width: 24px !important;
-	height: 24px !important;
 }
 
 .WordsListItem__listItem:hover .WordsListItem__delete {
 	visibility: visible;
-}
-
-.WordsListItem__tableWrapper {
-	max-height: 300px;
-	overflow: auto !important;
 }
 
 @media (max-width: 600px) {

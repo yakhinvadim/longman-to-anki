@@ -168,11 +168,11 @@ export default class App extends React.Component {
 				/>
 
 				<Grid container spacing={16}>
-					<Grid item item xs={12}>
+					<Grid item xs={12}>
 						<Header />
 					</Grid>
 
-					<Grid item item xs={12}>
+					<Grid item xs={12}>
 						<form onSubmit={this.handleSubmit}>
 							<UserWords
 								value={this.state.inputValue}
@@ -182,7 +182,7 @@ export default class App extends React.Component {
 						</form>
 					</Grid>
 
-					<Grid item item xs={12}>
+					<Grid item xs={12}>
 						<ResultCards
 							words={this.state.words}
 							wordsCards={this.state.wordsCards}
@@ -190,14 +190,14 @@ export default class App extends React.Component {
 						/>
 					</Grid>
 
-					<Grid item item xs={12}>
+					<Grid item xs={12}>
 						<DeckName
 							value={this.state.deckName}
 							onChange={this.handleDeckNameChange}
 						/>
 					</Grid>
 
-					<Grid item item xs={12}>
+					<Grid item xs={12}>
 						<div className="App__download-section">
 							<span className="App__total">{totals}</span>
 							<DownloadButton
