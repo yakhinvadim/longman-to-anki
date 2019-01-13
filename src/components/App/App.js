@@ -33,7 +33,8 @@ export default class App extends React.Component {
 		words: [],
 		inputValue: '',
 		wordsCards: {},
-		deckName: 'English words'
+		deckName: 'English words',
+		isDeckBeingDownloaded: false
 	}
 
 	componentDidMount() {
@@ -125,18 +126,30 @@ export default class App extends React.Component {
 			.reduce((acc, curr) => (curr ? acc.concat(...curr) : acc), [])
 			.map(makeCard)
 
-		fetch('https://micro-anki-yakhinvadim.now.sh/', {
-			method: 'POST',
-			headers: new Headers({ 'Content-Type': 'application/json' }),
-			body: JSON.stringify({
-				cards: cardsArr,
-				deckName: this.state.deckName,
-				template: template
-			})
-		})
-			.then(res => res.blob())
-			.then(blob => saveAs(blob, `${this.state.deckName}.apkg`))
-			.catch(console.error)
+		this.setState(
+			{
+				isDeckBeingDownloaded: true
+			},
+			() => {
+				fetch('https://micro-anki-yakhinvadim.now.sh/', {
+					method: 'POST',
+					headers: new Headers({ 'Content-Type': 'application/json' }),
+					body: JSON.stringify({
+						cards: cardsArr,
+						deckName: this.state.deckName,
+						template: template
+					})
+				})
+					.then(res => res.blob())
+					.then(blob => saveAs(blob, `${this.state.deckName}.apkg`))
+					.then(() => {
+						this.setState({
+							isDeckBeingDownloaded: false
+						})
+					})
+					.catch(console.error)
+			}
+		)
 	}
 
 	handleEnterPress = event => {
@@ -203,6 +216,7 @@ export default class App extends React.Component {
 							<DownloadButton
 								onClick={this.handleDownload}
 								disabled={!cardsTotalNumber}
+								isLoading={this.state.isDeckBeingDownloaded}
 							/>
 						</div>
 					</Grid>
