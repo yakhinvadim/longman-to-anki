@@ -27,6 +27,11 @@
 	visibility: hidden;
 }
 
+.WordsListItem__tableWrapper {
+	width: auto;
+	overflow-x: scroll;
+}
+
 .WordsListItem__listItem:hover .WordsListItem__delete {
 	visibility: visible;
 }

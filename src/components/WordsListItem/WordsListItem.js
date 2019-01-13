@@ -39,16 +39,18 @@ export default class WordsListItem extends PureComponent {
 	)
 
 	renderTable = arr => (
-		<Table>
-			<TableHead>
-				<TableRow>
-					<TableCell>Form</TableCell>
-					<TableCell>Example</TableCell>
-					<TableCell>Definition</TableCell>
-				</TableRow>
-			</TableHead>
-			<TableBody>{arr.map(this.renderRow)}</TableBody>
-		</Table>
+		<div className="WordsListItem__tableWrapper">
+			<Table>
+				<TableHead>
+					<TableRow>
+						<TableCell>Form</TableCell>
+						<TableCell>Example</TableCell>
+						<TableCell>Definition</TableCell>
+					</TableRow>
+				</TableHead>
+				<TableBody>{arr.map(this.renderRow)}</TableBody>
+			</Table>
+		</div>
 	)
 
 	renderDeleteButton = word => (
