@@ -11,7 +11,7 @@ export default class DownloadButton extends PureComponent {
 	render() {
 		return (
 			<Button
-				variant="raised"
+				variant="contained"
 				onClick={this.props.onClick}
 				disabled={this.props.disabled}
 				color="primary"
