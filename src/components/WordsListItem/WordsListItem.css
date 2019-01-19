@@ -1,47 +1,47 @@
 .WordsListItem__header {
-	display: flex;
-	flex: 1;
-	align-items: center;
+    display: flex;
+    flex: 1;
+    align-items: center;
 }
 
 .WordsListItem__icon {
-	color: red;
-	flex: 0 0 56px;
+    color: red;
+    flex: 0 0 56px;
 }
 
 .WordsListItem__word {
-	flex: 0 0 180px;
+    flex: 0 0 180px;
 }
 
 .WordsListItem__counter {
-	color: #757575;
+    color: #757575;
 }
 
 .WordsListItem__description {
-	flex: auto;
-	font-size: 13px;
-	margin-right: 50px;
+    flex: auto;
+    font-size: 13px;
+    margin-right: 50px;
 }
 
 .WordsListItem__delete {
-	visibility: hidden;
+    visibility: hidden;
 }
 
 .WordsListItem__tableWrapper {
-	width: auto;
-	overflow-x: auto;
+    width: auto;
+    overflow-x: auto;
 }
 
 .WordsListItem__listItem:hover .WordsListItem__delete {
-	visibility: visible;
+    visibility: visible;
 }
 
 @media (max-width: 600px) {
-	.WordsListItem__description {
-		display: none;
-	}
+    .WordsListItem__description {
+        display: none;
+    }
 
-	.WordsListItem__word {
-		flex: auto;
-	}
+    .WordsListItem__word {
+        flex: auto;
+    }
 }

@@ -36,9 +36,14 @@
   "predeploy": "npm run build",
   "deploy": "gh-pages -d build"
  },
+ "husky": {
+     "hooks": {
+        "pre-commit": "lint-staged"
+     }
+ },
  "lint-staged": {
-  "src/**/*.js": [
-   "prettier --single-quote --tab-width 4 --no-semi --write",
+    "src/**/*.{js,jsx,ts,tsx,json,css,md}": [
+   "prettier --single-quote --no-semi --use-tabs false --tab-width 4 --write",
    "git add"
   ]
  },

@@ -1,4 +1,5 @@
 # How to get markup for mocks
+
 1. Open vocabulary page on ldoceonline
 2. In devtools find the element you need
 3. Right click -> "Edit as html"

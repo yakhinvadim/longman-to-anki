@@ -1,12 +1,12 @@
 .App {
-	font-family: 'Roboto', sans-serif;
-	max-width: 800px;
-	margin: 0 auto;
-	padding: 20px;
+    font-family: 'Roboto', sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
 .App__download-section {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
