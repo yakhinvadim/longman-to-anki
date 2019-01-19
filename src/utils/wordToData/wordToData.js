@@ -6,7 +6,11 @@ import extractHeadword from '../../core/extractHeadword/extractHeadword'
 
 const removeDoubleSpace = R.replace(/ {2}/gm, '')
 const removeNewLines = R.replace(/\n/gm, '')
-const normalizeMarkup = R.pipe(unescape, removeDoubleSpace, removeNewLines)
+const normalizeMarkup = R.pipe(
+    unescape,
+    removeDoubleSpace,
+    removeNewLines
+)
 
 const isNotWordPage = markup => extractHeadword(markup) === null
 

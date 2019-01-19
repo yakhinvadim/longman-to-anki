@@ -52,13 +52,10 @@ const normalizeSenseData = R.curry(
             normalizeSenseData({ headword, pronunciation, frequency })
         )(subsenses)
 
-        const cardFromDefinition = R.all(R.isEmpty, [
-            examples,
-            exampleGroups,
-            subsenses
-        ]) && definition
-            ? { ...commonData, form: headword }
-            : {}
+        const cardFromDefinition =
+            R.all(R.isEmpty, [examples, exampleGroups, subsenses]) && definition
+                ? { ...commonData, form: headword }
+                : {}
 
         // all cards
 

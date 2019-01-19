@@ -20,7 +20,13 @@ const cleanse = R.pipe(
 const extractExamples = senseOrExampleGroupMarkup => {
     const examples = R.pipe(
         splitBySelector({ selector: '.EXAMPLE', onlyChildren: true }),
-        R.map(R.pipe(domify, R.prop('textContent'), cleanse))
+        R.map(
+            R.pipe(
+                domify,
+                R.prop('textContent'),
+                cleanse
+            )
+        )
     )(senseOrExampleGroupMarkup)
 
     return examples
