@@ -6,10 +6,10 @@
 
 1. Type the words you want to learn.
 1. The web app will:
-   1. find the words in [Longman Dictionary](https://www.ldoceonline.com/),
-   1. scrape the data from dictionary entries,
-   1. create small and easy to learn flashcards,
-   1. compose an [Anki](http://ankisrs.net/) deck.
+    1. find the words in [Longman Dictionary](https://www.ldoceonline.com/),
+    1. scrape the data from dictionary entries,
+    1. create small and easy to learn flashcards,
+    1. compose an [Anki](http://ankisrs.net/) deck.
 1. Download the deck, import it by Anki and start to learn!
 
 ## Have any questions?

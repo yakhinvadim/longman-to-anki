@@ -1,14 +1,14 @@
 language: node_js
 node_js:
-- '10'
+    - '10'
 cache:
-  directories:
-  - node_modules
+    directories:
+        - node_modules
 before_deploy: npm run build
 deploy:
-  provider: pages
-  local_dir: build
-  skip_cleanup: true
-  github_token: $GITHUB_TOKEN
-  on:
-    branch: master
+    provider: pages
+    local_dir: build
+    skip_cleanup: true
+    github_token: $GITHUB_TOKEN
+    on:
+        branch: master
