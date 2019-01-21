@@ -12,13 +12,16 @@ fetchMock.get(composeQuery('asdfasdf'), asdfasdfMarkup)
 describe('wordToData', () => {
     it('returns null for non-existent word', () => {
         return wordToData('asdfasdf').then(data => {
-            expect(data).toEqual(null)
+            expect(data).toEqual({ status: 'word not found', payload: null })
         })
     })
 
     it('returns correct data for real word', () => {
         return wordToData('set').then(data => {
-            expect(data).toEqual(normalizeMarkup(setMarkup))
+            expect(data).toEqual({
+                status: 'ok',
+                payload: normalizeMarkup(setMarkup)
+            })
         })
     })
 })
