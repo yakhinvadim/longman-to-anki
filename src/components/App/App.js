@@ -93,11 +93,21 @@ export default class App extends React.Component {
                 this.state.words.map(async word => {
                     const wordData = await wordToData(word)
 
-                    if (!wordData) {
+                    if (wordData.status === 'offline') {
                         this.setState(prevState => ({
                             wordsCards: {
                                 ...prevState.wordsCards,
-                                [word]: null
+                                [word]: 'offline'
+                            }
+                        }))
+                        return
+                    }
+
+                    if (wordData.status === 'word not found') {
+                        this.setState(prevState => ({
+                            wordsCards: {
+                                ...prevState.wordsCards,
+                                [word]: 'word not found'
                             }
                         }))
                         return
@@ -106,10 +116,12 @@ export default class App extends React.Component {
                     this.setState(prevState => ({
                         wordsCards: {
                             ...prevState.wordsCards,
-                            [wordData.headword]: normalizeWordData(wordData)
+                            [wordData.payload.headword]: normalizeWordData(
+                                wordData.payload
+                            )
                         },
                         words: prevState.words.map(item =>
-                            item === word ? wordData.headword : item
+                            item === word ? wordData.payload.headword : item
                         )
                     }))
                 })
