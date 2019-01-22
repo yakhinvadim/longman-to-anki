@@ -23,6 +23,7 @@
         "lodash.debounce": "^4.0.8",
         "ramda": "^0.26.1",
         "react": "^16.2.0",
+        "react-detect-offline": "^2.1.2",
         "react-dom": "^16.2.0",
         "react-github-corner": "^2.0.0",
         "script-loader": "^0.7.2"

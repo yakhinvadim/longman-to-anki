@@ -1,5 +1,9 @@
 import React from 'react'
 import { saveAs } from 'file-saver'
+import GithubCorner from 'react-github-corner'
+import { Detector } from 'react-detect-offline'
+
+import Grid from '@material-ui/core/Grid'
 
 import normalizeWordData from '../../core/normalizeWordData/normalizeWordData'
 import makeCard from '../../core/makeCard/makeCard'
@@ -8,15 +12,11 @@ import splitByWord from '../../utils/splitByWord/splitByWord'
 import maybePluralize from '../../utils/maybePluralize/maybePluralize'
 import wordToData from '../../utils/wordToData/wordToData'
 
-import GithubCorner from 'react-github-corner'
-
 import Header from '../Header/Header'
 import DownloadButton from '../DownloadButton/DownloadButton'
 import ResultCards from '../ResultCards/ResultCards'
 import UserWords from '../UserWords/UserWords'
 import DeckName from '../DeckName/DeckName'
-
-import Grid from '@material-ui/core/Grid'
 
 import './App.css'
 
@@ -48,7 +48,7 @@ export default class App extends React.Component {
             console.error(error)
         }
 
-        window.addEventListener('online', () => this.handleOnline())
+        window.addEventListener('online', this.handleOnline)
     }
 
     handleOnline = () => {
@@ -252,10 +252,17 @@ export default class App extends React.Component {
                     <Grid item xs={12}>
                         <div className="App__download-section">
                             <span className="App__total">{totals}</span>
-                            <DownloadButton
-                                onClick={this.handleDownload}
-                                disabled={!cardsTotalNumber}
-                                isLoading={this.state.isDeckBeingDownloaded}
+                            <Detector
+                                render={({ online }) => (
+                                    <DownloadButton
+                                        onClick={this.handleDownload}
+                                        disabled={!cardsTotalNumber}
+                                        isOnline={online}
+                                        isLoading={
+                                            this.state.isDeckBeingDownloaded
+                                        }
+                                    />
+                                )}
                             />
                         </div>
                     </Grid>
