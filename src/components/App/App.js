@@ -1,5 +1,9 @@
 import React from 'react'
 import { saveAs } from 'file-saver'
+import GithubCorner from 'react-github-corner'
+import { Detector } from 'react-detect-offline'
+
+import Grid from '@material-ui/core/Grid'
 
 import normalizeWordData from '../../core/normalizeWordData/normalizeWordData'
 import makeCard from '../../core/makeCard/makeCard'
@@ -8,15 +12,11 @@ import splitByWord from '../../utils/splitByWord/splitByWord'
 import maybePluralize from '../../utils/maybePluralize/maybePluralize'
 import wordToData from '../../utils/wordToData/wordToData'
 
-import GithubCorner from 'react-github-corner'
-
 import Header from '../Header/Header'
 import DownloadButton from '../DownloadButton/DownloadButton'
 import ResultCards from '../ResultCards/ResultCards'
 import UserWords from '../UserWords/UserWords'
 import DeckName from '../DeckName/DeckName'
-
-import Grid from '@material-ui/core/Grid'
 
 import './App.css'
 
@@ -38,15 +38,31 @@ export default class App extends React.Component {
     }
 
     componentDidMount() {
-        try {
-            if (localStorage.state) {
-                this.setState(JSON.parse(localStorage.state))
-            } else {
-                this.setState({ inputValue: localStorage.inputValue })
+        if (localStorage.state) {
+            try {
+                this.setState(JSON.parse(localStorage.state), () => {
+                    if (navigator.onLine) {
+                        this.handleOnline()
+                    }
+                })
+            } catch (error) {
+                console.error(error)
             }
-        } catch (error) {
-            console.error(error)
         }
+
+        window.addEventListener('online', this.handleOnline)
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('online', this.handleOnline)
+    }
+
+    handleOnline = () => {
+        this.state.words.forEach(word => {
+            if (this.state.wordsCards[word] === 'offline') {
+                this.downloadAndSaveWordData(word)
+            }
+        })
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -90,29 +106,56 @@ export default class App extends React.Component {
                 inputValue: ''
             }),
             () => {
-                this.state.words.map(async word => {
-                    const wordData = await wordToData(word)
+                this.state.words.map(this.downloadAndSaveWordData)
+            }
+        )
+    }
 
-                    if (!wordData) {
-                        this.setState(prevState => ({
-                            wordsCards: {
-                                ...prevState.wordsCards,
-                                [word]: null
-                            }
-                        }))
-                        return
-                    }
+    downloadAndSaveWordData = word => {
+        if (Array.isArray(this.state.wordsCards[word])) {
+            return // don't download word, if we already have cards from it
+        }
+        this.setState(
+            prevState => ({
+                wordsCards: {
+                    ...prevState.wordsCards,
+                    [word]: undefined // turn loader indicator on
+                }
+            }),
+            async () => {
+                const wordData = await wordToData(word)
 
+                if (wordData.status === 'offline') {
                     this.setState(prevState => ({
                         wordsCards: {
                             ...prevState.wordsCards,
-                            [wordData.headword]: normalizeWordData(wordData)
-                        },
-                        words: prevState.words.map(item =>
-                            item === word ? wordData.headword : item
-                        )
+                            [word]: 'offline'
+                        }
                     }))
-                })
+                    return
+                }
+
+                if (wordData.status === 'word not found') {
+                    this.setState(prevState => ({
+                        wordsCards: {
+                            ...prevState.wordsCards,
+                            [word]: 'word not found'
+                        }
+                    }))
+                    return
+                }
+
+                this.setState(prevState => ({
+                    wordsCards: {
+                        ...prevState.wordsCards,
+                        [wordData.payload.headword]: normalizeWordData(
+                            wordData.payload
+                        )
+                    },
+                    words: prevState.words.map(item =>
+                        item === word ? wordData.payload.headword : item
+                    )
+                }))
             }
         )
     }
@@ -215,10 +258,18 @@ export default class App extends React.Component {
                     <Grid item xs={12}>
                         <div className="App__download-section">
                             <span className="App__total">{totals}</span>
-                            <DownloadButton
-                                onClick={this.handleDownload}
-                                disabled={!cardsTotalNumber}
-                                isLoading={this.state.isDeckBeingDownloaded}
+                            <Detector
+                                polling={false}
+                                render={({ online }) => (
+                                    <DownloadButton
+                                        onClick={this.handleDownload}
+                                        disabled={!cardsTotalNumber}
+                                        isOnline={online}
+                                        isLoading={
+                                            this.state.isDeckBeingDownloaded
+                                        }
+                                    />
+                                )}
                             />
                         </div>
                     </Grid>

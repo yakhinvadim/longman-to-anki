@@ -15,18 +15,25 @@ const normalizeMarkup = R.pipe(
 const isNotWordPage = markup => extractHeadword(markup) === null
 
 const wordToData = async word => {
-    const query = composeQuery(word)
-    const escapedMarkup = await fetch(query).then(response => response.text())
+    let escapedMarkup
+
+    try {
+        const query = composeQuery(word)
+        escapedMarkup = await fetch(query).then(response => response.text())
+    } catch (error) {
+        return { status: 'offline', payload: null }
+    }
+
     const markup = normalizeMarkup(escapedMarkup)
 
     if (isNotWordPage(markup)) {
-        return null
+        return { status: 'word not found', payload: null }
     }
 
     const wordData = composeWordData(markup)
 
-    return wordData
+    return { status: 'ok', payload: wordData }
 }
 
 export { normalizeMarkup }
-export default R.memoizeWith(R.toString, wordToData)
+export default wordToData

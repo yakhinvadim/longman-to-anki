@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './components/App/App'
+import * as serviceWorker from './serviceWorker'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import indigo from '@material-ui/core/colors/indigo'
 import './index.css'
@@ -21,3 +22,5 @@ const MainPage = () => (
 )
 
 ReactDOM.render(<MainPage />, document.getElementById('root'))
+
+serviceWorker.register()

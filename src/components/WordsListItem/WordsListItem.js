@@ -15,6 +15,7 @@ import Tooltip from '@material-ui/core/Tooltip'
 
 import DeleteIcon from '@material-ui/icons/Delete'
 import Clear from '@material-ui/icons/Clear'
+import CloudOff from '@material-ui/icons/CloudOff'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
 import './WordsListItem.css'
@@ -22,7 +23,7 @@ import './WordsListItem.css'
 export default class WordsListItem extends PureComponent {
     static propTypes = {
         word: PropTypes.string.isRequired,
-        cards: PropTypes.array,
+        cards: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
         onDeleteButtonClick: PropTypes.func.isRequired
     }
 
@@ -124,18 +125,18 @@ export default class WordsListItem extends PureComponent {
         </ExpansionPanel>
     )
 
-    renderFailedWord = (word, reason) => (
+    renderFailedWord = (word, icon, description) => (
         <ExpansionPanel
             className="WordsListItem__listItem"
             key={`${word} fail`}
         >
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <div className="WordsListItem__header">
-                    <div className="WordsListItem__icon">
-                        <Clear />
-                    </div>
+                    <div className="WordsListItem__icon">{icon}</div>
                     <div className="WordsListItem__word">{word}</div>
-                    <div className="WordsListItem__description">{reason}</div>
+                    <div className="WordsListItem__description">
+                        {description}
+                    </div>
                     {this.renderDeleteButton(word)}
                 </div>
             </ExpansionPanelSummary>
@@ -143,16 +144,32 @@ export default class WordsListItem extends PureComponent {
     )
 
     render() {
+        if (this.props.cards === 'offline') {
+            return this.renderFailedWord(
+                this.props.word,
+                <CloudOff />,
+                'No internet connection. The word will be loaded when you are back online'
+            )
+        }
+
         if (this.props.cards === undefined) {
             return this.renderLoadingWord(this.props.word)
         }
 
-        if (this.props.cards === null) {
-            return this.renderFailedWord(this.props.word, 'word not found')
+        if (this.props.cards === 'word not found') {
+            return this.renderFailedWord(
+                this.props.word,
+                <Clear />,
+                'Word not found'
+            )
         }
 
         if (this.props.cards.length === 0) {
-            return this.renderFailedWord(this.props.word, 'cards not found')
+            return this.renderFailedWord(
+                this.props.word,
+                <Clear />,
+                'Word exists, but cards not found (we do not make cards from Business Dictionary)'
+            )
         }
 
         return this.renderFetchedWord(this.props.cards)
