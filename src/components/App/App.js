@@ -47,6 +47,16 @@ export default class App extends React.Component {
         } catch (error) {
             console.error(error)
         }
+
+        window.addEventListener('online', () => this.handleOnline())
+    }
+
+    handleOnline = () => {
+        this.state.words.forEach(word => {
+            if (this.state.wordsCards[word] === 'offline') {
+                this.downloadAndSaveWordData(word)
+            }
+        })
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -90,41 +100,56 @@ export default class App extends React.Component {
                 inputValue: ''
             }),
             () => {
-                this.state.words.map(async word => {
-                    const wordData = await wordToData(word)
+                this.state.words.map(this.downloadAndSaveWordData)
+            }
+        )
+    }
 
-                    if (wordData.status === 'offline') {
-                        this.setState(prevState => ({
-                            wordsCards: {
-                                ...prevState.wordsCards,
-                                [word]: 'offline'
-                            }
-                        }))
-                        return
-                    }
+    downloadAndSaveWordData = word => {
+        if (Array.isArray(this.state.wordsCards[word])) {
+            return // don't download word, if we already have cards from it
+        }
+        this.setState(
+            prevState => ({
+                wordsCards: {
+                    ...prevState.wordsCards,
+                    [word]: undefined // turn loader indicator on
+                }
+            }),
+            async () => {
+                const wordData = await wordToData(word)
 
-                    if (wordData.status === 'word not found') {
-                        this.setState(prevState => ({
-                            wordsCards: {
-                                ...prevState.wordsCards,
-                                [word]: 'word not found'
-                            }
-                        }))
-                        return
-                    }
-
+                if (wordData.status === 'offline') {
                     this.setState(prevState => ({
                         wordsCards: {
                             ...prevState.wordsCards,
-                            [wordData.payload.headword]: normalizeWordData(
-                                wordData.payload
-                            )
-                        },
-                        words: prevState.words.map(item =>
-                            item === word ? wordData.payload.headword : item
-                        )
+                            [word]: 'offline'
+                        }
                     }))
-                })
+                    return
+                }
+
+                if (wordData.status === 'word not found') {
+                    this.setState(prevState => ({
+                        wordsCards: {
+                            ...prevState.wordsCards,
+                            [word]: 'word not found'
+                        }
+                    }))
+                    return
+                }
+
+                this.setState(prevState => ({
+                    wordsCards: {
+                        ...prevState.wordsCards,
+                        [wordData.payload.headword]: normalizeWordData(
+                            wordData.payload
+                        )
+                    },
+                    words: prevState.words.map(item =>
+                        item === word ? wordData.payload.headword : item
+                    )
+                }))
             }
         )
     }
