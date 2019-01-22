@@ -38,17 +38,23 @@ export default class App extends React.Component {
     }
 
     componentDidMount() {
-        try {
-            if (localStorage.state) {
-                this.setState(JSON.parse(localStorage.state))
-            } else {
-                this.setState({ inputValue: localStorage.inputValue })
+        if (localStorage.state) {
+            try {
+                this.setState(JSON.parse(localStorage.state), () => {
+                    if (navigator.onLine) {
+                        this.handleOnline()
+                    }
+                })
+            } catch (error) {
+                console.error(error)
             }
-        } catch (error) {
-            console.error(error)
         }
 
         window.addEventListener('online', this.handleOnline)
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('online', this.handleOnline)
     }
 
     handleOnline = () => {
