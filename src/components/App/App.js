@@ -259,6 +259,7 @@ export default class App extends React.Component {
                         <div className="App__download-section">
                             <span className="App__total">{totals}</span>
                             <Detector
+                                polling={false}
                                 render={({ online }) => (
                                     <DownloadButton
                                         onClick={this.handleDownload}
