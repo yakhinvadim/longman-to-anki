@@ -12,7 +12,7 @@ const normalizeMarkup = R.pipe(
     removeNewLines
 )
 
-const isNotWordPage = (markup: string) => extractHeadword(markup) === null
+const isNotWordPage = (markup: string) => extractHeadword(markup) === ''
 
 const wordToData = async (word: string) => {
     let escapedMarkup
