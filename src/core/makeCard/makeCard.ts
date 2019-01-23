@@ -6,14 +6,23 @@ const verticalOffset = '<br><br>' // I don't use css-margins for offset, because
 const join = R.join('')
 
 const makeCard = ({
+    form,
+    definition,
     example = '',
     situation = '',
     geography = '',
-    form,
     pronunciation = '',
-    definition,
     synonym = '',
     antonym = ''
+}: {
+    form: string
+    definition: string
+    example: string
+    situation: string
+    geography: string
+    pronunciation: string
+    synonym: string
+    antonym: string
 }) => {
     // card parts
 

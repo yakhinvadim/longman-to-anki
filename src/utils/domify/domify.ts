@@ -1,6 +1,6 @@
-const domify = str => {
+const domify = (markup: string) => {
     const wrapper = document.createElement('div')
-    wrapper.innerHTML = str
+    wrapper.innerHTML = markup
 
     return wrapper
 }

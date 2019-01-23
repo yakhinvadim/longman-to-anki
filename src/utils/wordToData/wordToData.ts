@@ -12,9 +12,9 @@ const normalizeMarkup = R.pipe(
     removeNewLines
 )
 
-const isNotWordPage = markup => extractHeadword(markup) === null
+const isNotWordPage = (markup: string) => extractHeadword(markup) === null
 
-const wordToData = async word => {
+const wordToData = async (word: string) => {
     let escapedMarkup
 
     try {
@@ -24,7 +24,7 @@ const wordToData = async word => {
         return { status: 'offline', payload: null }
     }
 
-    const markup = normalizeMarkup(escapedMarkup)
+    const markup = normalizeMarkup(escapedMarkup, undefined)
 
     if (isNotWordPage(markup)) {
         return { status: 'word not found', payload: null }

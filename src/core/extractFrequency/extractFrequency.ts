@@ -1,13 +1,14 @@
 import domify from '../../utils/domify/domify'
+import getTrimmedTextContent from '../../utils/getTrimmedTextContent/getTrimmedTextContent'
 
-const extractFrequency = pageMarkup => {
+const extractFrequency = (pageMarkup: string) => {
     const frequencyNode = domify(pageMarkup).querySelector('.LEVEL')
 
     if (!frequencyNode) {
         return '○○○'
     }
 
-    const frequency = frequencyNode.textContent.trim()
+    const frequency = getTrimmedTextContent(frequencyNode)
 
     return frequency
 }
