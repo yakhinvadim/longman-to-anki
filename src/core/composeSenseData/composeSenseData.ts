@@ -10,7 +10,7 @@ import extractSituation from '../extractSituation/extractSituation'
 import extractGeography from '../extractGeography/extractGeography'
 import extractExamples from '../extractExamples/extractExamples'
 
-const composeSenseData = senseMarkup => {
+const composeSenseData = (senseMarkup: string): object => {
     const definition = extractDefinition(senseMarkup)
     const situation = extractSituation(senseMarkup)
     const geography = extractGeography(senseMarkup)

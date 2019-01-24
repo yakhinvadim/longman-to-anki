@@ -5,7 +5,7 @@ import extractPronunciation from '../extractPronunciation/extractPronunciation'
 import extractFrequency from '../extractFrequency/extractFrequency'
 import composeEntryData from '../composeEntryData/composeEntryData'
 
-const composeWordData = pageMarkup => {
+const composeWordData = (pageMarkup: string) => {
     const headword = extractHeadword(pageMarkup)
     const pronunciation = extractPronunciation(pageMarkup)
     const frequency = extractFrequency(pageMarkup)
