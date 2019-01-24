@@ -28,7 +28,7 @@ const template = {
 		`
 }
 
-export default class App extends React.Component {
+export default class App extends React.Component<any, any> {
     state = {
         words: [],
         inputValue: '',

@@ -6,7 +6,7 @@ import CloudDownloadIcon from '@material-ui/icons/CloudDownload'
 import CloudOff from '@material-ui/icons/CloudOff'
 import { withStyles } from '@material-ui/core'
 
-class DownloadButton extends PureComponent {
+class DownloadButton extends PureComponent<any, any> {
     static propTypes = {
         onClick: PropTypes.func.isRequired,
         disabled: PropTypes.bool.isRequired,

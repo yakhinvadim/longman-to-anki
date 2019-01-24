@@ -20,7 +20,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
 import './WordsListItem.css'
 
-export default class WordsListItem extends PureComponent {
+export default class WordsListItem extends PureComponent<any, any> {
     static propTypes = {
         word: PropTypes.string.isRequired,
         cards: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),

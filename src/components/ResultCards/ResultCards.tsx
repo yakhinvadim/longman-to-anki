@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 import WordsListItem from '../WordsListItem/WordsListItem'
 
-export default class ResultCards extends PureComponent {
+export default class ResultCards extends PureComponent<any, any> {
     static propTypes = {
         words: PropTypes.array.isRequired,
         wordsCards: PropTypes.object.isRequired,
