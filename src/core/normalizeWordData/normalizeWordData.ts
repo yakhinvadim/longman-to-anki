@@ -1,7 +1,7 @@
 import * as R from 'ramda'
 import normalizeEntryData from '../normalizeEntryData/normalizeEntryData'
 
-const normalizeWordData = wordData => {
+const normalizeWordData = (wordData: any) => {
     const { headword, pronunciation, frequency, entries } = wordData
 
     const cards = R.pipe(

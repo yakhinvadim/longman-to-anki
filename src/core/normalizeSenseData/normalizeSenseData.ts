@@ -1,7 +1,19 @@
 import * as R from 'ramda'
 
-const normalizeSenseData = R.curry(
-    ({ headword, pronunciation, frequency }, senseData) => {
+const normalizeSenseData: any = R.curry(
+    (
+        { headword, pronunciation, frequency },
+        senseData: {
+            definition: any
+            situation: any
+            geography: any
+            synonym: any
+            antonym: any
+            examples: any
+            exampleGroups: any
+            subsenses: any
+        }
+    ) => {
         // data
 
         const {
@@ -28,13 +40,13 @@ const normalizeSenseData = R.curry(
 
         // normalize... functions
 
-        const normalizeExample = form => example => ({
+        const normalizeExample = (form: any) => (example: any) => ({
             ...commonData,
             example,
             form
         })
 
-        const normalizeExampleGroup = exampleGroup => {
+        const normalizeExampleGroup = (exampleGroup: any) => {
             const { form, examples: exampleGroupExamples } = exampleGroup
             const cards = exampleGroupExamples.map(normalizeExample(form))
             return cards
