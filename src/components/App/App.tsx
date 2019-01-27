@@ -18,6 +18,8 @@ import ResultCards from '../ResultCards/ResultCards'
 import UserWords from '../UserWords/UserWords'
 import DeckName from '../DeckName/DeckName'
 
+import { WordFetchStatus, CardData } from '../../types.d'
+
 import './App.css'
 
 const template = {
@@ -28,11 +30,21 @@ const template = {
 		`
 }
 
-export default class App extends React.Component<any, any> {
-    state = {
+interface State {
+    words: string[]
+    inputValue: string
+    wordsFetchStatusOrCardsData: {
+        [key: string]: WordFetchStatus | CardData[]
+    }
+    deckName: string
+    isDeckBeingDownloaded: boolean
+}
+
+export default class App extends React.Component<{}, State> {
+    state: State = {
         words: [],
         inputValue: '',
-        wordsCards: {},
+        wordsFetchStatusOrCardsData: {},
         deckName: 'English words',
         isDeckBeingDownloaded: false
     }
@@ -59,36 +71,45 @@ export default class App extends React.Component<any, any> {
 
     handleOnline = () => {
         this.state.words.forEach(word => {
-            if (this.state.wordsCards[word] === 'offline') {
+            if (this.state.wordsFetchStatusOrCardsData[word] === 'offline') {
                 this.downloadAndSaveWordData(word)
             }
         })
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate() {
         localStorage.state = JSON.stringify(this.state)
     }
 
-    handleDeckNameChange = event => {
+    handleDeckNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         this.setState({
             deckName: event.target.value
         })
     }
 
-    handleInputChange = async event => {
+    handleInputChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
         this.setState({
             inputValue: event.target.value
         })
     }
 
-    handleDeleteButtonClick = wordToDelete => () => {
-        this.setState(prevState => ({
-            words: prevState.words.filter(word => word !== wordToDelete),
-            wordsCards: { ...prevState.wordsCards, [wordToDelete]: undefined }
-        }))
+    handleDeleteButtonClick = (wordToDelete: string) => (
+        e: React.MouseEvent
+    ) => {
+        this.setState(prevState => {
+            const newWordsFetchStatusOrCardsData = {
+                ...prevState.wordsFetchStatusOrCardsData
+            }
+            delete newWordsFetchStatusOrCardsData[wordToDelete]
+
+            return {
+                words: prevState.words.filter(word => word !== wordToDelete),
+                wordsFetchStatusOrCardsData: newWordsFetchStatusOrCardsData
+            }
+        })
     }
 
-    handleSubmit = event => {
+    handleSubmit = (event: React.FormEvent) => {
         event.preventDefault()
 
         if (this.state.inputValue === '') {
@@ -111,62 +132,78 @@ export default class App extends React.Component<any, any> {
         )
     }
 
-    downloadAndSaveWordData = word => {
-        if (Array.isArray(this.state.wordsCards[word])) {
+    downloadAndSaveWordData = (word: string) => {
+        if (Array.isArray(this.state.wordsFetchStatusOrCardsData[word])) {
             return // don't download word, if we already have cards from it
         }
         this.setState(
-            prevState => ({
-                wordsCards: {
-                    ...prevState.wordsCards,
-                    [word]: undefined // turn loader indicator on
+            prevState => {
+                const newWordsFetchStatusOrCardsData = {
+                    ...prevState.wordsFetchStatusOrCardsData
                 }
-            }),
+                delete newWordsFetchStatusOrCardsData[word]
+                return {
+                    wordsFetchStatusOrCardsData: newWordsFetchStatusOrCardsData
+                }
+            },
             async () => {
                 const wordData = await wordToData(word)
-
-                if (wordData.status === 'offline') {
+                if (wordData.status === WordFetchStatus.Offline) {
                     this.setState(prevState => ({
-                        wordsCards: {
-                            ...prevState.wordsCards,
-                            [word]: 'offline'
+                        wordsFetchStatusOrCardsData: {
+                            ...prevState.wordsFetchStatusOrCardsData,
+                            [word]: WordFetchStatus.Offline
                         }
                     }))
                     return
                 }
 
-                if (wordData.status === 'word not found') {
+                if (wordData.status === WordFetchStatus.NotFound) {
                     this.setState(prevState => ({
-                        wordsCards: {
-                            ...prevState.wordsCards,
-                            [word]: 'word not found'
+                        wordsFetchStatusOrCardsData: {
+                            ...prevState.wordsFetchStatusOrCardsData,
+                            [word]: WordFetchStatus.NotFound
                         }
                     }))
                     return
                 }
 
-                this.setState(prevState => ({
-                    wordsCards: {
-                        ...prevState.wordsCards,
-                        [wordData.payload.headword]: normalizeWordData(
-                            wordData.payload
+                if (
+                    wordData.status === WordFetchStatus.Ok &&
+                    wordData.payload
+                ) {
+                    this.setState(prevState => ({
+                        wordsFetchStatusOrCardsData: {
+                            ...prevState.wordsFetchStatusOrCardsData,
+                            [wordData.payload.headword]: normalizeWordData(
+                                wordData.payload
+                            )
+                        },
+                        words: prevState.words.map(item =>
+                            item === word ? wordData.payload.headword : item
                         )
-                    },
-                    words: prevState.words.map(item =>
-                        item === word ? wordData.payload.headword : item
-                    )
-                }))
+                    }))
+                }
+
+                // TODO make exhaustiveness check
             }
         )
     }
 
-    handleDownload = event => {
+    handleDownload = (event: React.MouseEvent) => {
         event.preventDefault()
 
         const cardsArr = this.state.words
             .reverse()
-            .map(word => this.state.wordsCards[word])
-            .reduce((acc, curr) => (curr ? acc.concat(...curr) : acc), [])
+            .map(word => this.state.wordsFetchStatusOrCardsData[word])
+            .filter(Array.isArray)
+            .reduce(
+                (allCardsData, currentWordCardsData) =>
+                    currentWordCardsData
+                        ? allCardsData.concat(...currentWordCardsData)
+                        : allCardsData,
+                []
+            )
             .map(makeCard)
 
         this.setState(
@@ -197,7 +234,7 @@ export default class App extends React.Component<any, any> {
         )
     }
 
-    handleEnterPress = event => {
+    handleEnterPress = (event: React.KeyboardEvent) => {
         if (event.key === 'Enter' && event.shiftKey === false) {
             event.preventDefault()
             this.handleSubmit(event)
@@ -206,12 +243,16 @@ export default class App extends React.Component<any, any> {
 
     render() {
         const wordsTotalNumber = this.state.words.length
-        const cardsTotalNumber = Object.values(this.state.wordsCards).reduce(
-            (acc, curr) => {
-                return acc + (curr ? curr.length : 0)
-            },
-            0
+        const cardsTotalNumber = Object.values(
+            this.state.wordsFetchStatusOrCardsData
         )
+            .filter(Array.isArray)
+            .reduce((totalCardsCount: number, currentWordCards) => {
+                return (
+                    totalCardsCount +
+                    (currentWordCards ? currentWordCards.length : 0)
+                )
+            }, 0)
 
         const wordsTotal = maybePluralize(wordsTotalNumber, 'word')
         const cardsTotal = maybePluralize(cardsTotalNumber, 'card')
@@ -243,7 +284,9 @@ export default class App extends React.Component<any, any> {
                     <Grid item xs={12}>
                         <ResultCards
                             words={this.state.words}
-                            wordsCards={this.state.wordsCards}
+                            wordsFetchStatusOrCardsData={
+                                this.state.wordsFetchStatusOrCardsData
+                            }
                             onDeleteButtonClick={this.handleDeleteButtonClick}
                         />
                     </Grid>
@@ -260,7 +303,7 @@ export default class App extends React.Component<any, any> {
                             <span className="App__total">{totals}</span>
                             <Detector
                                 polling={false}
-                                render={({ online }) => (
+                                render={({ online }: { online: boolean }) => (
                                     <DownloadButton
                                         onClick={this.handleDownload}
                                         disabled={!cardsTotalNumber}

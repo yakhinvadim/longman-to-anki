@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -18,28 +17,26 @@ import Clear from '@material-ui/icons/Clear'
 import CloudOff from '@material-ui/icons/CloudOff'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
+import { CardData, WordFetchStatus } from '../../types.d'
+
 import './WordsListItem.css'
 
-export default class WordsListItem extends PureComponent<any, any> {
-    static propTypes = {
-        word: PropTypes.string.isRequired,
-        cards: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
-        onDeleteButtonClick: PropTypes.func.isRequired
-    }
+interface Props {
+    word: string
+    fetchStatusOrCardData: WordFetchStatus | CardData[]
+    onDeleteButtonClick: (word: string) => (e: React.MouseEvent) => void
+}
 
-    static defaultProps = {
-        cards: undefined
-    }
-
-    renderRow = card => (
-        <TableRow key={card.example + card.definition}>
-            <TableCell>{card.form}</TableCell>
-            <TableCell>{card.example || '—'}</TableCell>
-            <TableCell>{card.definition}</TableCell>
+export default class WordsListItem extends PureComponent<Props> {
+    renderRow = (cardData: CardData) => (
+        <TableRow key={cardData.example + cardData.definition}>
+            <TableCell>{cardData.form}</TableCell>
+            <TableCell>{cardData.example || '—'}</TableCell>
+            <TableCell>{cardData.definition}</TableCell>
         </TableRow>
     )
 
-    renderTable = arr => (
+    renderTable = (cardsData: CardData[]) => (
         <div className="WordsListItem__tableWrapper">
             <Table>
                 <TableHead>
@@ -49,12 +46,12 @@ export default class WordsListItem extends PureComponent<any, any> {
                         <TableCell>Definition</TableCell>
                     </TableRow>
                 </TableHead>
-                <TableBody>{arr.map(this.renderRow)}</TableBody>
+                <TableBody>{cardsData.map(this.renderRow)}</TableBody>
             </Table>
         </div>
     )
 
-    renderDeleteButton = word => (
+    renderDeleteButton = (word: string) => (
         <IconButton
             className="WordsListItem__delete"
             onClick={this.props.onDeleteButtonClick(word)}
@@ -63,10 +60,10 @@ export default class WordsListItem extends PureComponent<any, any> {
         </IconButton>
     )
 
-    renderFetchedWord = cards => (
+    renderFetchedWord = (cardsData: CardData[]) => (
         <ExpansionPanel
             className="WordsListItem__listItem"
-            key={`${cards[0].headword} loaded`}
+            key={`${cardsData[0].headword} loaded`}
         >
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <div className="WordsListItem__header">
@@ -86,28 +83,28 @@ export default class WordsListItem extends PureComponent<any, any> {
                         }
                     >
                         <div className="WordsListItem__icon">
-                            {cards[0].frequency}
+                            {cardsData[0].frequency}
                         </div>
                     </Tooltip>
                     <div className="WordsListItem__word">
-                        <span>{cards[0].headword}</span>{' '}
+                        <span>{cardsData[0].headword}</span>{' '}
                         <span className="WordsListItem__counter">
-                            ({cards.length})
+                            ({cardsData.length})
                         </span>
                     </div>
                     <div className="WordsListItem__description">
-                        {cards[0].definition}
+                        {cardsData[0].definition}
                     </div>
-                    {this.renderDeleteButton(cards[0].headword)}
+                    {this.renderDeleteButton(cardsData[0].headword)}
                 </div>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
-                {this.renderTable(cards)}
+                {this.renderTable(cardsData)}
             </ExpansionPanelDetails>
         </ExpansionPanel>
     )
 
-    renderLoadingWord = word => (
+    renderLoadingWord = (word: string) => (
         <ExpansionPanel
             className="WordsListItem__listItem"
             key={`${word} load`}
@@ -125,7 +122,11 @@ export default class WordsListItem extends PureComponent<any, any> {
         </ExpansionPanel>
     )
 
-    renderFailedWord = (word, icon, description) => (
+    renderFailedWord = (
+        word: string,
+        icon: JSX.Element,
+        description: string
+    ) => (
         <ExpansionPanel
             className="WordsListItem__listItem"
             key={`${word} fail`}
@@ -144,7 +145,11 @@ export default class WordsListItem extends PureComponent<any, any> {
     )
 
     render() {
-        if (this.props.cards === 'offline') {
+        const { fetchStatusOrCardData } = this.props
+
+        // TODO: make conditions more clear
+
+        if (fetchStatusOrCardData === WordFetchStatus.Offline) {
             return this.renderFailedWord(
                 this.props.word,
                 <CloudOff />,
@@ -152,11 +157,11 @@ export default class WordsListItem extends PureComponent<any, any> {
             )
         }
 
-        if (this.props.cards === undefined) {
+        if (fetchStatusOrCardData === undefined) {
             return this.renderLoadingWord(this.props.word)
         }
 
-        if (this.props.cards === 'word not found') {
+        if (fetchStatusOrCardData === WordFetchStatus.NotFound) {
             return this.renderFailedWord(
                 this.props.word,
                 <Clear />,
@@ -164,7 +169,7 @@ export default class WordsListItem extends PureComponent<any, any> {
             )
         }
 
-        if (this.props.cards.length === 0) {
+        if (fetchStatusOrCardData.length === 0) {
             return this.renderFailedWord(
                 this.props.word,
                 <Clear />,
@@ -172,6 +177,10 @@ export default class WordsListItem extends PureComponent<any, any> {
             )
         }
 
-        return this.renderFetchedWord(this.props.cards)
+        if (Array.isArray(fetchStatusOrCardData)) {
+            return this.renderFetchedWord(fetchStatusOrCardData)
+        }
+
+        // TODO make exhaustiveness check
     }
 }

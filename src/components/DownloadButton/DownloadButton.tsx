@@ -1,20 +1,25 @@
-import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload'
 import CloudOff from '@material-ui/icons/CloudOff'
-import { withStyles } from '@material-ui/core'
+import { withStyles, WithStyles, Theme, createStyles } from '@material-ui/core'
 
-class DownloadButton extends PureComponent<any, any> {
-    static propTypes = {
-        onClick: PropTypes.func.isRequired,
-        disabled: PropTypes.bool.isRequired,
-        isLoading: PropTypes.bool.isRequired,
-        classes: PropTypes.object.isRequired,
-        isOnline: PropTypes.bool.isRequired
-    }
+const styles = (theme: Theme) =>
+    createStyles({
+        leftIcon: {
+            marginRight: theme.spacing.unit
+        }
+    })
 
+interface Props extends WithStyles<typeof styles> {
+    onClick: (e: React.MouseEvent) => void
+    disabled: boolean
+    isLoading: boolean
+    isOnline: boolean
+}
+
+class DownloadButton extends PureComponent<Props> {
     render() {
         return (
             <Button
@@ -52,8 +57,4 @@ class DownloadButton extends PureComponent<any, any> {
     }
 }
 
-export default withStyles(theme => ({
-    leftIcon: {
-        marginRight: theme.spacing.unit
-    }
-}))(DownloadButton)
+export default withStyles(styles)(DownloadButton)

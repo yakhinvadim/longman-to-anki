@@ -1,14 +1,12 @@
-import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 import TextField from '@material-ui/core/TextField'
 
-export default class UserWords extends PureComponent<any, any> {
-    static propTypes = {
-        onChange: PropTypes.func.isRequired,
-        value: PropTypes.string.isRequired,
-        onKeyDown: PropTypes.func.isRequired
-    }
-
+interface Props {
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+    onKeyDown: (e: React.KeyboardEvent) => void
+    value: string
+}
+export default class UserWords extends PureComponent<Props> {
     render() {
         const { onChange, value, onKeyDown } = this.props
 

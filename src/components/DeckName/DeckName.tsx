@@ -1,17 +1,12 @@
-import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 import TextField from '@material-ui/core/TextField'
 
-export default class DeckName extends PureComponent<any, any> {
-    static propTypes = {
-        onChange: PropTypes.func.isRequired,
-        value: PropTypes.string
-    }
+interface Props {
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+    value: string
+}
 
-    static defaultProps = {
-        value: ''
-    }
-
+export default class DeckName extends PureComponent<Props> {
     render() {
         const { onChange, value } = this.props
 

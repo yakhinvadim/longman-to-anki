@@ -1,29 +1,23 @@
 import * as R from 'ramda'
+import { CardData } from '../../types.d'
 
 const newLine = '<br>'
 const verticalOffset = '<br><br>' // I don't use css-margins for offset, because I want cards to be styled "out of box", even without css styles
 
 const join = R.join('')
 
-const makeCard = ({
-    form,
-    definition,
-    example = '',
-    situation = '',
-    geography = '',
-    pronunciation = '',
-    synonym = '',
-    antonym = ''
-}: {
-    form: string
-    definition: string
-    example: string
-    situation: string
-    geography: string
-    pronunciation: string
-    synonym: string
-    antonym: string
-}) => {
+const makeCard = (cardData: CardData) => {
+    const {
+        form,
+        definition,
+        example,
+        situation,
+        geography,
+        pronunciation,
+        synonym,
+        antonym
+    } = cardData
+
     // card parts
 
     const cardExample = `<span class="lta-example">${example}</span>`

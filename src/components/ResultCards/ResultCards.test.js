@@ -9,7 +9,7 @@ it('renders without crashing', () => {
     Enzyme.shallow(
         <ResultCards
             words={[]}
-            wordsCards={{}}
+            wordsFetchStatusOrCardsData={{}}
             onDeleteButtonClick={() => {}}
         />
     )

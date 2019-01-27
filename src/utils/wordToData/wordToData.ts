@@ -3,6 +3,7 @@ import { unescape } from 'he'
 import composeQuery from '../composeQuery/composeQuery'
 import composeWordData from '../../core/composeWordData/composeWordData'
 import extractHeadword from '../../core/extractHeadword/extractHeadword'
+import { WordFetchStatus } from '../../types.d'
 
 const removeDoubleSpace = R.replace(/ {2}/gm, '')
 const removeNewLines = R.replace(/\n/gm, '')
@@ -12,7 +13,7 @@ const normalizeMarkup = R.pipe(
     removeNewLines
 )
 
-const isNotWordPage = (markup: string) => extractHeadword(markup) === ''
+const wordNotFound = (markup: string) => extractHeadword(markup) === ''
 
 const wordToData = async (word: string) => {
     let escapedMarkup
@@ -21,18 +22,17 @@ const wordToData = async (word: string) => {
         const query = composeQuery(word)
         escapedMarkup = await fetch(query).then(response => response.text())
     } catch (error) {
-        return { status: 'offline', payload: null }
+        return { status: WordFetchStatus.Offline }
     }
 
     const markup = normalizeMarkup(escapedMarkup, undefined)
 
-    if (isNotWordPage(markup)) {
-        return { status: 'word not found', payload: null }
+    if (wordNotFound(markup)) {
+        return { status: WordFetchStatus.NotFound }
+    } else {
+        const wordData = composeWordData(markup)
+        return { status: WordFetchStatus.Ok, payload: wordData }
     }
-
-    const wordData = composeWordData(markup)
-
-    return { status: 'ok', payload: wordData }
 }
 
 export { normalizeMarkup }

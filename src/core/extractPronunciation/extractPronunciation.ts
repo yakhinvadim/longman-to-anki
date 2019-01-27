@@ -5,7 +5,7 @@ const extractPronunciation = (pageMarkup: string) => {
     const pronunciationWrapper = domify(pageMarkup).querySelector('.PronCodes') // there are several '.PronCodes' on each page, we need the first one
 
     if (!pronunciationWrapper) {
-        return null
+        return ''
     }
 
     const pronunciation = Array.from(
