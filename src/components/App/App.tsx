@@ -143,14 +143,14 @@ export default class App extends React.Component<{}, State> {
     }
 
     downloadAndSaveWordData = (word: string) => {
-        const wordFetchStatusOrCardsData = this.state
-            .wordsFetchStatusOrCardsData[word]
+        const cardsAreAlreadyDownloaded = Array.isArray(
+            this.state.wordsFetchStatusOrCardsData[word]
+        )
+        const wordIsAlreadyNotFound =
+            this.state.wordsFetchStatusOrCardsData[word] ===
+            WordFetchError.NotFound
 
-        if (
-            Array.isArray(wordFetchStatusOrCardsData) ||
-            wordFetchStatusOrCardsData === WordFetchError.NotFound
-        ) {
-            // don't download word, if we already have cards from it, or we know that word is not found
+        if (cardsAreAlreadyDownloaded || wordIsAlreadyNotFound) {
             return
         }
 
