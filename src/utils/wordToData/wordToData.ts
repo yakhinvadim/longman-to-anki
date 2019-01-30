@@ -1,5 +1,4 @@
 import * as R from 'ramda'
-import { unescape } from 'he'
 import composeQuery from '../composeQuery/composeQuery'
 import composeWordData from '../../core/composeWordData/composeWordData'
 import extractHeadword from '../../core/extractHeadword/extractHeadword'
@@ -8,7 +7,6 @@ import { WordFetchError } from '../../types.d'
 const removeDoubleSpace = R.replace(/ {2}/gm, '')
 const removeNewLines = R.replace(/\n/gm, '')
 const normalizeMarkup = R.pipe(
-    unescape,
     removeDoubleSpace,
     removeNewLines
 )
@@ -25,7 +23,7 @@ const wordToData = async (word: string) => {
         return { status: WordFetchError.Offline }
     }
 
-    const markup = normalizeMarkup(escapedMarkup, undefined)
+    const markup = normalizeMarkup(escapedMarkup)
 
     if (wordNotFound(markup)) {
         return { status: WordFetchError.NotFound }
