@@ -2,6 +2,7 @@ import React from 'react'
 import { saveAs } from 'file-saver'
 import GithubCorner from 'react-github-corner'
 import { Detector } from 'react-detect-offline'
+import uniq from 'lodash/uniq'
 
 import Grid from '@material-ui/core/Grid'
 
@@ -132,7 +133,7 @@ export default class App extends React.Component<{}, State> {
 
         this.setState(
             prevState => ({
-                words: [...newWords, ...prevState.words],
+                words: uniq([...newWords, ...prevState.words]),
                 inputValue: '',
                 wordsFetchStatusOrCardsData: newWordsFetchStatusOrCardsData
             }),
