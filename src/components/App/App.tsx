@@ -242,20 +242,20 @@ export default class App extends React.Component<{}, State> {
     }
 
     render() {
-        const wordsTotalNumber = this.state.words.length
-        const cardsTotalNumber = Object.values(
+        const wordsTotalCount = this.state.words.length
+        const cardsTotalCount = Object.values(
             this.state.wordsFetchStatusOrCardsData
         )
             .filter(Array.isArray)
-            .reduce((totalCardsCount: number, currentWordCards) => {
+            .reduce((totalCardsCount, currentWordCards) => {
                 return (
                     totalCardsCount +
                     (currentWordCards ? currentWordCards.length : 0)
                 )
             }, 0)
 
-        const wordsTotal = maybePluralize(wordsTotalNumber, 'word')
-        const cardsTotal = maybePluralize(cardsTotalNumber, 'card')
+        const wordsTotal = maybePluralize(wordsTotalCount, 'word')
+        const cardsTotal = maybePluralize(cardsTotalCount, 'card')
 
         const totals = `${wordsTotal}, ${cardsTotal}`
 
@@ -306,7 +306,7 @@ export default class App extends React.Component<{}, State> {
                                 render={({ online }: { online: boolean }) => (
                                     <DownloadButton
                                         onClick={this.handleDownload}
-                                        disabled={!cardsTotalNumber}
+                                        disabled={!cardsTotalCount}
                                         isOnline={online}
                                         isLoading={
                                             this.state.isDeckBeingDownloaded
