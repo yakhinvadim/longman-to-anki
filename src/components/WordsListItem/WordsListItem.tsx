@@ -17,13 +17,15 @@ import Clear from '@material-ui/icons/Clear'
 import CloudOff from '@material-ui/icons/CloudOff'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
-import { CardData, WordFetchStatus } from '../../types.d'
+import assertUnreachable from '../../utils/assertUnreachable/assertUnreachable'
+
+import { WordIsLoading, WordFetchError, CardData } from '../../types.d'
 
 import './WordsListItem.css'
 
 interface Props {
     word: string
-    fetchStatusOrCardData: WordFetchStatus | CardData[]
+    fetchStatusOrCardData: WordIsLoading | WordFetchError | CardData[]
     onDeleteButtonClick: (word: string) => (e: React.MouseEvent) => void
 }
 
@@ -104,19 +106,19 @@ export default class WordsListItem extends PureComponent<Props> {
         </ExpansionPanel>
     )
 
-    renderLoadingWord = (word: string) => (
+    renderLoadingWord = () => (
         <ExpansionPanel
             className="WordsListItem__listItem"
-            key={`${word} load`}
+            key={`${this.props.word} load`}
         >
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <div className="WordsListItem__header">
                     <div className="WordsListItem__icon">
                         <CircularProgress size={24} thickness={2} />
                     </div>
-                    <div className="WordsListItem__word">{word}</div>
+                    <div className="WordsListItem__word">{this.props.word}</div>
                     <div className="WordsListItem__description">...</div>
-                    {this.renderDeleteButton(word)}
+                    {this.renderDeleteButton(this.props.word)}
                 </div>
             </ExpansionPanelSummary>
         </ExpansionPanel>
@@ -144,43 +146,40 @@ export default class WordsListItem extends PureComponent<Props> {
         </ExpansionPanel>
     )
 
+    renderOfflineWord = () =>
+        this.renderFailedWord(
+            this.props.word,
+            <CloudOff />,
+            'No internet connection. The word will be loaded when you are back online'
+        )
+
+    renderNotFoundWord = () =>
+        this.renderFailedWord(this.props.word, <Clear />, 'Word not found')
+
+    renderNoCardsWord = () =>
+        this.renderFailedWord(
+            this.props.word,
+            <Clear />,
+            'Word exists, but cards not found (we do not make cards from Business Dictionary)'
+        )
+
     render() {
         const { fetchStatusOrCardData } = this.props
 
-        // TODO: make conditions more clear
-
-        if (fetchStatusOrCardData === WordFetchStatus.Offline) {
-            return this.renderFailedWord(
-                this.props.word,
-                <CloudOff />,
-                'No internet connection. The word will be loaded when you are back online'
-            )
+        if (fetchStatusOrCardData === WordIsLoading) {
+            return this.renderLoadingWord()
+        } else if (fetchStatusOrCardData === WordFetchError.Offline) {
+            return this.renderOfflineWord()
+        } else if (fetchStatusOrCardData === WordFetchError.NotFound) {
+            return this.renderNotFoundWord()
+        } else if (Array.isArray(fetchStatusOrCardData)) {
+            if (fetchStatusOrCardData.length === 0) {
+                return this.renderNoCardsWord()
+            } else {
+                return this.renderFetchedWord(fetchStatusOrCardData)
+            }
+        } else {
+            assertUnreachable(fetchStatusOrCardData)
         }
-
-        if (fetchStatusOrCardData === undefined) {
-            return this.renderLoadingWord(this.props.word)
-        }
-
-        if (fetchStatusOrCardData === WordFetchStatus.NotFound) {
-            return this.renderFailedWord(
-                this.props.word,
-                <Clear />,
-                'Word not found'
-            )
-        }
-
-        if (fetchStatusOrCardData.length === 0) {
-            return this.renderFailedWord(
-                this.props.word,
-                <Clear />,
-                'Word exists, but cards not found (we do not make cards from Business Dictionary)'
-            )
-        }
-
-        if (Array.isArray(fetchStatusOrCardData)) {
-            return this.renderFetchedWord(fetchStatusOrCardData)
-        }
-
-        // TODO make exhaustiveness check
     }
 }

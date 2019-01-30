@@ -38,8 +38,10 @@ export interface CardData {
     antonym: string
 }
 
-export enum WordFetchStatus {
-    Ok = 'FETCH STATUS: OK',
-    NotFound = 'FETCH STATUS: NOT FOUND',
-    Offline = 'FETCH STATUS: OFFLINE'
+type WordIsLoading = 'WORD IS LOADING'
+export const WordIsLoading: WordIsLoading = 'WORD IS LOADING'
+
+export enum WordFetchError {
+    NotFound = 'FETCH ERROR: NOT FOUND',
+    Offline = 'FETCH ERROR: OFFLINE'
 }

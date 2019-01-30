@@ -11,6 +11,7 @@ import makeCard from '../../core/makeCard/makeCard'
 import splitByWord from '../../utils/splitByWord/splitByWord'
 import maybePluralize from '../../utils/maybePluralize/maybePluralize'
 import wordToData from '../../utils/wordToData/wordToData'
+import assertUnreachable from '../../utils/assertUnreachable/assertUnreachable'
 
 import Header from '../Header/Header'
 import DownloadButton from '../DownloadButton/DownloadButton'
@@ -18,7 +19,7 @@ import ResultCards from '../ResultCards/ResultCards'
 import UserWords from '../UserWords/UserWords'
 import DeckName from '../DeckName/DeckName'
 
-import { WordFetchStatus, CardData } from '../../types.d'
+import { WordIsLoading, WordFetchError, CardData } from '../../types.d'
 
 import './App.css'
 
@@ -34,7 +35,7 @@ interface State {
     words: string[]
     inputValue: string
     wordsFetchStatusOrCardsData: {
-        [key: string]: WordFetchStatus | CardData[]
+        [key: string]: WordIsLoading | WordFetchError | CardData[]
     }
     deckName: string
     isDeckBeingDownloaded: boolean
@@ -121,10 +122,19 @@ export default class App extends React.Component<{}, State> {
             ? splitByWord(this.state.inputValue)
             : [this.state.inputValue]
 
+        const newWordsFetchStatusOrCardsData = {
+            ...this.state.wordsFetchStatusOrCardsData
+        }
+
+        newWords.forEach(word => {
+            newWordsFetchStatusOrCardsData[word] = WordIsLoading
+        })
+
         this.setState(
             prevState => ({
                 words: [...newWords, ...prevState.words],
-                inputValue: ''
+                inputValue: '',
+                wordsFetchStatusOrCardsData: newWordsFetchStatusOrCardsData
             }),
             () => {
                 this.state.words.map(this.downloadAndSaveWordData)
@@ -137,41 +147,30 @@ export default class App extends React.Component<{}, State> {
             return // don't download word, if we already have cards from it
         }
         this.setState(
-            prevState => {
-                const newWordsFetchStatusOrCardsData = {
-                    ...prevState.wordsFetchStatusOrCardsData
+            prevState => ({
+                wordsFetchStatusOrCardsData: {
+                    ...prevState.wordsFetchStatusOrCardsData,
+                    [word]: WordIsLoading
                 }
-                delete newWordsFetchStatusOrCardsData[word]
-                return {
-                    wordsFetchStatusOrCardsData: newWordsFetchStatusOrCardsData
-                }
-            },
+            }),
             async () => {
                 const wordData = await wordToData(word)
-                if (wordData.status === WordFetchStatus.Offline) {
+
+                if (wordData.status === WordFetchError.Offline) {
                     this.setState(prevState => ({
                         wordsFetchStatusOrCardsData: {
                             ...prevState.wordsFetchStatusOrCardsData,
-                            [word]: WordFetchStatus.Offline
+                            [word]: WordFetchError.Offline
                         }
                     }))
-                    return
-                }
-
-                if (wordData.status === WordFetchStatus.NotFound) {
+                } else if (wordData.status === WordFetchError.NotFound) {
                     this.setState(prevState => ({
                         wordsFetchStatusOrCardsData: {
                             ...prevState.wordsFetchStatusOrCardsData,
-                            [word]: WordFetchStatus.NotFound
+                            [word]: WordFetchError.NotFound
                         }
                     }))
-                    return
-                }
-
-                if (
-                    wordData.status === WordFetchStatus.Ok &&
-                    wordData.payload
-                ) {
+                } else if (wordData.payload) {
                     this.setState(prevState => ({
                         wordsFetchStatusOrCardsData: {
                             ...prevState.wordsFetchStatusOrCardsData,
@@ -183,9 +182,9 @@ export default class App extends React.Component<{}, State> {
                             item === word ? wordData.payload.headword : item
                         )
                     }))
+                } else {
+                    assertUnreachable(wordData.status)
                 }
-
-                // TODO make exhaustiveness check
             }
         )
     }
