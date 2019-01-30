@@ -16,8 +16,7 @@ describe('normalizeEntryData', () => {
         }
 
         expect(
-            normalizeEntryData(
-                { headword, pronunciation, frequency },
+            normalizeEntryData({ headword, pronunciation, frequency })(
                 entryData
             )
         ).toEqual([

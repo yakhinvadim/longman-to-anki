@@ -17,9 +17,7 @@ describe('extractPronunciation', () => {
         expect(extractPronunciation(irregularNounMarkup)).toEqual('maʊs')
     })
 
-    it('returns null if there is no pronunciation', () => {
-        expect(extractPronunciation(wordWithNoPronunciationMarkup)).toEqual(
-            null
-        )
+    it('returns empty string if there is no pronunciation', () => {
+        expect(extractPronunciation(wordWithNoPronunciationMarkup)).toEqual('')
     })
 })

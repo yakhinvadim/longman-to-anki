@@ -6,7 +6,7 @@ describe('extractHeadword', () => {
         expect(extractHeadword(wordMarkup)).toEqual('set')
     })
 
-    it('returns null, if headword is not found', () => {
-        expect(extractHeadword('<div>no headword here</div>')).toEqual(null)
+    it('returns empty string, if headword is not found', () => {
+        expect(extractHeadword('<div>no headword here</div>')).toEqual('')
     })
 })

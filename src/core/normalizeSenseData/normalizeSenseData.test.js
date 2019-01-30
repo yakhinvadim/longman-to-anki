@@ -1,8 +1,10 @@
 import normalizeSenseData from './normalizeSenseData'
 
-const headword = 'headword'
-const pronunciation = 'pronunciation'
-const frequency = 'frequency'
+const wordData = {
+    headword: 'headword',
+    pronunciation: 'pronunciation',
+    frequency: 'frequency'
+}
 
 const basicSenseData = {
     situation: 'situation',
@@ -33,22 +35,12 @@ describe('normalizeSenseData', () => {
             examples: ['example']
         }
 
-        expect(
-            normalizeSenseData(
-                { headword, pronunciation, frequency },
-                senseData
-            )
-        ).toEqual([
-            [
-                {
-                    ...basicCardData,
-                    form: 'headword',
-                    example: 'example'
-                }
-            ],
-            [],
-            [],
-            {}
+        expect(normalizeSenseData(wordData)(senseData)).toEqual([
+            {
+                ...basicCardData,
+                form: 'headword',
+                example: 'example'
+            }
         ])
     })
 
@@ -58,27 +50,17 @@ describe('normalizeSenseData', () => {
             examples: ['example1', 'example2']
         }
 
-        expect(
-            normalizeSenseData(
-                { headword, pronunciation, frequency },
-                senseData
-            )
-        ).toEqual([
-            [
-                {
-                    ...basicCardData,
-                    form: 'headword',
-                    example: 'example1'
-                },
-                {
-                    ...basicCardData,
-                    form: 'headword',
-                    example: 'example2'
-                }
-            ],
-            [],
-            [],
-            {}
+        expect(normalizeSenseData(wordData)(senseData)).toEqual([
+            {
+                ...basicCardData,
+                form: 'headword',
+                example: 'example1'
+            },
+            {
+                ...basicCardData,
+                form: 'headword',
+                example: 'example2'
+            }
         ])
     })
 
@@ -93,24 +75,12 @@ describe('normalizeSenseData', () => {
             ]
         }
 
-        expect(
-            normalizeSenseData(
-                { headword, pronunciation, frequency },
-                senseData
-            )
-        ).toEqual([
-            [],
-            [
-                [
-                    {
-                        ...basicCardData,
-                        form: 'form',
-                        example: 'example'
-                    }
-                ]
-            ],
-            [],
-            {}
+        expect(normalizeSenseData(wordData)(senseData)).toEqual([
+            {
+                ...basicCardData,
+                form: 'form',
+                example: 'example'
+            }
         ])
     })
 
@@ -129,36 +99,22 @@ describe('normalizeSenseData', () => {
             ]
         }
 
-        expect(
-            normalizeSenseData(
-                { headword, pronunciation, frequency },
-                senseData
-            )
-        ).toEqual([
-            [],
-            [
-                [
-                    {
-                        ...basicCardData,
-                        form: 'form1',
-                        example: 'example11'
-                    },
-                    {
-                        ...basicCardData,
-                        form: 'form1',
-                        example: 'example12'
-                    }
-                ],
-                [
-                    {
-                        ...basicCardData,
-                        form: 'form2',
-                        example: 'example2'
-                    }
-                ]
-            ],
-            [],
-            {}
+        expect(normalizeSenseData(wordData)(senseData)).toEqual([
+            {
+                ...basicCardData,
+                form: 'form1',
+                example: 'example11'
+            },
+            {
+                ...basicCardData,
+                form: 'form1',
+                example: 'example12'
+            },
+            {
+                ...basicCardData,
+                form: 'form2',
+                example: 'example2'
+            }
         ])
     })
 
@@ -177,41 +133,17 @@ describe('normalizeSenseData', () => {
             ]
         }
 
-        expect(
-            normalizeSenseData(
-                { headword, pronunciation, frequency },
-                senseData
-            )
-        ).toEqual([
-            [],
-            [],
-            [
-                [
-                    [
-                        {
-                            ...basicCardData,
-                            form: 'headword',
-                            example: 'example1'
-                        }
-                    ],
-                    [],
-                    [],
-                    {}
-                ],
-                [
-                    [
-                        {
-                            ...basicCardData,
-                            form: 'headword',
-                            example: 'example2'
-                        }
-                    ],
-                    [],
-                    [],
-                    {}
-                ]
-            ],
-            {}
+        expect(normalizeSenseData(wordData)(senseData)).toEqual([
+            {
+                ...basicCardData,
+                form: 'headword',
+                example: 'example1'
+            },
+            {
+                ...basicCardData,
+                form: 'headword',
+                example: 'example2'
+            }
         ])
     })
 
@@ -241,72 +173,42 @@ describe('normalizeSenseData', () => {
             ]
         }
 
-        expect(
-            normalizeSenseData(
-                { headword, pronunciation, frequency },
-                senseData
-            )
-        ).toEqual([
-            [
-                {
-                    ...basicCardData,
-                    form: 'headword',
-                    example: 'example1'
-                },
-                {
-                    ...basicCardData,
-                    form: 'headword',
-                    example: 'example2'
-                }
-            ],
-            [
-                [
-                    {
-                        ...basicCardData,
-                        form: 'form3',
-                        example: 'example31'
-                    },
-                    {
-                        ...basicCardData,
-                        form: 'form3',
-                        example: 'example32'
-                    }
-                ],
-                [
-                    {
-                        ...basicCardData,
-                        form: 'form4',
-                        example: 'example4'
-                    }
-                ]
-            ],
-            [
-                [
-                    [
-                        {
-                            ...basicCardData,
-                            form: 'headword',
-                            example: 'example5'
-                        }
-                    ],
-                    [],
-                    [],
-                    {}
-                ],
-                [
-                    [
-                        {
-                            ...basicCardData,
-                            form: 'headword',
-                            example: 'example6'
-                        }
-                    ],
-                    [],
-                    [],
-                    {}
-                ]
-            ],
-            {}
+        expect(normalizeSenseData(wordData)(senseData)).toEqual([
+            {
+                ...basicCardData,
+                form: 'headword',
+                example: 'example1'
+            },
+            {
+                ...basicCardData,
+                form: 'headword',
+                example: 'example2'
+            },
+            {
+                ...basicCardData,
+                form: 'form3',
+                example: 'example31'
+            },
+            {
+                ...basicCardData,
+                form: 'form3',
+                example: 'example32'
+            },
+            {
+                ...basicCardData,
+                form: 'form4',
+                example: 'example4'
+            },
+            {
+                ...basicCardData,
+                form: 'headword',
+                example: 'example5'
+            },
+            {
+                ...basicCardData,
+                form: 'headword',
+                example: 'example6'
+            }
         ])
     })
 
@@ -315,18 +217,11 @@ describe('normalizeSenseData', () => {
             ...basicSenseData
         }
 
-        expect(
-            normalizeSenseData(
-                { headword, pronunciation, frequency },
-                senseData
-            )
-        ).toEqual([
-            [],
-            [],
-            [],
+        expect(normalizeSenseData(wordData)(senseData)).toEqual([
             {
                 ...basicCardData,
-                form: 'headword'
+                form: 'headword',
+                example: ''
             }
         ])
     })
