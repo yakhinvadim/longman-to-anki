@@ -1,7 +1,6 @@
 import React from 'react'
 import { saveAs } from 'file-saver'
 import GithubCorner from 'react-github-corner'
-import { Detector } from 'react-detect-offline'
 import uniq from 'lodash/uniq'
 
 import Grid from '@material-ui/core/Grid'
@@ -15,7 +14,7 @@ import wordToData from '../../utils/wordToData/wordToData'
 import assertUnreachable from '../../utils/assertUnreachable/assertUnreachable'
 
 import Header from '../Header/Header'
-import DownloadButton from '../DownloadButton/DownloadButton'
+import DownloadSection from '../DownloadSection/DownloadSection'
 import ResultCards from '../ResultCards/ResultCards'
 import UserWords from '../UserWords/UserWords'
 import DeckName from '../DeckName/DeckName'
@@ -23,14 +22,6 @@ import DeckName from '../DeckName/DeckName'
 import { WordIsLoading, WordFetchError, CardData } from '../../types.d'
 
 import './App.css'
-
-const template = {
-    css: `
-			.card { font-family: arial; font-size: 20px; text-align: center; color: black; background-color: white; }
-			.lta-example { font-style: italic; } 
-			.lta-form { font-weight: bold; }
-		`
-}
 
 interface State {
     words: string[]
@@ -227,7 +218,13 @@ export default class App extends React.Component<{}, State> {
                     body: JSON.stringify({
                         cards: cardsArr,
                         deckName: this.state.deckName,
-                        template: template
+                        template: {
+                            css: `
+                                    .card { font-family: arial; font-size: 20px; text-align: center; color: black; background-color: white; }
+                                    .lta-example { font-style: italic; } 
+                                    .lta-form { font-weight: bold; }
+                                `
+                        }
                     })
                 })
                     .then(res => res.blob())
@@ -280,13 +277,12 @@ export default class App extends React.Component<{}, State> {
                     </Grid>
 
                     <Grid item xs={12}>
-                        <form onSubmit={this.handleSubmit}>
-                            <UserWords
-                                value={this.state.inputValue}
-                                onChange={this.handleInputChange}
-                                onKeyDown={this.handleEnterPress}
-                            />
-                        </form>
+                        <UserWords
+                            value={this.state.inputValue}
+                            onChange={this.handleInputChange}
+                            onKeyDown={this.handleEnterPress}
+                            onSubmit={this.handleSubmit}
+                        />
                     </Grid>
 
                     <Grid item xs={12}>
@@ -307,22 +303,12 @@ export default class App extends React.Component<{}, State> {
                     </Grid>
 
                     <Grid item xs={12}>
-                        <div className="App__download-section">
-                            <span className="App__total">{totals}</span>
-                            <Detector
-                                polling={false}
-                                render={({ online }: { online: boolean }) => (
-                                    <DownloadButton
-                                        onClick={this.handleDownload}
-                                        disabled={!cardsTotalCount}
-                                        isOnline={online}
-                                        isLoading={
-                                            this.state.isDeckBeingDownloaded
-                                        }
-                                    />
-                                )}
-                            />
-                        </div>
+                        <DownloadSection
+                            onClick={this.handleDownload}
+                            disabled={!cardsTotalCount}
+                            isLoading={this.state.isDeckBeingDownloaded}
+                            totals={totals}
+                        />
                     </Grid>
                 </Grid>
             </div>
