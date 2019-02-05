@@ -192,7 +192,7 @@ export default class App extends React.Component<{}, State> {
     handleDownload = (event: React.MouseEvent) => {
         event.preventDefault()
 
-        const cardsArr = this.state.words
+        const cards = this.state.words
             .reverse()
             .map(word => this.state.wordsFetchStatusOrCardsData[word])
             .filter(Array.isArray)
@@ -216,7 +216,7 @@ export default class App extends React.Component<{}, State> {
                         'Content-Type': 'application/json'
                     }),
                     body: JSON.stringify({
-                        cards: cardsArr,
+                        cards,
                         deckName: this.state.deckName,
                         template: {
                             css: `
