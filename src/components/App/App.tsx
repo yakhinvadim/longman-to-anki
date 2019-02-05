@@ -64,7 +64,10 @@ export default class App extends React.Component<{}, State> {
 
     handleOnline = () => {
         this.state.words.forEach(word => {
-            if (this.state.wordsFetchStatusOrCardsData[word] === 'offline') {
+            if (
+                this.state.wordsFetchStatusOrCardsData[word] ===
+                WordFetchError.Offline
+            ) {
                 this.downloadAndSaveWordData(word)
             }
         })
