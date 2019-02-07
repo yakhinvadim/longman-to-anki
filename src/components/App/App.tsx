@@ -4,10 +4,9 @@ import uniq from 'lodash/uniq'
 import Grid from '@material-ui/core/Grid'
 
 import normalizeWordData from '../../core/normalizeWordData/normalizeWordData'
-import makeCard from '../../core/makeCard/makeCard'
+import makeCards from '../../utils/makeCards/makeCards'
 
 import splitByWord from '../../utils/splitByWord/splitByWord'
-import maybePluralize from '../../utils/maybePluralize/maybePluralize'
 import wordToData from '../../utils/wordToData/wordToData'
 import assertUnreachable from '../../utils/assertUnreachable/assertUnreachable'
 import downloadAndSaveDeck from '../../utils/downloadAndSaveDeck/downloadAndSaveDeck'
@@ -200,20 +199,10 @@ export default class App extends React.Component<{}, State> {
     }
 
     handleDownload = (event: React.MouseEvent) => {
-        event.preventDefault()
-
-        const cards = this.state.words
-            .reverse()
-            .map(word => this.state.wordsFetchStatusOrCardsData[word])
-            .filter(Array.isArray)
-            .reduce(
-                (allCardsData, currentWordCardsData) =>
-                    currentWordCardsData
-                        ? allCardsData.concat(...currentWordCardsData)
-                        : allCardsData,
-                []
-            )
-            .map(makeCard)
+        const cards = makeCards(
+            this.state.words,
+            this.state.wordsFetchStatusOrCardsData
+        )
 
         this.setState(
             {
