@@ -169,13 +169,8 @@ export default class App extends React.Component<{}, State> {
                     this.setState(prevState => ({
                         wordsFetchStatusOrCardsData: {
                             ...prevState.wordsFetchStatusOrCardsData,
-                            [wordData.payload.headword]: normalizeWordData(
-                                wordData.payload
-                            )
-                        },
-                        words: prevState.words.map(item =>
-                            item === word ? wordData.payload.headword : item
-                        )
+                            [word]: normalizeWordData(wordData.payload)
+                        }
                     }))
                 } else {
                     assertUnreachable(wordData)

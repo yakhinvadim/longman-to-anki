@@ -3,7 +3,10 @@ import getTrimmedTextContent from '../../utils/getTrimmedTextContent/getTrimmedT
 
 const extractHeadword = (pageMarkup: string) => {
     // I'm adding h1 in selector, because page has two .pagetitle elements, and one of them is span
-    const headwordNode = domify(pageMarkup).querySelector('h1.pagetitle')
+    // I'm adding entry_content in order to exclude pagetitle from https://www.ldoceonline.com/dictionary/
+    const headwordNode = domify(pageMarkup).querySelector(
+        '.entry_content h1.pagetitle'
+    )
 
     const headword = getTrimmedTextContent(headwordNode)
 
