@@ -38,6 +38,11 @@ export interface CardData {
     antonym: string
 }
 
+export interface Card {
+    front: string
+    back: string
+}
+
 type WordIsLoading = 'WORD IS LOADING'
 export const WordIsLoading: WordIsLoading = 'WORD IS LOADING'
 

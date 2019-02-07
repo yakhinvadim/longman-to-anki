@@ -1,5 +1,4 @@
 import React from 'react'
-import { saveAs } from 'file-saver'
 import GithubCorner from 'react-github-corner'
 import uniq from 'lodash/uniq'
 
@@ -12,6 +11,7 @@ import splitByWord from '../../utils/splitByWord/splitByWord'
 import maybePluralize from '../../utils/maybePluralize/maybePluralize'
 import wordToData from '../../utils/wordToData/wordToData'
 import assertUnreachable from '../../utils/assertUnreachable/assertUnreachable'
+import downloadAndSaveDeck from '../../utils/downloadAndSaveDeck/downloadAndSaveDeck'
 
 import Header from '../Header/Header'
 import DownloadSection from '../DownloadSection/DownloadSection'
@@ -216,25 +216,7 @@ export default class App extends React.Component<{}, State> {
                 isDeckBeingDownloaded: true
             },
             () => {
-                fetch('https://micro-anki-yakhinvadim.now.sh/', {
-                    method: 'POST',
-                    headers: new Headers({
-                        'Content-Type': 'application/json'
-                    }),
-                    body: JSON.stringify({
-                        cards,
-                        deckName: this.state.deckName,
-                        template: {
-                            css: `
-                                    .card { font-family: arial; font-size: 20px; text-align: center; color: black; background-color: white; }
-                                    .lta-example { font-style: italic; } 
-                                    .lta-form { font-weight: bold; }
-                                `
-                        }
-                    })
-                })
-                    .then(res => res.blob())
-                    .then(blob => saveAs(blob, `${this.state.deckName}.apkg`))
+                downloadAndSaveDeck(this.state.deckName, cards)
                     .then(() => {
                         this.setState({
                             isDeckBeingDownloaded: false
