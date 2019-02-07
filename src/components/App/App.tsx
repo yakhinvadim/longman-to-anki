@@ -1,5 +1,4 @@
 import React from 'react'
-import GithubCorner from 'react-github-corner'
 import uniq from 'lodash/uniq'
 
 import Grid from '@material-ui/core/Grid'
@@ -242,11 +241,6 @@ export default class App extends React.Component<{}, State> {
     render() {
         return (
             <div className="App">
-                <GithubCorner
-                    href="https://github.com/yakhinvadim/longman-to-anki"
-                    bannerColor="#3f51b5"
-                />
-
                 <Grid container spacing={16}>
                     <Grid item xs={12}>
                         <Header />
