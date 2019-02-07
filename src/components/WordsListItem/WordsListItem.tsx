@@ -19,13 +19,18 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
 import assertUnreachable from '../../utils/assertUnreachable/assertUnreachable'
 
-import { WordIsLoading, WordFetchError, CardData } from '../../types.d'
+import {
+    WordIsLoading,
+    WordFetchError,
+    CardData,
+    WordFetchStatusOrCardsData
+} from '../../types.d'
 
 import './WordsListItem.css'
 
 interface Props {
     word: string
-    fetchStatusOrCardData: WordIsLoading | WordFetchError | CardData[]
+    fetchStatusOrCardData: WordFetchStatusOrCardsData
     onDeleteButtonClick: (word: string) => (e: React.MouseEvent) => void
 }
 

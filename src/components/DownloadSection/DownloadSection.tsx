@@ -5,6 +5,7 @@ import CloudDownloadIcon from '@material-ui/icons/CloudDownload'
 import CloudOff from '@material-ui/icons/CloudOff'
 import { withStyles, WithStyles, Theme, createStyles } from '@material-ui/core'
 import { Detector } from 'react-detect-offline'
+import maybePluralize from '../../utils/maybePluralize/maybePluralize'
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -20,25 +21,30 @@ const styles = (theme: Theme) =>
 
 interface Props extends WithStyles<typeof styles> {
     onClick: (e: React.MouseEvent) => void
-    disabled: boolean
     isLoading: boolean
-    totals: string
+    wordsAndCardsCount: {
+        wordsCount: number
+        cardsCount: number
+    }
 }
 
 class DownloadSection extends PureComponent<Props> {
     render() {
-        const { classes, totals, onClick, disabled, isLoading } = this.props
+        const { classes, onClick, isLoading, wordsAndCardsCount } = this.props
+
+        const wordsTotal = maybePluralize(wordsAndCardsCount.wordsCount, 'word')
+        const cardsTotal = maybePluralize(wordsAndCardsCount.cardsCount, 'card')
 
         return (
             <div className={classes.root}>
-                <span>{totals}</span>
+                <span>{`${wordsTotal}, ${cardsTotal}`}</span>
                 <Detector
                     polling={false}
                     render={({ online }: { online: boolean }) => (
                         <Button
                             variant="contained"
                             onClick={onClick}
-                            disabled={disabled || !online}
+                            disabled={!wordsAndCardsCount.cardsCount || !online}
                             color="primary"
                         >
                             {online ? (

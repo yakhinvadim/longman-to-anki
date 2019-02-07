@@ -1,12 +1,12 @@
 import React, { PureComponent } from 'react'
 import WordsListItem from '../WordsListItem/WordsListItem'
 
-import { WordIsLoading, WordFetchError, CardData } from '../../types.d'
+import { WordFetchStatusOrCardsData } from '../../types.d'
 
 interface Props {
     words: string[]
     wordsFetchStatusOrCardsData: {
-        [key: string]: WordIsLoading | WordFetchError | CardData[]
+        [key: string]: WordFetchStatusOrCardsData
     }
     onDeleteButtonClick: (word: string) => (e: React.MouseEvent) => void
 }

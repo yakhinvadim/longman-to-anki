@@ -12,6 +12,7 @@ import maybePluralize from '../../utils/maybePluralize/maybePluralize'
 import wordToData from '../../utils/wordToData/wordToData'
 import assertUnreachable from '../../utils/assertUnreachable/assertUnreachable'
 import downloadAndSaveDeck from '../../utils/downloadAndSaveDeck/downloadAndSaveDeck'
+import getWordsAndCardsCount from '../../utils/getWordsAndCardsCount/getWordsAndCardsCount'
 
 import Header from '../Header/Header'
 import DownloadSection from '../DownloadSection/DownloadSection'
@@ -19,7 +20,11 @@ import ResultCards from '../ResultCards/ResultCards'
 import UserWords from '../UserWords/UserWords'
 import DeckName from '../DeckName/DeckName'
 
-import { WordIsLoading, WordFetchError, CardData } from '../../types.d'
+import {
+    WordIsLoading,
+    WordFetchError,
+    WordFetchStatusOrCardsData
+} from '../../types.d'
 
 import './App.css'
 
@@ -27,7 +32,7 @@ interface State {
     words: string[]
     inputValue: string
     wordsFetchStatusOrCardsData: {
-        [key: string]: WordIsLoading | WordFetchError | CardData[]
+        [key: string]: WordFetchStatusOrCardsData
     }
     deckName: string
     isDeckBeingDownloaded: boolean
@@ -235,23 +240,6 @@ export default class App extends React.Component<{}, State> {
     }
 
     render() {
-        const wordsTotalCount = this.state.words.length
-        const cardsTotalCount = Object.values(
-            this.state.wordsFetchStatusOrCardsData
-        )
-            .filter(Array.isArray)
-            .reduce((totalCardsCount, currentWordCards) => {
-                return (
-                    totalCardsCount +
-                    (currentWordCards ? currentWordCards.length : 0)
-                )
-            }, 0)
-
-        const wordsTotal = maybePluralize(wordsTotalCount, 'word')
-        const cardsTotal = maybePluralize(cardsTotalCount, 'card')
-
-        const totals = `${wordsTotal}, ${cardsTotal}`
-
         return (
             <div className="App">
                 <GithubCorner
@@ -293,9 +281,11 @@ export default class App extends React.Component<{}, State> {
                     <Grid item xs={12}>
                         <DownloadSection
                             onClick={this.handleDownload}
-                            disabled={!cardsTotalCount}
                             isLoading={this.state.isDeckBeingDownloaded}
-                            totals={totals}
+                            wordsAndCardsCount={getWordsAndCardsCount(
+                                this.state.words,
+                                this.state.wordsFetchStatusOrCardsData
+                            )}
                         />
                     </Grid>
                 </Grid>
