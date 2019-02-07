@@ -114,36 +114,22 @@ export default class App extends React.Component<{}, State> {
         })
     }
 
-    downloadAndSaveWordData = (word: string) => {
-        this.setState(
-            prevState => ({
-                wordsFetchStatusOrCardsData: {
-                    ...prevState.wordsFetchStatusOrCardsData,
-                    [word]: WordIsLoading
-                }
-            }),
-            async () => {
-                const wordData = await wordToData(word)
-
-                if (wordData.status) {
-                    this.setState(prevState => ({
-                        wordsFetchStatusOrCardsData: {
-                            ...prevState.wordsFetchStatusOrCardsData,
-                            [word]: wordData.status
-                        }
-                    }))
-                } else if (wordData.payload) {
-                    this.setState(prevState => ({
-                        wordsFetchStatusOrCardsData: {
-                            ...prevState.wordsFetchStatusOrCardsData,
-                            [word]: normalizeWordData(wordData.payload)
-                        }
-                    }))
-                } else {
-                    assertUnreachable(wordData)
-                }
+    downloadAndSaveWordData = async (word: string) => {
+        this.setState(prevState => ({
+            wordsFetchStatusOrCardsData: {
+                ...prevState.wordsFetchStatusOrCardsData,
+                [word]: WordIsLoading
             }
-        )
+        }))
+
+        const wordData = await wordToData(word)
+
+        this.setState(prevState => ({
+            wordsFetchStatusOrCardsData: {
+                ...prevState.wordsFetchStatusOrCardsData,
+                [word]: wordData.status || normalizeWordData(wordData.payload)
+            }
+        }))
     }
 
     handleDeleteButtonClick = (wordToDelete: string) => (
