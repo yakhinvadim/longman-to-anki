@@ -44,8 +44,11 @@ export default class App extends React.Component<{}, State> {
 
     componentDidMount() {
         if (localStorage.state) {
+            const newState = JSON.parse(localStorage.state)
+            newState.isDeckBeingDownloaded = false
+
             try {
-                this.setState(JSON.parse(localStorage.state), () => {
+                this.setState(newState, () => {
                     if (navigator.onLine) {
                         this.handleOnline()
                     }
