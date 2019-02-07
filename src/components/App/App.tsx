@@ -89,7 +89,7 @@ export default class App extends React.Component<{}, State> {
         })
     }
 
-    handleInputChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         this.setState({
             inputValue: event.target.value
         })

@@ -9,7 +9,7 @@ const template = {
         `
 }
 
-const downloadAndSaveDeck = async (deckName: string, cards: Card[]) =>
+const downloadAndSaveDeck = (deckName: string, cards: Card[]) =>
     fetch('https://micro-anki-yakhinvadim.now.sh/', {
         body: JSON.stringify({ cards, deckName, template }),
         method: 'POST',
