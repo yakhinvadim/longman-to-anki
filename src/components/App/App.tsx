@@ -136,14 +136,14 @@ export default class App extends React.Component<{}, State> {
         e: React.MouseEvent
     ) => {
         this.setState(prevState => {
-            const newWordsFetchStatusOrCardsData = {
+            const wordsFetchStatusOrCardsData = {
                 ...prevState.wordsFetchStatusOrCardsData
             }
-            delete newWordsFetchStatusOrCardsData[wordToDelete]
+            delete wordsFetchStatusOrCardsData[wordToDelete]
 
             return {
                 words: prevState.words.filter(word => word !== wordToDelete),
-                wordsFetchStatusOrCardsData: newWordsFetchStatusOrCardsData
+                wordsFetchStatusOrCardsData
             }
         })
     }
