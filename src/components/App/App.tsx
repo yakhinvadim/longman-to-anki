@@ -192,25 +192,22 @@ export default class App extends React.Component<{}, State> {
     }
 
     handleDownload = (event: React.MouseEvent) => {
+        this.setState({
+            isDeckBeingDownloaded: true
+        })
+
         const cards = makeCards(
             this.state.words,
             this.state.wordsFetchStatusOrCardsData
         )
 
-        this.setState(
-            {
-                isDeckBeingDownloaded: true
-            },
-            () => {
-                downloadAndSaveDeck(this.state.deckName, cards)
-                    .then(() => {
-                        this.setState({
-                            isDeckBeingDownloaded: false
-                        })
-                    })
-                    .catch(console.error)
-            }
-        )
+        downloadAndSaveDeck(this.state.deckName, cards)
+            .then(() => {
+                this.setState({
+                    isDeckBeingDownloaded: false
+                })
+            })
+            .catch(console.error)
     }
 
     handleEnterPress = (event: React.KeyboardEvent) => {
