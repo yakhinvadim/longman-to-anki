@@ -68,6 +68,10 @@ export default class App extends React.Component<{}, State> {
         window.removeEventListener('online', this.handleOnline)
     }
 
+    componentDidUpdate() {
+        localStorage.state = JSON.stringify(this.state)
+    }
+
     handleOnline = () => {
         this.state.words.forEach(word => {
             if (
@@ -79,8 +83,10 @@ export default class App extends React.Component<{}, State> {
         })
     }
 
-    componentDidUpdate() {
-        localStorage.state = JSON.stringify(this.state)
+    handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        this.setState({
+            inputValue: event.target.value
+        })
     }
 
     handleDeckNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -89,54 +95,26 @@ export default class App extends React.Component<{}, State> {
         })
     }
 
-    handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.setState({
-            inputValue: event.target.value
-        })
-    }
-
-    handleDeleteButtonClick = (wordToDelete: string) => (
-        e: React.MouseEvent
-    ) => {
-        this.setState(prevState => {
-            const newWordsFetchStatusOrCardsData = {
-                ...prevState.wordsFetchStatusOrCardsData
-            }
-            delete newWordsFetchStatusOrCardsData[wordToDelete]
-
-            return {
-                words: prevState.words.filter(word => word !== wordToDelete),
-                wordsFetchStatusOrCardsData: newWordsFetchStatusOrCardsData
-            }
-        })
+    handleEnterPress = (event: React.KeyboardEvent) => {
+        if (event.key === 'Enter' && event.shiftKey === false) {
+            event.preventDefault()
+            this.handleSubmit(event)
+        }
     }
 
     handleSubmit = (event: React.FormEvent) => {
         event.preventDefault()
 
         const newWords = splitByWord(this.state.inputValue)
-
-        const allWords = uniq([...newWords, ...this.state.words])
-        allWords.forEach(this.downloadAndSaveWordData)
+        newWords.forEach(this.downloadAndSaveWordData)
 
         this.setState({
-            words: allWords,
+            words: uniq([...newWords, ...this.state.words]),
             inputValue: ''
         })
     }
 
     downloadAndSaveWordData = (word: string) => {
-        const cardsAreAlreadyDownloaded = Array.isArray(
-            this.state.wordsFetchStatusOrCardsData[word]
-        )
-        const wordIsAlreadyNotFound =
-            this.state.wordsFetchStatusOrCardsData[word] ===
-            WordFetchError.NotFound
-
-        if (cardsAreAlreadyDownloaded || wordIsAlreadyNotFound) {
-            return
-        }
-
         this.setState(
             prevState => ({
                 wordsFetchStatusOrCardsData: {
@@ -168,6 +146,22 @@ export default class App extends React.Component<{}, State> {
         )
     }
 
+    handleDeleteButtonClick = (wordToDelete: string) => (
+        e: React.MouseEvent
+    ) => {
+        this.setState(prevState => {
+            const newWordsFetchStatusOrCardsData = {
+                ...prevState.wordsFetchStatusOrCardsData
+            }
+            delete newWordsFetchStatusOrCardsData[wordToDelete]
+
+            return {
+                words: prevState.words.filter(word => word !== wordToDelete),
+                wordsFetchStatusOrCardsData: newWordsFetchStatusOrCardsData
+            }
+        })
+    }
+
     handleDownload = (event: React.MouseEvent) => {
         this.setState({
             isDeckBeingDownloaded: true
@@ -185,13 +179,6 @@ export default class App extends React.Component<{}, State> {
                 })
             })
             .catch(console.error)
-    }
-
-    handleEnterPress = (event: React.KeyboardEvent) => {
-        if (event.key === 'Enter' && event.shiftKey === false) {
-            event.preventDefault()
-            this.handleSubmit(event)
-        }
     }
 
     render() {
