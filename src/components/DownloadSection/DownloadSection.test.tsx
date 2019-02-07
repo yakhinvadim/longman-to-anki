@@ -6,9 +6,11 @@ it('renders without crashing', () => {
     Enzyme.shallow(
         <DownloadSection
             onClick={() => {}}
-            disabled
             isLoading={false}
-            totals="some text"
+            wordsAndCardsCount={{
+                wordsCount: 1,
+                cardsCount: 3
+            }}
         />
     )
 })

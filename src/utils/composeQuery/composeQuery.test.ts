@@ -2,7 +2,7 @@ import composeQuery from './composeQuery'
 
 const path =
     'https://cors-anywhere.herokuapp.com/https://www.ldoceonline.com/dictionary/'
-const makeUrl = word => `${path}${word}`
+const makeUrl = (word: string) => `${path}${word}`
 
 describe('composeQuery', () => {
     it('composes correct query one simple word', () => {
