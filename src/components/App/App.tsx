@@ -114,14 +114,7 @@ export default class App extends React.Component<{}, State> {
     handleSubmit = (event: React.FormEvent) => {
         event.preventDefault()
 
-        if (this.state.inputValue === '') {
-            return
-        }
-
-        const isMultilineInputValue = /\n/.test(this.state.inputValue)
-        const newWords = isMultilineInputValue
-            ? splitByWord(this.state.inputValue)
-            : [this.state.inputValue]
+        const newWords = splitByWord(this.state.inputValue)
 
         const newWordsFetchStatusOrCardsData = {
             ...this.state.wordsFetchStatusOrCardsData
