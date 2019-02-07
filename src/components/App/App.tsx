@@ -165,18 +165,11 @@ export default class App extends React.Component<{}, State> {
             async () => {
                 const wordData = await wordToData(word)
 
-                if (wordData.status === WordFetchError.Offline) {
+                if (wordData.status) {
                     this.setState(prevState => ({
                         wordsFetchStatusOrCardsData: {
                             ...prevState.wordsFetchStatusOrCardsData,
-                            [word]: WordFetchError.Offline
-                        }
-                    }))
-                } else if (wordData.status === WordFetchError.NotFound) {
-                    this.setState(prevState => ({
-                        wordsFetchStatusOrCardsData: {
-                            ...prevState.wordsFetchStatusOrCardsData,
-                            [word]: WordFetchError.NotFound
+                            [word]: wordData.status
                         }
                     }))
                 } else if (wordData.payload) {
@@ -192,7 +185,7 @@ export default class App extends React.Component<{}, State> {
                         )
                     }))
                 } else {
-                    assertUnreachable(wordData.status)
+                    assertUnreachable(wordData)
                 }
             }
         )
