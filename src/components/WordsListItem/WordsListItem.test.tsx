@@ -7,7 +7,7 @@ it('renders without crashing', () => {
     Enzyme.shallow(
         <WordsListItem
             word="word"
-            onDeleteButtonClick={() => {}}
+            onDeleteButtonClick={() => () => {}}
             fetchStatusOrCardData={WordIsLoading}
         />
     )

@@ -7,7 +7,7 @@ it('renders without crashing', () => {
         <ResultCards
             words={[]}
             wordsFetchStatusOrCardsData={{}}
-            onDeleteButtonClick={() => {}}
+            onDeleteButtonClick={() => () => {}}
         />
     )
 })
