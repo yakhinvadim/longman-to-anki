@@ -2,6 +2,7 @@ import assertUnreacheble from './assertUnreachable'
 
 describe('assertUnreacheble', () => {
     it('throws Error', () => {
-        expect(() => assertUnreacheble()).toThrow()
+        let x: never
+        expect(() => assertUnreacheble(x)).toThrow()
     })
 })

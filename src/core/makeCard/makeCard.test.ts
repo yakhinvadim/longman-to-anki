@@ -9,12 +9,27 @@ const pronunciation = 'pronunciation'
 const definition = 'definition'
 const synonym = 'synonym'
 const antonym = 'antonym'
+const headword = "doesn't matter"
+const frequency = "doesn't matter"
 
 const join = R.join('')
 
 describe('makeCard', () => {
     it('make correct card if example passed (minimum card parts)', () => {
-        expect(makeCard({ example, definition, form })).toEqual({
+        expect(
+            makeCard({
+                example,
+                definition,
+                form,
+                situation: '',
+                geography: '',
+                synonym: '',
+                antonym: '',
+                pronunciation: '',
+                headword,
+                frequency
+            })
+        ).toEqual({
             front: join([
                 `<span class="lta-example">example</span>`,
                 `<br><br>`,
@@ -34,7 +49,9 @@ describe('makeCard', () => {
                 pronunciation,
                 definition,
                 synonym,
-                antonym
+                antonym,
+                headword,
+                frequency
             })
         ).toEqual({
             front: join([
@@ -54,7 +71,20 @@ describe('makeCard', () => {
     })
 
     it('make correct card if no example passed (minimum card parts)', () => {
-        expect(makeCard({ definition, form })).toEqual({
+        expect(
+            makeCard({
+                definition,
+                form,
+                example: '',
+                situation: '',
+                geography: '',
+                synonym: '',
+                antonym: '',
+                pronunciation: '',
+                headword,
+                frequency
+            })
+        ).toEqual({
             front: '<span class="lta-definition">definition</span>',
             back: '<span class="lta-form">form</span>'
         })
@@ -69,7 +99,10 @@ describe('makeCard', () => {
                 pronunciation,
                 definition,
                 synonym,
-                antonym
+                antonym,
+                example: '',
+                headword,
+                frequency
             })
         ).toEqual({
             front: join([

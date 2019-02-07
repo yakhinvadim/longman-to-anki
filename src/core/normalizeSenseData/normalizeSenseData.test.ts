@@ -3,7 +3,8 @@ import normalizeSenseData from './normalizeSenseData'
 const wordData = {
     headword: 'headword',
     pronunciation: 'pronunciation',
-    frequency: 'frequency'
+    frequency: 'frequency',
+    entries: []
 }
 
 const basicSenseData = {

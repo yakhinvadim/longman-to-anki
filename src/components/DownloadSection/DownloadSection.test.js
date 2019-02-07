@@ -1,7 +1,7 @@
 import React from 'react'
-import DownloadButton from './DownloadButton'
+import DownloadSection from './DownloadSection'
 import Enzyme from 'enzyme'
 
 it('renders without crashing', () => {
-    Enzyme.shallow(<DownloadButton onClick={() => {}} disabled />)
+    Enzyme.shallow(<DownloadSection onClick={() => {}} disabled />)
 })

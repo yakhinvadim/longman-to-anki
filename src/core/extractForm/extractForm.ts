@@ -3,14 +3,14 @@ import getTrimmedTextContent from '../../utils/getTrimmedTextContent/getTrimmedT
 
 const formClasses = '.PROPFORM, .PROPFORMPREP, .COLLO, .LINKWORD, .LEXUNIT'
 
-const extractAntonym = (exampleGroupMarkup: string) => {
-    const antonym = Array.from(
+const extractForm = (exampleGroupMarkup: string) => {
+    const form = Array.from(
         domify(exampleGroupMarkup).querySelectorAll(formClasses)
     )
         .map(getTrimmedTextContent)
         .join(' ')
 
-    return antonym
+    return form
 }
 
-export default extractAntonym
+export default extractForm
