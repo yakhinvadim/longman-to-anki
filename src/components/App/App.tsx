@@ -116,24 +116,13 @@ export default class App extends React.Component<{}, State> {
 
         const newWords = splitByWord(this.state.inputValue)
 
-        const newWordsFetchStatusOrCardsData = {
-            ...this.state.wordsFetchStatusOrCardsData
-        }
+        const allWords = uniq([...newWords, ...this.state.words])
+        allWords.forEach(this.downloadAndSaveWordData)
 
-        newWords.forEach(word => {
-            newWordsFetchStatusOrCardsData[word] = WordIsLoading
+        this.setState({
+            words: allWords,
+            inputValue: ''
         })
-
-        this.setState(
-            prevState => ({
-                words: uniq([...newWords, ...prevState.words]),
-                inputValue: '',
-                wordsFetchStatusOrCardsData: newWordsFetchStatusOrCardsData
-            }),
-            () => {
-                this.state.words.map(this.downloadAndSaveWordData)
-            }
-        )
     }
 
     downloadAndSaveWordData = (word: string) => {
