@@ -94,7 +94,9 @@ export default class WordsListItem extends PureComponent<Props> {
                         </div>
                     </Tooltip>
                     <div className="WordsListItem__word">
-                        <span>{cardsData[0].headword}</span>{' '}
+                        <span data-qa="words-list-item__fetched-word">
+                            {cardsData[0].headword}
+                        </span>{' '}
                         <span className="WordsListItem__counter">
                             ({cardsData.length})
                         </span>
@@ -123,7 +125,12 @@ export default class WordsListItem extends PureComponent<Props> {
                     <div className="WordsListItem__icon">
                         <CircularProgress size={24} thickness={2} />
                     </div>
-                    <div className="WordsListItem__word">{this.props.word}</div>
+                    <div
+                        className="WordsListItem__word"
+                        data-qa="words-list-item__loading-word"
+                    >
+                        {this.props.word}
+                    </div>
                     <div className="WordsListItem__description">...</div>
                     {this.renderDeleteButton(this.props.word)}
                 </div>

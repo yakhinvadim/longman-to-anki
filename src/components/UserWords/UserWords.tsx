@@ -24,6 +24,7 @@ export default class UserWords extends PureComponent<Props> {
                     value={value}
                     onChange={onChange}
                     onKeyDown={onKeyDown}
+                    data-qa="user-words"
                 />
             </form>
         )
