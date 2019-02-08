@@ -62,6 +62,7 @@ export default class WordsListItem extends PureComponent<Props> {
         <IconButton
             className="WordsListItem__delete"
             onClick={this.props.onDeleteButtonClick(word)}
+            data-qa="words-list-item__delete"
         >
             <DeleteIcon />
         </IconButton>

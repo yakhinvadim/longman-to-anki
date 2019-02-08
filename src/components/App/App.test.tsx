@@ -85,4 +85,27 @@ describe('<App />', () => {
             done()
         }, 0)
     })
+
+    it('deletes word', () => {
+        const wrapper = mount(<App />)
+        wrapper
+            .find('[data-qa="user-words"]')
+            .find('textarea')
+            .filter('[placeholder="example"]')
+            .simulate('change', { target: { value: 'go\nset' } })
+            .simulate('submit')
+
+        wrapper.update()
+
+        wrapper
+            .find('[data-qa="words-list-item__delete"]')
+            .first()
+            .simulate('click')
+
+        wrapper.update()
+
+        expect(
+            wrapper.find('[data-qa="words-list-item__loading-word"]').text()
+        ).toEqual('set')
+    })
 })
