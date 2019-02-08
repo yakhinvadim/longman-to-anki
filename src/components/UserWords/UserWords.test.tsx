@@ -4,6 +4,11 @@ import Enzyme from 'enzyme'
 
 it('renders without crashing', () => {
     Enzyme.shallow(
-        <UserWords onChange={() => {}} value="" onKeyDown={() => {}} />
+        <UserWords
+            onChange={() => {}}
+            onKeyDown={() => {}}
+            onSubmit={() => {}}
+            value=""
+        />
     )
 })
