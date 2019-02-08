@@ -37,7 +37,7 @@ class DownloadSection extends PureComponent<Props> {
 
         return (
             <div className={classes.root}>
-                <span>{`${wordsTotal}, ${cardsTotal}`}</span>
+                <span data-qa="download-section__totals">{`${wordsTotal}, ${cardsTotal}`}</span>
                 <Detector
                     polling={false}
                     render={({ online }: { online: boolean }) => (

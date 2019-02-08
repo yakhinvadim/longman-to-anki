@@ -7,9 +7,11 @@ import DownloadSection from '../DownloadSection/DownloadSection'
 import Header from '../Header/Header'
 import fetchMock from 'fetch-mock'
 import goMarkup from '../../mocks/wordGo'
+import setMarkup from '../../mocks/wordSet'
 import composeQuery from '../../utils/composeQuery/composeQuery'
 
 fetchMock.get(composeQuery('go'), goMarkup)
+fetchMock.get(composeQuery('set'), setMarkup)
 
 describe('<App />', () => {
     it('renders without errors', () => {
@@ -24,7 +26,7 @@ describe('<App />', () => {
         expect(wrapper.find(DownloadSection)).toHaveLength(1)
     })
 
-    it('shows loading and downloaded word in ResultCards', done => {
+    it('shows 1 loading and downloaded word in ResultCards', done => {
         const wrapper = mount(<App />)
         wrapper
             .find('[data-qa="user-words"]')
@@ -45,6 +47,40 @@ describe('<App />', () => {
             expect(
                 wrapper.find('[data-qa="words-list-item__fetched-word"]').text()
             ).toEqual('go')
+
+            done()
+        }, 0)
+    })
+
+    it('handles multiline input, shows several loading and downloaded words in ResultCards, and calculates cards count', done => {
+        const wrapper = mount(<App />)
+        wrapper
+            .find('[data-qa="user-words"]')
+            .find('textarea')
+            .filter('[placeholder="example"]')
+            .simulate('change', { target: { value: 'go\nset' } })
+            .simulate('submit')
+
+        wrapper.update()
+
+        expect(
+            wrapper
+                .find('[data-qa="words-list-item__loading-word"]')
+                .map(node => node.text())
+        ).toEqual(['go', 'set'])
+
+        // wait for async fetch to return result
+        setTimeout(() => {
+            wrapper.update()
+            expect(
+                wrapper
+                    .find('[data-qa="words-list-item__fetched-word"]')
+                    .map(node => node.text())
+            ).toEqual(['go', 'set'])
+
+            expect(
+                wrapper.find('[data-qa="download-section__totals"]').text()
+            ).toEqual('2 words, 163 cards')
 
             done()
         }, 0)
