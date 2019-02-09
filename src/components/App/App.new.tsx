@@ -59,7 +59,7 @@ import './App.css'
 // }
 
 function App() {
-    const [inputValue, setInputValue] = useState('')
+    const [wordsInput, setWordsInput] = useState('')
     const [words, setWords] = useState([] as string[])
     const [wordsFetchResult, setWordsFetchResult] = useState({} as {
         [key: string]: WordFetchResult
@@ -67,24 +67,26 @@ function App() {
     const [deckName, setDeckName] = useState('English words')
     const [isDeckBeingDownloaded, setIsDeckBeingDownloaded] = useState(false)
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setInputValue(event.target.value)
+    const handleWordsInputChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setWordsInput(event.target.value)
     }
 
     const handleEnterPress = (event: React.KeyboardEvent) => {
         if (event.key === 'Enter' && event.shiftKey === false) {
             event.preventDefault()
-            handleSubmit(event)
+            handleWordsSubmit(event)
         }
     }
 
-    const handleSubmit = (event: React.FormEvent) => {
+    const handleWordsSubmit = (event: React.FormEvent) => {
         event.preventDefault()
 
-        const newWords = splitByWord(inputValue)
+        const newWords = splitByWord(wordsInput)
         newWords.forEach(downloadAndSaveWordData)
 
-        setInputValue('')
+        setWordsInput('')
         setWords(uniq([...newWords, ...words]))
     }
 
@@ -102,7 +104,7 @@ function App() {
         })
     }
 
-    const handleButtonClick = useCallback(
+    const handleDeleteButtonClick = useCallback(
         (wordToDelete: string) => (e: React.MouseEvent) => {
             const newWordsFetchResult = {
                 ...wordsFetchResult
@@ -126,7 +128,7 @@ function App() {
         wordsFetchResult
     ])
 
-    const handleDownload = useCallback((event: React.MouseEvent) => {
+    const handleDownloadButtonClick = useCallback((event: React.MouseEvent) => {
         setIsDeckBeingDownloaded(true)
 
         const cards = makeCards(words, wordsFetchResult)
@@ -147,10 +149,10 @@ function App() {
 
                 <Grid item xs={12}>
                     <UserWords
-                        value={inputValue}
-                        onChange={handleInputChange}
+                        value={wordsInput}
+                        onChange={handleWordsInputChange}
                         onKeyDown={handleEnterPress}
-                        onSubmit={handleSubmit}
+                        onSubmit={handleWordsSubmit}
                     />
                 </Grid>
 
@@ -158,7 +160,7 @@ function App() {
                     <ResultCards
                         words={words}
                         wordsFetchResult={wordsFetchResult}
-                        onDeleteButtonClick={handleButtonClick}
+                        onDeleteButtonClick={handleDeleteButtonClick}
                     />
                 </Grid>
 
@@ -171,7 +173,7 @@ function App() {
 
                 <Grid item xs={12}>
                     <DownloadSection
-                        onClick={handleDownload}
+                        onClick={handleDownloadButtonClick}
                         isLoading={isDeckBeingDownloaded}
                         cardsCount={cardsCount}
                         wordsCount={words.length}
