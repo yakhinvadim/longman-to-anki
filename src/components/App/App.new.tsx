@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback, useMemo } from 'react'
 import uniq from 'lodash/uniq'
 
 import Grid from '@material-ui/core/Grid'
@@ -8,7 +8,7 @@ import makeCards from '../../utils/makeCards/makeCards'
 import splitByWord from '../../utils/splitByWord/splitByWord'
 import wordToData from '../../utils/wordToData/wordToData'
 import downloadAndSaveDeck from '../../utils/downloadAndSaveDeck/downloadAndSaveDeck'
-import getWordsAndCardsCount from '../../utils/getWordsAndCardsCount/getWordsAndCardsCount'
+import getCardsCount from '../../utils/getCardsCount/getCardsCount'
 
 import Header from '../Header/Header'
 import DownloadSection from '../DownloadSection/DownloadSection'
@@ -16,11 +16,7 @@ import ResultCards from '../ResultCards/ResultCards'
 import UserWords from '../UserWords/UserWords'
 import DeckName from '../DeckName/DeckName'
 
-import {
-    WordIsLoading,
-    WordFetchError,
-    WordFetchStatusOrCardsData
-} from '../../types.d'
+import { WordIsLoading, WordFetchResult } from '../../types.d'
 
 import './App.css'
 
@@ -54,7 +50,7 @@ import './App.css'
 // handleOnline = () => {
 //     this.state.words.forEach(word => {
 //         if (
-//             this.state.wordsFetchStatusOrCardsData[word] ===
+//             this.state.wordsFetchResult[word] ===
 //             WordFetchError.Offline
 //         ) {
 //             this.downloadAndSaveWordData(word)
@@ -63,24 +59,26 @@ import './App.css'
 // }
 
 function App() {
-    const [deckName, setDeckName] = useState('English words')
     const [inputValue, setInputValue] = useState('')
     const [words, setWords] = useState([] as string[])
-    const [
-        wordsFetchStatusOrCardsData,
-        setWordsFetchStatusOrCardsData
-    ] = useState({} as { [key: string]: WordFetchStatusOrCardsData })
+    const [wordsFetchResult, setWordsFetchResult] = useState({} as {
+        [key: string]: WordFetchResult
+    })
+    const [deckName, setDeckName] = useState('English words')
     const [isDeckBeingDownloaded, setIsDeckBeingDownloaded] = useState(false)
 
-    function handleDeckNameChange(event: React.ChangeEvent<HTMLInputElement>) {
-        setDeckName(event.target.value)
-    }
-
-    function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(event.target.value)
     }
 
-    function handleSubmit(event: React.FormEvent) {
+    const handleEnterPress = (event: React.KeyboardEvent) => {
+        if (event.key === 'Enter' && event.shiftKey === false) {
+            event.preventDefault()
+            handleSubmit(event)
+        }
+    }
+
+    const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault()
 
         const newWords = splitByWord(inputValue)
@@ -90,50 +88,55 @@ function App() {
         setWords(uniq([...newWords, ...words]))
     }
 
-    function handleEnterPress(event: React.KeyboardEvent) {
-        if (event.key === 'Enter' && event.shiftKey === false) {
-            event.preventDefault()
-            handleSubmit(event)
-        }
-    }
-
-    async function downloadAndSaveWordData(word: string) {
-        setWordsFetchStatusOrCardsData({
-            ...wordsFetchStatusOrCardsData,
+    const downloadAndSaveWordData = async (word: string) => {
+        setWordsFetchResult({
+            ...wordsFetchResult,
             [word]: WordIsLoading
         })
 
         const wordData = await wordToData(word)
 
-        setWordsFetchStatusOrCardsData({
-            ...wordsFetchStatusOrCardsData,
+        setWordsFetchResult({
+            ...wordsFetchResult,
             [word]: wordData.status || normalizeWordData(wordData.payload)
         })
     }
 
-    function handleDeleteButtonClick(wordToDelete: string) {
-        return (e: React.MouseEvent) => {
-            const newWordsFetchStatusOrCardsData = {
-                ...wordsFetchStatusOrCardsData
+    const handleButtonClick = useCallback(
+        (wordToDelete: string) => (e: React.MouseEvent) => {
+            const newWordsFetchResult = {
+                ...wordsFetchResult
             }
-            delete newWordsFetchStatusOrCardsData[wordToDelete]
+            delete newWordsFetchResult[wordToDelete]
 
-            setWordsFetchStatusOrCardsData(newWordsFetchStatusOrCardsData)
+            setWordsFetchResult(newWordsFetchResult)
             setWords(words.filter(word => word !== wordToDelete))
-        }
-    }
+        },
+        []
+    )
 
-    function handleDownload(event: React.MouseEvent) {
+    const handleDeckNameChange = useCallback(
+        (event: React.ChangeEvent<HTMLInputElement>) => {
+            setDeckName(event.target.value)
+        },
+        []
+    )
+
+    const cardsCount = useMemo(() => getCardsCount(wordsFetchResult), [
+        wordsFetchResult
+    ])
+
+    const handleDownload = useCallback((event: React.MouseEvent) => {
         setIsDeckBeingDownloaded(true)
 
-        const cards = makeCards(words, wordsFetchStatusOrCardsData)
+        const cards = makeCards(words, wordsFetchResult)
 
         downloadAndSaveDeck(deckName, cards)
             .then(() => {
                 setIsDeckBeingDownloaded(false)
             })
             .catch(console.error)
-    }
+    }, [])
 
     return (
         <div className="App">
@@ -154,10 +157,8 @@ function App() {
                 <Grid item xs={12}>
                     <ResultCards
                         words={words}
-                        wordsFetchStatusOrCardsData={
-                            wordsFetchStatusOrCardsData
-                        }
-                        onDeleteButtonClick={handleDeleteButtonClick}
+                        wordsFetchResult={wordsFetchResult}
+                        onDeleteButtonClick={handleButtonClick}
                     />
                 </Grid>
 
@@ -172,10 +173,8 @@ function App() {
                     <DownloadSection
                         onClick={handleDownload}
                         isLoading={isDeckBeingDownloaded}
-                        wordsAndCardsCount={getWordsAndCardsCount(
-                            words,
-                            wordsFetchStatusOrCardsData
-                        )}
+                        cardsCount={cardsCount}
+                        wordsCount={words.length}
                     />
                 </Grid>
             </Grid>

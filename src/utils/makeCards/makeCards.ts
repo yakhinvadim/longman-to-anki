@@ -1,15 +1,15 @@
 import makeCard from '../../core/makeCard/makeCard'
-import { WordFetchStatusOrCardsData } from '../../types.d'
+import { WordFetchResult } from '../../types.d'
 
 const makeCards = (
     words: string[],
-    wordsFetchStatusOrCardsData: {
-        [key: string]: WordFetchStatusOrCardsData
+    wordsFetchResult: {
+        [key: string]: WordFetchResult
     }
 ) => {
     const cards = words
         .reverse()
-        .map(word => wordsFetchStatusOrCardsData[word])
+        .map(word => wordsFetchResult[word])
         .filter(Array.isArray)
         .reduce(
             (allCardsData, currentWordCardsData) =>

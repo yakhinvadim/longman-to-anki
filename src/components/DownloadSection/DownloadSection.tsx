@@ -22,18 +22,22 @@ const styles = (theme: Theme) =>
 interface Props extends WithStyles<typeof styles> {
     onClick: (e: React.MouseEvent) => void
     isLoading: boolean
-    wordsAndCardsCount: {
-        wordsCount: number
-        cardsCount: number
-    }
+    wordsCount: number
+    cardsCount: number
 }
 
 class DownloadSection extends PureComponent<Props> {
     render() {
-        const { classes, onClick, isLoading, wordsAndCardsCount } = this.props
+        const {
+            classes,
+            onClick,
+            isLoading,
+            wordsCount,
+            cardsCount
+        } = this.props
 
-        const wordsTotal = maybePluralize(wordsAndCardsCount.wordsCount, 'word')
-        const cardsTotal = maybePluralize(wordsAndCardsCount.cardsCount, 'card')
+        const wordsTotal = maybePluralize(wordsCount, 'word')
+        const cardsTotal = maybePluralize(cardsCount, 'card')
 
         return (
             <div className={classes.root}>
@@ -44,7 +48,7 @@ class DownloadSection extends PureComponent<Props> {
                         <Button
                             variant="contained"
                             onClick={onClick}
-                            disabled={!wordsAndCardsCount.cardsCount || !online}
+                            disabled={!cardsCount || !online}
                             color="primary"
                         >
                             {online ? (
