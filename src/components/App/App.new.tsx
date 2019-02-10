@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react'
+import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import uniq from 'lodash/uniq'
 
 import Grid from '@material-ui/core/Grid'
@@ -16,7 +16,7 @@ import ResultCards from '../ResultCards/ResultCards'
 import UserWords from '../UserWords/UserWords'
 import DeckName from '../DeckName/DeckName'
 
-import { WordIsLoading, WordFetchResult } from '../../types.d'
+import { WordIsLoading, WordFetchError, WordFetchResult } from '../../types.d'
 
 import './App.css'
 
@@ -26,36 +26,16 @@ import './App.css'
 //         newState.isDeckBeingDownloaded = false
 
 //         try {
-//             this.setState(newState, () => {
-//                 if (navigator.onLine) {
-//                     this.handleOnline()
-//                 }
-//             })
+//             this.setState(newState)
 //         } catch (error) {
 //             console.error(error)
 //         }
 //     }
 
-//     window.addEventListener('online', this.handleOnline)
-// }
-
-// componentWillUnmount() {
-//     window.removeEventListener('online', this.handleOnline)
 // }
 
 // componentDidUpdate() {
 //     localStorage.state = JSON.stringify(this.state)
-// }
-
-// handleOnline = () => {
-//     this.state.words.forEach(word => {
-//         if (
-//             this.state.wordsFetchResult[word] ===
-//             WordFetchError.Offline
-//         ) {
-//             this.downloadAndSaveWordData(word)
-//         }
-//     })
 // }
 
 function App() {
@@ -66,6 +46,23 @@ function App() {
     })
     const [deckName, setDeckName] = useState('English words')
     const [isDeckBeingDownloaded, setIsDeckBeingDownloaded] = useState(false)
+
+    useEffect(() => {
+        if (navigator.onLine) {
+            handleOnline()
+        }
+    }, [])
+
+    useEffect(() => {
+        window.addEventListener('online', handleOnline)
+        return () => window.removeEventListener('online', handleOnline)
+    }, [words, wordsFetchResult])
+
+    const handleOnline = () => {
+        words
+            .filter(word => wordsFetchResult[word] === WordFetchError.Offline)
+            .forEach(downloadAndSaveWordData)
+    }
 
     const handleWordsInputChange = (
         event: React.ChangeEvent<HTMLInputElement>
@@ -91,17 +88,17 @@ function App() {
     }
 
     const downloadAndSaveWordData = async (word: string) => {
-        setWordsFetchResult({
-            ...wordsFetchResult,
+        setWordsFetchResult(prevWordsFetchResult => ({
+            ...prevWordsFetchResult,
             [word]: WordIsLoading
-        })
+        }))
 
         const wordData = await wordToData(word)
 
-        setWordsFetchResult({
-            ...wordsFetchResult,
+        setWordsFetchResult(prevWordsFetchResult => ({
+            ...prevWordsFetchResult,
             [word]: wordData.status || normalizeWordData(wordData.payload)
-        })
+        }))
     }
 
     const handleDeleteButtonClick = useCallback(
@@ -114,7 +111,7 @@ function App() {
             setWordsFetchResult(newWordsFetchResult)
             setWords(words.filter(word => word !== wordToDelete))
         },
-        []
+        [words, wordsFetchResult]
     )
 
     const handleDeckNameChange = useCallback(
