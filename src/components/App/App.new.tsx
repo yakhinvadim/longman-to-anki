@@ -84,7 +84,7 @@ function App() {
         newWords.forEach(downloadAndSaveWordData)
 
         setWordsInput('')
-        setWords(uniq([...newWords, ...words]))
+        setWords(prevWords => uniq([...newWords, ...prevWords]))
     }
 
     const downloadAndSaveWordData = async (word: string) => {
@@ -103,13 +103,15 @@ function App() {
 
     const handleDeleteButtonClick = useCallback(
         (wordToDelete: string) => (e: React.MouseEvent) => {
-            const newWordsFetchResult = {
-                ...wordsFetchResult
-            }
-            delete newWordsFetchResult[wordToDelete]
+            setWordsFetchResult(prevWordsFetchResult => {
+                const newWordsFetchResult = { ...prevWordsFetchResult }
+                delete newWordsFetchResult[wordToDelete]
+                return newWordsFetchResult
+            })
 
-            setWordsFetchResult(newWordsFetchResult)
-            setWords(words.filter(word => word !== wordToDelete))
+            setWords(prevWords =>
+                prevWords.filter(word => word !== wordToDelete)
+            )
         },
         [words, wordsFetchResult]
     )
