@@ -20,24 +20,6 @@ import { WordIsLoading, WordFetchError, WordFetchResult } from '../../types.d'
 
 import './App.css'
 
-// componentDidMount() {
-//     if (localStorage.state) {
-//         const newState = JSON.parse(localStorage.state)
-//         newState.isDeckBeingDownloaded = false
-
-//         try {
-//             this.setState(newState)
-//         } catch (error) {
-//             console.error(error)
-//         }
-//     }
-
-// }
-
-// componentDidUpdate() {
-//     localStorage.state = JSON.stringify(this.state)
-// }
-
 function App() {
     const [wordsInput, setWordsInput] = useState('')
     const [words, setWords] = useState([] as string[])
@@ -46,6 +28,34 @@ function App() {
     })
     const [deckName, setDeckName] = useState('English words')
     const [isDeckBeingDownloaded, setIsDeckBeingDownloaded] = useState(false)
+
+    useEffect(() => {
+        try {
+            if (localStorage.words) {
+                setWords(JSON.parse(localStorage.words))
+            }
+            if (localStorage.wordsFetchResult) {
+                setWordsFetchResult(JSON.parse(localStorage.wordsFetchResult))
+            }
+            if (localStorage.deckName) {
+                setDeckName(JSON.parse(localStorage.deckName))
+            }
+        } catch (error) {
+            console.error(error)
+        }
+    }, [])
+
+    useEffect(() => {
+        localStorage.words = JSON.stringify(words)
+    }, [words])
+
+    useEffect(() => {
+        localStorage.wordsFetchResult = JSON.stringify(wordsFetchResult)
+    }, [wordsFetchResult])
+
+    useEffect(() => {
+        localStorage.deckName = JSON.stringify(deckName)
+    }, [deckName])
 
     useEffect(() => {
         if (navigator.onLine) {
