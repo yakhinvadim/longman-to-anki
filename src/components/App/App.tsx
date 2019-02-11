@@ -137,17 +137,20 @@ function App() {
         wordsFetchResult
     ])
 
-    const handleDownloadButtonClick = useCallback((event: React.MouseEvent) => {
-        setIsDeckBeingDownloaded(true)
+    const handleDownloadButtonClick = useCallback(
+        (event: React.MouseEvent) => {
+            setIsDeckBeingDownloaded(true)
 
-        const cards = makeCards(words, wordsFetchResult)
+            const cards = makeCards(words, wordsFetchResult)
 
-        downloadAndSaveDeck(deckName, cards)
-            .then(() => {
-                setIsDeckBeingDownloaded(false)
-            })
-            .catch(console.error)
-    }, [])
+            downloadAndSaveDeck(deckName, cards)
+                .then(() => {
+                    setIsDeckBeingDownloaded(false)
+                })
+                .catch(console.error)
+        },
+        [deckName, words, wordsFetchResult]
+    )
 
     return (
         <div className="App">
