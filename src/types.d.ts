@@ -51,4 +51,4 @@ export enum WordFetchError {
     Offline = 'FETCH ERROR: OFFLINE'
 }
 
-type WordFetchStatusOrCardsData = WordIsLoading | WordFetchError | CardData[]
+type WordFetchResult = WordIsLoading | WordFetchError | CardData[]

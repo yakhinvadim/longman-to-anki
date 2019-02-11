@@ -23,14 +23,14 @@ import {
     WordIsLoading,
     WordFetchError,
     CardData,
-    WordFetchStatusOrCardsData
+    WordFetchResult
 } from '../../types.d'
 
 import './WordsListItem.css'
 
 interface Props {
     word: string
-    fetchStatusOrCardData: WordFetchStatusOrCardsData
+    fetchStatusOrCardData: WordFetchResult
     onDeleteButtonClick: (word: string) => (e: React.MouseEvent) => void
 }
 

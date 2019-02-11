@@ -1,12 +1,12 @@
 import React, { PureComponent } from 'react'
 import WordsListItem from '../WordsListItem/WordsListItem'
 
-import { WordFetchStatusOrCardsData } from '../../types.d'
+import { WordFetchResult } from '../../types.d'
 
 interface Props {
     words: string[]
-    wordsFetchStatusOrCardsData: {
-        [key: string]: WordFetchStatusOrCardsData
+    wordsFetchResult: {
+        [key: string]: WordFetchResult
     }
     onDeleteButtonClick: (word: string) => (e: React.MouseEvent) => void
 }
@@ -15,7 +15,7 @@ export default class ResultCards extends PureComponent<Props> {
     renderWord = (word: string) => (
         <WordsListItem
             key={word}
-            fetchStatusOrCardData={this.props.wordsFetchStatusOrCardsData[word]}
+            fetchStatusOrCardData={this.props.wordsFetchResult[word]}
             word={word}
             onDeleteButtonClick={this.props.onDeleteButtonClick}
         />
