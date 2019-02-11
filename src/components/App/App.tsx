@@ -1,16 +1,14 @@
-import React from 'react'
+import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import uniq from 'lodash/uniq'
 
 import Grid from '@material-ui/core/Grid'
 
 import normalizeWordData from '../../core/normalizeWordData/normalizeWordData'
 import makeCards from '../../utils/makeCards/makeCards'
-
 import splitByWord from '../../utils/splitByWord/splitByWord'
 import wordToData from '../../utils/wordToData/wordToData'
-import assertUnreachable from '../../utils/assertUnreachable/assertUnreachable'
 import downloadAndSaveDeck from '../../utils/downloadAndSaveDeck/downloadAndSaveDeck'
-import getWordsAndCardsCount from '../../utils/getWordsAndCardsCount/getWordsAndCardsCount'
+import getCardsCount from '../../utils/getCardsCount/getCardsCount'
 
 import Header from '../Header/Header'
 import DownloadSection from '../DownloadSection/DownloadSection'
@@ -18,201 +16,181 @@ import ResultCards from '../ResultCards/ResultCards'
 import UserWords from '../UserWords/UserWords'
 import DeckName from '../DeckName/DeckName'
 
-import {
-    WordIsLoading,
-    WordFetchError,
-    WordFetchStatusOrCardsData
-} from '../../types.d'
+import { WordIsLoading, WordFetchError, WordFetchResult } from '../../types'
 
 import './App.css'
 
-interface State {
-    words: string[]
-    inputValue: string
-    wordsFetchStatusOrCardsData: {
-        [key: string]: WordFetchStatusOrCardsData
-    }
-    deckName: string
-    isDeckBeingDownloaded: boolean
-}
+function App() {
+    const [wordsInput, setWordsInput] = useState('')
+    const [words, setWords] = useState([] as string[])
+    const [wordsFetchResult, setWordsFetchResult] = useState({} as {
+        [key: string]: WordFetchResult
+    })
+    const [deckName, setDeckName] = useState('English words')
+    const [isDeckBeingDownloaded, setIsDeckBeingDownloaded] = useState(false)
 
-export default class App extends React.Component<{}, State> {
-    state: State = {
-        words: [],
-        inputValue: '',
-        wordsFetchStatusOrCardsData: {},
-        deckName: 'English words',
-        isDeckBeingDownloaded: false
-    }
-
-    componentDidMount() {
-        if (localStorage.state) {
-            const newState = JSON.parse(localStorage.state)
-            newState.isDeckBeingDownloaded = false
-
-            try {
-                this.setState(newState, () => {
-                    if (navigator.onLine) {
-                        this.handleOnline()
-                    }
-                })
-            } catch (error) {
-                console.error(error)
+    useEffect(() => {
+        try {
+            if (localStorage.words) {
+                setWords(JSON.parse(localStorage.words))
             }
+            if (localStorage.wordsFetchResult) {
+                setWordsFetchResult(JSON.parse(localStorage.wordsFetchResult))
+            }
+            if (localStorage.deckName) {
+                setDeckName(JSON.parse(localStorage.deckName))
+            }
+        } catch (error) {
+            console.error(error)
         }
+    }, [])
 
-        window.addEventListener('online', this.handleOnline)
+    useEffect(() => {
+        localStorage.words = JSON.stringify(words)
+    }, [words])
+
+    useEffect(() => {
+        localStorage.wordsFetchResult = JSON.stringify(wordsFetchResult)
+    }, [wordsFetchResult])
+
+    useEffect(() => {
+        localStorage.deckName = JSON.stringify(deckName)
+    }, [deckName])
+
+    useEffect(() => {
+        if (navigator.onLine) {
+            handleOnline()
+        }
+    }, [])
+
+    useEffect(() => {
+        window.addEventListener('online', handleOnline)
+        return () => window.removeEventListener('online', handleOnline)
+    }, [words, wordsFetchResult])
+
+    const handleOnline = () => {
+        words
+            .filter(word => wordsFetchResult[word] === WordFetchError.Offline)
+            .forEach(downloadAndSaveWordData)
     }
 
-    componentWillUnmount() {
-        window.removeEventListener('online', this.handleOnline)
+    const handleWordsInputChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setWordsInput(event.target.value)
     }
 
-    componentDidUpdate() {
-        localStorage.state = JSON.stringify(this.state)
-    }
-
-    handleOnline = () => {
-        this.state.words.forEach(word => {
-            if (
-                this.state.wordsFetchStatusOrCardsData[word] ===
-                WordFetchError.Offline
-            ) {
-                this.downloadAndSaveWordData(word)
-            }
-        })
-    }
-
-    handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.setState({
-            inputValue: event.target.value
-        })
-    }
-
-    handleDeckNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.setState({
-            deckName: event.target.value
-        })
-    }
-
-    handleEnterPress = (event: React.KeyboardEvent) => {
+    const handleEnterPress = (event: React.KeyboardEvent) => {
         if (event.key === 'Enter' && event.shiftKey === false) {
             event.preventDefault()
-            this.handleSubmit(event)
+            handleWordsSubmit(event)
         }
     }
 
-    handleSubmit = (event: React.FormEvent) => {
+    const handleWordsSubmit = (event: React.FormEvent) => {
         event.preventDefault()
 
-        const newWords = splitByWord(this.state.inputValue)
-        newWords.forEach(this.downloadAndSaveWordData)
+        const newWords = splitByWord(wordsInput)
+        newWords.forEach(downloadAndSaveWordData)
 
-        this.setState({
-            words: uniq([...newWords, ...this.state.words]),
-            inputValue: ''
-        })
+        setWordsInput('')
+        setWords(prevWords => uniq([...newWords, ...prevWords]))
     }
 
-    downloadAndSaveWordData = async (word: string) => {
-        this.setState(prevState => ({
-            wordsFetchStatusOrCardsData: {
-                ...prevState.wordsFetchStatusOrCardsData,
-                [word]: WordIsLoading
-            }
+    const downloadAndSaveWordData = async (word: string) => {
+        setWordsFetchResult(prevWordsFetchResult => ({
+            ...prevWordsFetchResult,
+            [word]: WordIsLoading
         }))
 
         const wordData = await wordToData(word)
 
-        this.setState(prevState => ({
-            wordsFetchStatusOrCardsData: {
-                ...prevState.wordsFetchStatusOrCardsData,
-                [word]: wordData.status || normalizeWordData(wordData.payload)
-            }
+        setWordsFetchResult(prevWordsFetchResult => ({
+            ...prevWordsFetchResult,
+            [word]: wordData.status || normalizeWordData(wordData.payload)
         }))
     }
 
-    handleDeleteButtonClick = (wordToDelete: string) => (
-        e: React.MouseEvent
-    ) => {
-        this.setState(prevState => {
-            const wordsFetchStatusOrCardsData = {
-                ...prevState.wordsFetchStatusOrCardsData
-            }
-            delete wordsFetchStatusOrCardsData[wordToDelete]
+    const handleDeleteButtonClick = useCallback(
+        (wordToDelete: string) => (e: React.MouseEvent) => {
+            setWordsFetchResult(prevWordsFetchResult => {
+                const newWordsFetchResult = { ...prevWordsFetchResult }
+                delete newWordsFetchResult[wordToDelete]
+                return newWordsFetchResult
+            })
 
-            return {
-                words: prevState.words.filter(word => word !== wordToDelete),
-                wordsFetchStatusOrCardsData
-            }
-        })
-    }
+            setWords(prevWords =>
+                prevWords.filter(word => word !== wordToDelete)
+            )
+        },
+        [words, wordsFetchResult]
+    )
 
-    handleDownload = (event: React.MouseEvent) => {
-        this.setState({
-            isDeckBeingDownloaded: true
-        })
+    const handleDeckNameChange = useCallback(
+        (event: React.ChangeEvent<HTMLInputElement>) => {
+            setDeckName(event.target.value)
+        },
+        []
+    )
 
-        const cards = makeCards(
-            this.state.words,
-            this.state.wordsFetchStatusOrCardsData
-        )
+    const cardsCount = useMemo(() => getCardsCount(wordsFetchResult), [
+        wordsFetchResult
+    ])
 
-        downloadAndSaveDeck(this.state.deckName, cards)
+    const handleDownloadButtonClick = useCallback((event: React.MouseEvent) => {
+        setIsDeckBeingDownloaded(true)
+
+        const cards = makeCards(words, wordsFetchResult)
+
+        downloadAndSaveDeck(deckName, cards)
             .then(() => {
-                this.setState({
-                    isDeckBeingDownloaded: false
-                })
+                setIsDeckBeingDownloaded(false)
             })
             .catch(console.error)
-    }
+    }, [])
 
-    render() {
-        return (
-            <div className="App">
-                <Grid container spacing={16}>
-                    <Grid item xs={12}>
-                        <Header />
-                    </Grid>
-
-                    <Grid item xs={12}>
-                        <UserWords
-                            value={this.state.inputValue}
-                            onChange={this.handleInputChange}
-                            onKeyDown={this.handleEnterPress}
-                            onSubmit={this.handleSubmit}
-                        />
-                    </Grid>
-
-                    <Grid item xs={12}>
-                        <ResultCards
-                            words={this.state.words}
-                            wordsFetchStatusOrCardsData={
-                                this.state.wordsFetchStatusOrCardsData
-                            }
-                            onDeleteButtonClick={this.handleDeleteButtonClick}
-                        />
-                    </Grid>
-
-                    <Grid item xs={12}>
-                        <DeckName
-                            value={this.state.deckName}
-                            onChange={this.handleDeckNameChange}
-                        />
-                    </Grid>
-
-                    <Grid item xs={12}>
-                        <DownloadSection
-                            onClick={this.handleDownload}
-                            isLoading={this.state.isDeckBeingDownloaded}
-                            wordsAndCardsCount={getWordsAndCardsCount(
-                                this.state.words,
-                                this.state.wordsFetchStatusOrCardsData
-                            )}
-                        />
-                    </Grid>
+    return (
+        <div className="App">
+            <Grid container spacing={16}>
+                <Grid item xs={12}>
+                    <Header />
                 </Grid>
-            </div>
-        )
-    }
+
+                <Grid item xs={12}>
+                    <UserWords
+                        value={wordsInput}
+                        onChange={handleWordsInputChange}
+                        onKeyDown={handleEnterPress}
+                        onSubmit={handleWordsSubmit}
+                    />
+                </Grid>
+
+                <Grid item xs={12}>
+                    <ResultCards
+                        words={words}
+                        wordsFetchResult={wordsFetchResult}
+                        onDeleteButtonClick={handleDeleteButtonClick}
+                    />
+                </Grid>
+
+                <Grid item xs={12}>
+                    <DeckName
+                        value={deckName}
+                        onChange={handleDeckNameChange}
+                    />
+                </Grid>
+
+                <Grid item xs={12}>
+                    <DownloadSection
+                        onClick={handleDownloadButtonClick}
+                        isLoading={isDeckBeingDownloaded}
+                        cardsCount={cardsCount}
+                        wordsCount={words.length}
+                    />
+                </Grid>
+            </Grid>
+        </div>
+    )
 }
+
+export default App
