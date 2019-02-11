@@ -16,7 +16,7 @@ import ResultCards from '../ResultCards/ResultCards'
 import UserWords from '../UserWords/UserWords'
 import DeckName from '../DeckName/DeckName'
 
-import { WordIsLoading, WordFetchError, WordFetchResult } from '../../types'
+import { WordIsLoading, WordFetchError, WordFetchResult } from '../../types.d'
 
 import './App.css'
 
