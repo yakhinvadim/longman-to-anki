@@ -2,7 +2,7 @@
 
 ![Build Status](https://travis-ci.org/yakhinvadim/longman-to-anki.svg?branch=master)
 
-**longman-to-anki** is a web app which helps you learn English words.
+**longman-to-anki** is a web app to help you learn English with Longman dictionary and Anki.
 
 1. Type the words you want to learn.
 1. The web app will:
