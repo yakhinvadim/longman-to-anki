@@ -14,6 +14,7 @@ export default class UserWords extends PureComponent<Props> {
         return (
             <form onSubmit={onSubmit}>
                 <TextField
+                    id="user-words"
                     label="Type the word, you want to learn"
                     placeholder="example"
                     helperText="You can enter several words. Type one word per line using 'Shift + Enter' to add new lines"

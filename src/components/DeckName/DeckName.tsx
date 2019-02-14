@@ -12,6 +12,7 @@ export default class DeckName extends PureComponent<Props> {
 
         return (
             <TextField
+                id="deck-name"
                 label="Deck name"
                 helperText="You can add “::” to create a nested deck. For example: English::Words"
                 variant="outlined"
