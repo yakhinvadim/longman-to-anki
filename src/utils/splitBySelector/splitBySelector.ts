@@ -1,13 +1,12 @@
-import * as R from 'ramda'
 import domify from '../domify/domify'
 
-const splitBySelector = (
-    {
-        selector,
-        onlyChildren = false
-    }: { selector: string; onlyChildren?: boolean },
-    markup: string
-) => {
+const splitBySelector = ({
+    selector,
+    onlyChildren = false
+}: {
+    selector: string
+    onlyChildren?: boolean
+}) => (markup: string) => {
     const rootNode = domify(markup)
 
     const markups = onlyChildren
@@ -21,4 +20,4 @@ const splitBySelector = (
     return markups
 }
 
-export default R.curry(splitBySelector)
+export default splitBySelector
