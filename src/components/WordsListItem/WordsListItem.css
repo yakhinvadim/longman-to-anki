@@ -32,6 +32,10 @@
     overflow-x: auto;
 }
 
+.WordsListItem__tableCell {
+    white-space: nowrap;
+}
+
 .WordsListItem__listItem:hover .WordsListItem__delete {
     visibility: visible;
 }

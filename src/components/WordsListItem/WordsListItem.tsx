@@ -37,9 +37,30 @@ interface Props {
 export default class WordsListItem extends PureComponent<Props> {
     renderRow = (cardData: CardData) => (
         <TableRow key={cardData.example + cardData.definition}>
-            <TableCell>{cardData.form}</TableCell>
-            <TableCell>{cardData.example || '—'}</TableCell>
-            <TableCell>{cardData.definition}</TableCell>
+            <TableCell className="WordsListItem__tableCell">
+                {cardData.form}
+            </TableCell>
+            <TableCell className="WordsListItem__tableCell">
+                {cardData.example || '—'}
+            </TableCell>
+            <TableCell className="WordsListItem__tableCell">
+                {cardData.definition}
+            </TableCell>
+            <TableCell className="WordsListItem__tableCell">
+                {cardData.pronunciation || '—'}
+            </TableCell>
+            <TableCell className="WordsListItem__tableCell">
+                {cardData.situation || '—'}
+            </TableCell>
+            <TableCell className="WordsListItem__tableCell">
+                {cardData.geography || '—'}
+            </TableCell>
+            <TableCell className="WordsListItem__tableCell">
+                {cardData.synonym || '—'}
+            </TableCell>
+            <TableCell className="WordsListItem__tableCell">
+                {cardData.antonym || '—'}
+            </TableCell>
         </TableRow>
     )
 
@@ -51,6 +72,11 @@ export default class WordsListItem extends PureComponent<Props> {
                         <TableCell>Form</TableCell>
                         <TableCell>Example</TableCell>
                         <TableCell>Definition</TableCell>
+                        <TableCell>Pronunciation</TableCell>
+                        <TableCell>Situation</TableCell>
+                        <TableCell>Geography</TableCell>
+                        <TableCell>Synonym</TableCell>
+                        <TableCell>Antonym</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>{cardsData.map(this.renderRow)}</TableBody>
