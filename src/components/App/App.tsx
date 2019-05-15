@@ -57,22 +57,22 @@ function App() {
         localStorage.deckName = JSON.stringify(deckName)
     }, [deckName])
 
+    const handleOnline = useCallback(() => {
+        words
+            .filter(word => wordsFetchResult[word] === WordFetchError.Offline)
+            .forEach(downloadAndSaveWordData)
+    }, [words, wordsFetchResult])
+
     useEffect(() => {
         if (navigator.onLine) {
             handleOnline()
         }
-    }, [])
+    }, [handleOnline])
 
     useEffect(() => {
         window.addEventListener('online', handleOnline)
         return () => window.removeEventListener('online', handleOnline)
-    }, [words, wordsFetchResult])
-
-    const handleOnline = () => {
-        words
-            .filter(word => wordsFetchResult[word] === WordFetchError.Offline)
-            .forEach(downloadAndSaveWordData)
-    }
+    }, [handleOnline])
 
     const handleWordsInputChange = (
         event: React.ChangeEvent<HTMLInputElement>
@@ -123,7 +123,7 @@ function App() {
                 prevWords.filter(word => word !== wordToDelete)
             )
         },
-        [words, wordsFetchResult]
+        []
     )
 
     const handleDeckNameChange = useCallback(
