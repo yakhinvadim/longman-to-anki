@@ -10,7 +10,7 @@
 }
 
 .WordsListItem__word {
-    flex: 0 0 180px;
+    flex: 1 0 180px;
 }
 
 .WordsListItem__counter {

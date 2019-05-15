@@ -97,7 +97,8 @@ export default class WordsListItem extends PureComponent<Props> {
                     <div className="WordsListItem__word">
                         <span data-qa="words-list-item__fetched-word">
                             {cardsData[0].headword}
-                        </span>{' '}
+                        </span>
+                        &nbsp;
                         <span className="WordsListItem__counter">
                             ({cardsData.length})
                         </span>
