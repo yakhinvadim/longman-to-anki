@@ -50,6 +50,9 @@ export default class WordsListItem extends PureComponent<Props> {
                 {cardData.pronunciation || '—'}
             </TableCell>
             <TableCell className="WordsListItem__tableCell">
+                {cardData.partOfSpeech || '—'}
+            </TableCell>
+            <TableCell className="WordsListItem__tableCell">
                 {cardData.situation || '—'}
             </TableCell>
             <TableCell className="WordsListItem__tableCell">
@@ -73,6 +76,7 @@ export default class WordsListItem extends PureComponent<Props> {
                         <TableCell>Example</TableCell>
                         <TableCell>Definition</TableCell>
                         <TableCell>Pronunciation</TableCell>
+                        <TableCell>Part of speech</TableCell>
                         <TableCell>Situation</TableCell>
                         <TableCell>Geography</TableCell>
                         <TableCell>Synonym</TableCell>

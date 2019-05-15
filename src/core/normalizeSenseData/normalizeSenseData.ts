@@ -16,7 +16,7 @@ const normalizeSenseData = ({
     entryData: EntryData
 }) => (senseData: SenseData): CardData[] => {
     const { headword, frequency } = wordData
-    const { pronunciation } = entryData
+    const { pronunciation, partOfSpeech } = entryData
 
     const {
         definition,
@@ -32,6 +32,7 @@ const normalizeSenseData = ({
     const commonData = {
         headword,
         pronunciation,
+        partOfSpeech,
         frequency,
         definition,
         situation,

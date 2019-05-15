@@ -9,4 +9,8 @@ describe('composeEntryData', () => {
     it('EntryData contains pronunciation', () => {
         expect(composeEntryData(entryMarkup).pronunciation).toBeDefined()
     })
+
+    it('EntryData contains pronunciation', () => {
+        expect(composeEntryData(entryMarkup).partOfSpeech).toBeDefined()
+    })
 })

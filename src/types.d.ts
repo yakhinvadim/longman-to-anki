@@ -7,6 +7,7 @@ export interface WordData {
 export interface EntryData {
     senses: SenseData[]
     pronunciation: string
+    partOfSpeech: string
 }
 
 export interface SenseData {
@@ -30,6 +31,7 @@ export interface CardData {
     form: string
     headword: string
     pronunciation: string
+    partOfSpeech: string
     frequency: string
     definition: string
     situation: string
