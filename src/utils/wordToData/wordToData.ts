@@ -4,11 +4,11 @@ import composeWordData from '../../core/composeWordData/composeWordData'
 import extractHeadword from '../../core/extractHeadword/extractHeadword'
 import { WordFetchError } from '../../types.d'
 
-const removeDoubleSpace = R.replace(/ {2}/gm, '')
-const removeNewLines = R.replace(/\n/gm, '')
+const removeDoubleSpace = R.replace(/ {2}/gm, ' ')
+const removeNewLines = R.replace(/\n/gm, ' ')
 const normalizeMarkup = R.pipe(
-    removeDoubleSpace,
-    removeNewLines
+    removeNewLines,
+    removeDoubleSpace
 )
 
 const wordNotFound = (markup: string) => extractHeadword(markup) === ''
