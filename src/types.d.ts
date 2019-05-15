@@ -1,12 +1,12 @@
 export interface WordData {
     headword: string
-    pronunciation: string
     frequency: string
     entries: EntryData[]
 }
 
 export interface EntryData {
     senses: SenseData[]
+    pronunciation: string
 }
 
 export interface SenseData {

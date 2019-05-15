@@ -1,11 +1,22 @@
 import * as R from 'ramda'
 import flattenDeep from 'lodash/flatten'
-import { WordData, SenseData, CardData, ExampleGroup } from '../../types.d'
+import {
+    WordData,
+    EntryData,
+    SenseData,
+    CardData,
+    ExampleGroup
+} from '../../types.d'
 
-const normalizeSenseData = (wordData: WordData) => (
-    senseData: SenseData
-): CardData[] => {
-    const { headword, pronunciation, frequency } = wordData
+const normalizeSenseData = ({
+    wordData,
+    entryData
+}: {
+    wordData: WordData
+    entryData: EntryData
+}) => (senseData: SenseData): CardData[] => {
+    const { headword, frequency } = wordData
+    const { pronunciation } = entryData
 
     const {
         definition,
@@ -49,7 +60,9 @@ const normalizeSenseData = (wordData: WordData) => (
 
     const cardsFromExampleGroups = R.map(normalizeExampleGroup)(exampleGroups)
 
-    const cardsFromSubsenses = R.map(normalizeSenseData(wordData))(subsenses)
+    const cardsFromSubsenses = R.map(
+        normalizeSenseData({ wordData, entryData })
+    )(subsenses)
 
     const cardsFromDefinition =
         R.all(R.isEmpty, [examples, exampleGroups, subsenses]) && definition

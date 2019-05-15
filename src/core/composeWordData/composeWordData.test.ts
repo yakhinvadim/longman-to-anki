@@ -6,10 +6,6 @@ describe('composeWordData', () => {
         expect(composeWordData(wordMarkup).headword).toBeDefined()
     })
 
-    it('wordData contains pronunciation', () => {
-        expect(composeWordData(wordMarkup).pronunciation).toBeDefined()
-    })
-
     it('wordData contains entries', () => {
         expect(composeWordData(wordMarkup).entries).toBeDefined()
     })

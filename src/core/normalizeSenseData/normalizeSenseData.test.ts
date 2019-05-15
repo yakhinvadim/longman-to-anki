@@ -2,9 +2,13 @@ import normalizeSenseData from './normalizeSenseData'
 
 const wordData = {
     headword: 'headword',
-    pronunciation: 'pronunciation',
     frequency: 'frequency',
     entries: []
+}
+
+const entryData = {
+    pronunciation: 'pronunciation',
+    senses: []
 }
 
 const basicSenseData = {
@@ -36,7 +40,7 @@ describe('normalizeSenseData', () => {
             examples: ['example']
         }
 
-        expect(normalizeSenseData(wordData)(senseData)).toEqual([
+        expect(normalizeSenseData({ wordData, entryData })(senseData)).toEqual([
             {
                 ...basicCardData,
                 form: 'headword',
@@ -51,7 +55,7 @@ describe('normalizeSenseData', () => {
             examples: ['example1', 'example2']
         }
 
-        expect(normalizeSenseData(wordData)(senseData)).toEqual([
+        expect(normalizeSenseData({ wordData, entryData })(senseData)).toEqual([
             {
                 ...basicCardData,
                 form: 'headword',
@@ -76,7 +80,7 @@ describe('normalizeSenseData', () => {
             ]
         }
 
-        expect(normalizeSenseData(wordData)(senseData)).toEqual([
+        expect(normalizeSenseData({ wordData, entryData })(senseData)).toEqual([
             {
                 ...basicCardData,
                 form: 'form',
@@ -100,7 +104,7 @@ describe('normalizeSenseData', () => {
             ]
         }
 
-        expect(normalizeSenseData(wordData)(senseData)).toEqual([
+        expect(normalizeSenseData({ wordData, entryData })(senseData)).toEqual([
             {
                 ...basicCardData,
                 form: 'form1',
@@ -134,7 +138,7 @@ describe('normalizeSenseData', () => {
             ]
         }
 
-        expect(normalizeSenseData(wordData)(senseData)).toEqual([
+        expect(normalizeSenseData({ wordData, entryData })(senseData)).toEqual([
             {
                 ...basicCardData,
                 form: 'headword',
@@ -174,7 +178,7 @@ describe('normalizeSenseData', () => {
             ]
         }
 
-        expect(normalizeSenseData(wordData)(senseData)).toEqual([
+        expect(normalizeSenseData({ wordData, entryData })(senseData)).toEqual([
             {
                 ...basicCardData,
                 form: 'headword',
@@ -218,7 +222,7 @@ describe('normalizeSenseData', () => {
             ...basicSenseData
         }
 
-        expect(normalizeSenseData(wordData)(senseData)).toEqual([
+        expect(normalizeSenseData({ wordData, entryData })(senseData)).toEqual([
             {
                 ...basicCardData,
                 form: 'headword',
