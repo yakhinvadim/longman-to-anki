@@ -69,18 +69,36 @@ export default class WordsListItem extends PureComponent<Props> {
 
     renderTable = (cardsData: CardData[]) => (
         <div className="WordsListItem__tableWrapper">
-            <Table>
+            <Table padding="dense">
                 <TableHead>
                     <TableRow>
-                        <TableCell>Form</TableCell>
-                        <TableCell>Example</TableCell>
-                        <TableCell>Definition</TableCell>
-                        <TableCell>Pronunciation</TableCell>
-                        <TableCell>Part of speech</TableCell>
-                        <TableCell>Situation</TableCell>
-                        <TableCell>Geography</TableCell>
-                        <TableCell>Synonym</TableCell>
-                        <TableCell>Antonym</TableCell>
+                        <TableCell className="WordsListItem__tableHeadCell">
+                            Form
+                        </TableCell>
+                        <TableCell className="WordsListItem__tableHeadCell">
+                            Example
+                        </TableCell>
+                        <TableCell className="WordsListItem__tableHeadCell">
+                            Definition
+                        </TableCell>
+                        <TableCell className="WordsListItem__tableHeadCell">
+                            Pronunciation
+                        </TableCell>
+                        <TableCell className="WordsListItem__tableHeadCell">
+                            Part of speech
+                        </TableCell>
+                        <TableCell className="WordsListItem__tableHeadCell">
+                            Situation
+                        </TableCell>
+                        <TableCell className="WordsListItem__tableHeadCell">
+                            Geography
+                        </TableCell>
+                        <TableCell className="WordsListItem__tableHeadCell">
+                            Synonym
+                        </TableCell>
+                        <TableCell className="WordsListItem__tableHeadCell">
+                            Antonym
+                        </TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>{cardsData.map(this.renderRow)}</TableBody>

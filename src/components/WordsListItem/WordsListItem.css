@@ -10,7 +10,7 @@
 }
 
 .WordsListItem__word {
-    flex: 1 0 180px;
+    flex: 0 0 180px;
 }
 
 .WordsListItem__counter {
@@ -29,11 +29,18 @@
 
 .WordsListItem__tableWrapper {
     width: auto;
-    overflow-x: auto;
+    overflow: auto;
+    max-height: 500px;
 }
 
 .WordsListItem__tableCell {
     white-space: nowrap;
+}
+
+.WordsListItem__tableHeadCell {
+    position: sticky;
+    top: 0;
+    background-color: #fff;
 }
 
 .WordsListItem__listItem:hover .WordsListItem__delete {
