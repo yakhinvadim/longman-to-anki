@@ -20,7 +20,8 @@ const styles = (theme: Theme) =>
     })
 
 interface Props extends WithStyles<typeof styles> {
-    onClick: (e: React.MouseEvent) => void
+    onDownloadAnkiButtonClick: (e: React.MouseEvent) => void
+    onDownloadCsvButtonClick: (e: React.MouseEvent) => void
     isLoading: boolean
     wordsCount: number
     cardsCount: number
@@ -30,7 +31,8 @@ class DownloadSection extends PureComponent<Props> {
     render() {
         const {
             classes,
-            onClick,
+            onDownloadAnkiButtonClick,
+            onDownloadCsvButtonClick,
             isLoading,
             wordsCount,
             cardsCount
@@ -42,12 +44,20 @@ class DownloadSection extends PureComponent<Props> {
         return (
             <div className={classes.root}>
                 <span data-qa="download-section__totals">{`${wordsTotal}, ${cardsTotal}`}</span>
+
+                <Button
+                    variant="outlined"
+                    onClick={onDownloadCsvButtonClick}
+                    disabled={!cardsCount}
+                >
+                    Download CSV
+                </Button>
                 <Detector
                     polling={false}
                     render={({ online }: { online: boolean }) => (
                         <Button
                             variant="contained"
-                            onClick={onClick}
+                            onClick={onDownloadAnkiButtonClick}
                             disabled={!cardsCount || !online}
                             color="primary"
                         >

@@ -6,7 +6,7 @@ const verticalOffset = '<br><br>' // I don't use css-margins for offset, because
 
 const join = R.join('')
 
-const makeCard = (cardData: CardData): Card => {
+const makeAnkiCard = (cardData: CardData): Card => {
     const {
         form,
         definition,
@@ -76,4 +76,4 @@ const makeCard = (cardData: CardData): Card => {
     return card
 }
 
-export default makeCard
+export default makeAnkiCard

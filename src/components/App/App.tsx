@@ -4,10 +4,12 @@ import uniq from 'lodash/uniq'
 import Grid from '@material-ui/core/Grid'
 
 import normalizeWordData from '../../core/normalizeWordData/normalizeWordData'
-import makeCards from '../../utils/makeCards/makeCards'
+import makeAnkiCard from '../../core/makeAnkiCard/makeAnkiCard'
+import getCardsData from '../../utils/getCardsData/getCardsData'
 import splitByWord from '../../utils/splitByWord/splitByWord'
 import wordToData from '../../utils/wordToData/wordToData'
-import downloadAndSaveDeck from '../../utils/downloadAndSaveDeck/downloadAndSaveDeck'
+import saveAnkiDeck from '../../utils/saveAnkiDeck/saveAnkiDeck'
+import saveCsvFile from '../../utils/saveCsvFile/saveCsvFile'
 import getCardsCount from '../../utils/getCardsCount/getCardsCount'
 
 import Header from '../Header/Header'
@@ -137,20 +139,25 @@ function App() {
         wordsFetchResult
     ])
 
-    const handleDownloadButtonClick = useCallback(
-        (event: React.MouseEvent) => {
-            setIsDeckBeingDownloaded(true)
+    const handleDownloadAnkiButtonClick = useCallback(() => {
+        setIsDeckBeingDownloaded(true)
 
-            const cards = makeCards(words, wordsFetchResult)
+        const ankiCards = getCardsData(words, wordsFetchResult).map(
+            makeAnkiCard
+        )
 
-            downloadAndSaveDeck(deckName, cards)
-                .then(() => {
-                    setIsDeckBeingDownloaded(false)
-                })
-                .catch(console.error)
-        },
-        [deckName, words, wordsFetchResult]
-    )
+        saveAnkiDeck(deckName, ankiCards)
+            .then(() => {
+                setIsDeckBeingDownloaded(false)
+            })
+            .catch(console.error)
+    }, [deckName, words, wordsFetchResult])
+
+    const handleDownloadCsvButtonClick = useCallback(() => {
+        const cardsData = getCardsData(words, wordsFetchResult)
+
+        saveCsvFile(deckName, cardsData)
+    }, [deckName, words, wordsFetchResult])
 
     return (
         <div className="App">
@@ -185,7 +192,10 @@ function App() {
 
                 <Grid item xs={12}>
                     <DownloadSection
-                        onClick={handleDownloadButtonClick}
+                        onDownloadAnkiButtonClick={
+                            handleDownloadAnkiButtonClick
+                        }
+                        onDownloadCsvButtonClick={handleDownloadCsvButtonClick}
                         isLoading={isDeckBeingDownloaded}
                         cardsCount={cardsCount}
                         wordsCount={words.length}

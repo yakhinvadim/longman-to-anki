@@ -1,11 +1,12 @@
 import * as R from 'ramda'
-import makeCard from './makeCard'
+import makeAnkiCard from './makeAnkiCard'
 
 const example = 'example'
 const situation = 'situation'
 const geography = 'geography'
 const form = 'form'
 const pronunciation = 'pronunciation'
+const partOfSpeech = 'part of speech'
 const definition = 'definition'
 const synonym = 'synonym'
 const antonym = 'antonym'
@@ -17,7 +18,7 @@ const join = R.join('')
 describe('makeCard', () => {
     it('make correct card if example passed (minimum card parts)', () => {
         expect(
-            makeCard({
+            makeAnkiCard({
                 example,
                 definition,
                 form,
@@ -26,6 +27,7 @@ describe('makeCard', () => {
                 synonym: '',
                 antonym: '',
                 pronunciation: '',
+                partOfSpeech: '',
                 headword,
                 frequency
             })
@@ -41,12 +43,13 @@ describe('makeCard', () => {
 
     it('make correct card if example is passed (maximum card parts)', () => {
         expect(
-            makeCard({
+            makeAnkiCard({
                 example,
                 situation,
                 geography,
                 form,
                 pronunciation,
+                partOfSpeech,
                 definition,
                 synonym,
                 antonym,
@@ -72,7 +75,7 @@ describe('makeCard', () => {
 
     it('make correct card if no example passed (minimum card parts)', () => {
         expect(
-            makeCard({
+            makeAnkiCard({
                 definition,
                 form,
                 example: '',
@@ -81,6 +84,7 @@ describe('makeCard', () => {
                 synonym: '',
                 antonym: '',
                 pronunciation: '',
+                partOfSpeech: '',
                 headword,
                 frequency
             })
@@ -92,11 +96,12 @@ describe('makeCard', () => {
 
     it('make correct card if no example passed (maximum card parts)', () => {
         expect(
-            makeCard({
+            makeAnkiCard({
                 situation,
                 form,
                 geography,
                 pronunciation,
+                partOfSpeech,
                 definition,
                 synonym,
                 antonym,

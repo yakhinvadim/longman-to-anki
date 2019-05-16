@@ -1,13 +1,12 @@
-import makeCard from '../../core/makeCard/makeCard'
 import { WordFetchResult } from '../../types.d'
 
-const makeCards = (
+const getCardsData = (
     words: string[],
     wordsFetchResult: {
         [key: string]: WordFetchResult
     }
 ) => {
-    const cards = words
+    const cardsData = words
         .reverse()
         .map(word => wordsFetchResult[word])
         .filter(Array.isArray)
@@ -18,9 +17,8 @@ const makeCards = (
                     : allCardsData,
             []
         )
-        .map(makeCard)
 
-    return cards
+    return cardsData
 }
 
-export default makeCards
+export default getCardsData

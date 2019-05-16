@@ -9,7 +9,7 @@ const template = {
         `
 }
 
-const downloadAndSaveDeck = (deckName: string, cards: Card[]) =>
+const saveAnkiDeck = (deckName: string, cards: Card[]) =>
     fetch('https://micro-anki-yakhinvadim.now.sh/', {
         body: JSON.stringify({ cards, deckName, template }),
         method: 'POST',
@@ -20,4 +20,4 @@ const downloadAndSaveDeck = (deckName: string, cards: Card[]) =>
         .then(res => res.blob())
         .then(blob => saveAs(blob, `${deckName}.apkg`))
 
-export default downloadAndSaveDeck
+export default saveAnkiDeck
