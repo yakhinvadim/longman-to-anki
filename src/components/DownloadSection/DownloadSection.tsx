@@ -6,13 +6,12 @@ import CloudOff from '@material-ui/icons/CloudOff'
 import { withStyles, WithStyles, Theme, createStyles } from '@material-ui/core'
 import { Detector } from 'react-detect-offline'
 import maybePluralize from '../../utils/maybePluralize/maybePluralize'
+import Grid from '@material-ui/core/Grid'
 
 const styles = (theme: Theme) =>
     createStyles({
-        root: {
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between'
+        totals: {
+            lineHeight: '36px'
         },
         leftIcon: {
             marginRight: theme.spacing.unit
@@ -42,53 +41,68 @@ class DownloadSection extends PureComponent<Props> {
         const cardsTotal = maybePluralize(cardsCount, 'card')
 
         return (
-            <div className={classes.root}>
-                <span data-qa="download-section__totals">{`${wordsTotal}, ${cardsTotal}`}</span>
+            <Grid container spacing={16}>
+                <Grid item xs={12} sm={3} md={5}>
+                    <div
+                        className={classes.totals}
+                        data-qa="download-section__totals"
+                    >{`${wordsTotal}, ${cardsTotal}`}</div>
+                </Grid>
 
-                <Button
-                    variant="outlined"
-                    onClick={onDownloadCsvButtonClick}
-                    disabled={!cardsCount}
-                >
-                    Download CSV
-                </Button>
-                <Detector
-                    polling={false}
-                    render={({ online }: { online: boolean }) => (
+                <Grid item container xs={12} spacing={8} sm={9} md={7}>
+                    <Grid item xs={12} sm={5}>
                         <Button
-                            variant="contained"
-                            onClick={onDownloadAnkiButtonClick}
-                            disabled={!cardsCount || !online}
-                            color="primary"
+                            variant="outlined"
+                            onClick={onDownloadCsvButtonClick}
+                            disabled={!cardsCount}
+                            fullWidth
                         >
-                            {online ? (
-                                isLoading ? (
-                                    <>
-                                        <CircularProgress
-                                            className={classes.leftIcon}
-                                            color="inherit"
-                                            size={24}
-                                        />
-                                        Preparing your&nbsp;deck
-                                    </>
-                                ) : (
-                                    <>
-                                        <CloudDownloadIcon
-                                            className={classes.leftIcon}
-                                        />
-                                        Download anki&nbsp;deck
-                                    </>
-                                )
-                            ) : (
-                                <>
-                                    <CloudOff className={classes.leftIcon} />
-                                    No internet connection
-                                </>
-                            )}
+                            Download CSV
                         </Button>
-                    )}
-                />
-            </div>
+                    </Grid>
+                    <Grid item xs={12} sm={7}>
+                        <Detector
+                            polling={false}
+                            render={({ online }: { online: boolean }) => (
+                                <Button
+                                    variant="contained"
+                                    onClick={onDownloadAnkiButtonClick}
+                                    disabled={!cardsCount || !online}
+                                    color="primary"
+                                    fullWidth
+                                >
+                                    {online ? (
+                                        isLoading ? (
+                                            <>
+                                                <CircularProgress
+                                                    className={classes.leftIcon}
+                                                    color="inherit"
+                                                    size={24}
+                                                />
+                                                Preparing your&nbsp;deck
+                                            </>
+                                        ) : (
+                                            <>
+                                                <CloudDownloadIcon
+                                                    className={classes.leftIcon}
+                                                />
+                                                Download anki&nbsp;deck
+                                            </>
+                                        )
+                                    ) : (
+                                        <>
+                                            <CloudOff
+                                                className={classes.leftIcon}
+                                            />
+                                            No internet connection
+                                        </>
+                                    )}
+                                </Button>
+                            )}
+                        />
+                    </Grid>
+                </Grid>
+            </Grid>
         )
     }
 }
