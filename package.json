@@ -25,7 +25,7 @@
         "husky": "^2.0.0",
         "json2csv": "^4.5.1",
         "lint-staged": "^8.1.0",
-        "lodash": "^4.17.11",
+        "lodash": "^4.17.15",
         "prettier": "^1.4.4",
         "ramda": "^0.26.1",
         "react": "^16.2.0",
