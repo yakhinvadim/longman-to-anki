@@ -21,6 +21,7 @@ const styles = (theme: Theme) =>
 interface Props extends WithStyles<typeof styles> {
     onDownloadAnkiButtonClick: (e: React.MouseEvent) => void
     onDownloadCsvButtonClick: (e: React.MouseEvent) => void
+    onClearWordsButtonClick: (e: React.MouseEvent) => void
     isLoading: boolean
     wordsCount: number
     cardsCount: number
@@ -32,6 +33,7 @@ class DownloadSection extends PureComponent<Props> {
             classes,
             onDownloadAnkiButtonClick,
             onDownloadCsvButtonClick,
+            onClearWordsButtonClick,
             isLoading,
             wordsCount,
             cardsCount
@@ -42,15 +44,26 @@ class DownloadSection extends PureComponent<Props> {
 
         return (
             <Grid container spacing={16}>
-                <Grid item xs={12} sm={3} md={5}>
+                <Grid item xs={12} sm={12} md={12}>
                     <div
                         className={classes.totals}
                         data-qa="download-section__totals"
                     >{`${wordsTotal}, ${cardsTotal}`}</div>
                 </Grid>
 
-                <Grid item container xs={12} spacing={8} sm={9} md={7}>
-                    <Grid item xs={12} sm={5}>
+                <Grid item container xs={12} spacing={8} sm={12} md={12}>
+                    <Grid item xs={12} sm={4}>
+                        <Button
+                            variant="outlined"
+                            onClick={onClearWordsButtonClick}
+                            disabled={!cardsCount}
+                            fullWidth
+                            color="secondary"
+                        >
+                            Clear words
+                        </Button>
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
                         <Button
                             variant="outlined"
                             onClick={onDownloadCsvButtonClick}
@@ -60,7 +73,7 @@ class DownloadSection extends PureComponent<Props> {
                             Download CSV
                         </Button>
                     </Grid>
-                    <Grid item xs={12} sm={7}>
+                    <Grid item xs={12} sm={4}>
                         <Detector
                             polling={false}
                             render={({ online }: { online: boolean }) => (

@@ -159,6 +159,11 @@ function App() {
         saveCsvFile(deckName, cardsData)
     }, [deckName, words, wordsFetchResult])
 
+    const handleClearWordsButtonClick = useCallback(() => {
+        setWords([])
+        setWordsFetchResult({})
+    }, [])
+
     return (
         <div className="App">
             <Grid container spacing={16}>
@@ -196,6 +201,7 @@ function App() {
                             handleDownloadAnkiButtonClick
                         }
                         onDownloadCsvButtonClick={handleDownloadCsvButtonClick}
+                        onClearWordsButtonClick={handleClearWordsButtonClick}
                         isLoading={isDeckBeingDownloaded}
                         cardsCount={cardsCount}
                         wordsCount={words.length}
