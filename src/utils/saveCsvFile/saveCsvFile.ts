@@ -4,7 +4,19 @@ import { CardData } from '../../types'
 
 const saveCsvFile = (deckName: string, cardsData: CardData[]) => {
     const json2csvParser = new Parser({
-        fields: Object.keys(cardsData[0]),
+        fields: [
+            'headword',
+            'form',
+            'example',
+            'definition',
+            'pronunciation',
+            'partOfSpeech',
+            'situation',
+            'geography',
+            'synonym',
+            'antonym',
+            'frequency'
+        ],
         withBOM: true
     })
     const csv = json2csvParser.parse(cardsData)
