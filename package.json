@@ -26,6 +26,7 @@
         "json2csv": "^4.5.1",
         "lint-staged": "^9.1.0",
         "lodash": "^4.17.15",
+        "node-fetch": "^2.6.0",
         "prettier": "^1.4.4",
         "ramda": "^0.26.1",
         "react": "^16.2.0",

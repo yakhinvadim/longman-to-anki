@@ -9,7 +9,9 @@ jest.mock('../../core/composeWordData/composeWordData', () => jest.fn(a => a))
 
 fetchMock.get(composeQuery('set'), setMarkup)
 fetchMock.get(composeQuery('asdfasdf'), asdfasdfMarkup)
-fetchMock.get(composeQuery('offline-request'), { throws: 'Failed to fetch' })
+fetchMock.get(composeQuery('offline-request'), {
+    throws: new Error('Failed to fetch')
+})
 
 describe('wordToData', () => {
     it('returns correct status for offline request', () => {
