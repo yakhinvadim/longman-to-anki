@@ -154,9 +154,7 @@ export default class WordsListItem extends PureComponent<Props> {
                     <div className="WordsListItem__description">
                         {cardsData[0].definition}
                     </div>
-                    {this.renderDeleteButton(
-                        cardsData[0].headword.toLowerCase()
-                    )}
+                    {this.renderDeleteButton(this.props.word)}
                 </div>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
