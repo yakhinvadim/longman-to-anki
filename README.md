@@ -1,5 +1,7 @@
 # longman-to-anki
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/yakhinvadim/longman-to-anki.svg)](https://greenkeeper.io/)
+
 ![Build Status](https://travis-ci.org/yakhinvadim/longman-to-anki.svg?branch=master)
 
 **longman-to-anki** is a web app to help you learn English with Longman dictionary and Anki.
