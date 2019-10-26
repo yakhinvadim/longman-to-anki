@@ -1,12 +1,12 @@
 import normalizeWordData from './normalizeWordData'
+import { WordData, EntryData } from '../../types.d'
 jest.mock(
     '../normalizeEntryData/normalizeEntryData',
-    // TODO replace "any" with actual types. wait for this pr to be on create-react-app https://github.com/facebook/jest/pull/7799
-    () => (wordData: any) => (entryData: any) =>
+    () => (wordData: WordData) => (entryData: EntryData) =>
         `${entryData.senses[0].examples[0]} ${wordData.headword}`
 )
 
-const entryData1 = {
+const entryData1: EntryData = {
     senses: [
         {
             definition: '',
@@ -18,10 +18,12 @@ const entryData1 = {
             exampleGroups: [],
             subsenses: []
         }
-    ]
+    ],
+    pronunciation: '',
+    partOfSpeech: ''
 }
 
-const entryData2 = {
+const entryData2: EntryData = {
     senses: [
         {
             definition: '',
@@ -33,12 +35,13 @@ const entryData2 = {
             exampleGroups: [],
             subsenses: []
         }
-    ]
+    ],
+    pronunciation: '',
+    partOfSpeech: ''
 }
 
-const wordData = {
+const wordData: WordData = {
     headword: 'headword',
-    pronunciation: '',
     frequency: '',
     entries: [entryData1, entryData2]
 }

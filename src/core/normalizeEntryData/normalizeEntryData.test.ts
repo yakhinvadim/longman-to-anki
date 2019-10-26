@@ -1,17 +1,18 @@
 import normalizeEntryData from './normalizeEntryData'
-import { SenseData, WordData } from '../../types.d'
+import { SenseData, WordData, EntryData } from '../../types.d'
 jest.mock(
     '../normalizeSenseData/normalizeSenseData',
-    // TODO replace "any" with actual types. wait for create-react-app to update to Jest 24.1.0
-    () => ({ wordData, entryData }: { wordData: any; entryData: any }) => (
-        senseData: any
-    ) =>
-        `${senseData.examples[0]} ${wordData.headword} ${
-            entryData.pronunciation
-        }`
+    () => ({
+        wordData,
+        entryData
+    }: {
+        wordData: WordData
+        entryData: EntryData
+    }) => (senseData: SenseData) =>
+        `${senseData.examples[0]} ${wordData.headword} ${entryData.pronunciation}`
 )
 
-const entryData = {
+const entryData: EntryData = {
     senses: [
         {
             definition: '',
@@ -34,10 +35,11 @@ const entryData = {
             subsenses: []
         }
     ],
-    pronunciation: 'pronunciation'
+    pronunciation: 'pronunciation',
+    partOfSpeech: ''
 }
 
-const wordData = {
+const wordData: WordData = {
     headword: 'headword',
     frequency: '',
     entries: [entryData]
