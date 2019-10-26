@@ -1,5 +1,5 @@
 import * as R from 'ramda'
-import flattenDeep from 'lodash/flatten'
+import flattenDepth from 'lodash/flattenDepth'
 import {
     WordData,
     EntryData,
@@ -72,13 +72,15 @@ const normalizeSenseData = ({
 
     // all cards
 
-    // TODO:  find out why single top-level flattenDeep is not enough
-    const cards = flattenDeep([
-        cardsFromExamples,
-        flattenDeep(cardsFromExampleGroups),
-        flattenDeep(cardsFromSubsenses),
-        cardsFromDefinition
-    ])
+    const cards = flattenDepth(
+        [
+            cardsFromExamples,
+            cardsFromExampleGroups,
+            cardsFromSubsenses,
+            cardsFromDefinition
+        ],
+        2
+    )
 
     return cards
 }
