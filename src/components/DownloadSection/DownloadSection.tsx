@@ -14,7 +14,7 @@ const styles = (theme: Theme) =>
             lineHeight: '36px'
         },
         leftIcon: {
-            marginRight: theme.spacing.unit
+            marginRight: theme.spacing(1)
         }
     })
 
@@ -43,7 +43,7 @@ class DownloadSection extends PureComponent<Props> {
         const cardsTotal = maybePluralize(cardsCount, 'card')
 
         return (
-            <Grid container spacing={16}>
+            <Grid container spacing={2}>
                 <Grid item xs={12} sm={12} md={12}>
                     <div
                         className={classes.totals}
@@ -51,7 +51,7 @@ class DownloadSection extends PureComponent<Props> {
                     >{`${wordsTotal}, ${cardsTotal}`}</div>
                 </Grid>
 
-                <Grid item container xs={12} spacing={8} sm={12} md={12}>
+                <Grid item container xs={12} spacing={1} sm={12} md={12}>
                     <Grid item xs={12} sm={4}>
                         <Button
                             variant="outlined"

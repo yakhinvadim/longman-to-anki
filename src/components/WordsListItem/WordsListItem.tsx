@@ -69,7 +69,7 @@ export default class WordsListItem extends PureComponent<Props> {
 
     renderTable = (cardsData: CardData[]) => (
         <div className="WordsListItem__tableWrapper">
-            <Table padding="dense">
+            <Table size="small">
                 <TableHead>
                     <TableRow>
                         <TableCell className="WordsListItem__tableHeadCell">

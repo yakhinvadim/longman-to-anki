@@ -9,9 +9,6 @@ import './index.css'
 const theme = createMuiTheme({
     palette: {
         primary: indigo
-    },
-    typography: {
-        useNextVariants: true
     }
 })
 
