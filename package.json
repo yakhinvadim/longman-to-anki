@@ -20,7 +20,7 @@
         "enzyme-adapter-react-16": "1.15.1",
         "fetch-mock": "7.5.1",
         "file-saver": "2.0.2",
-        "gh-pages": "2.1.1",
+        "gh-pages": "2.2.0",
         "husky": "3.0.9",
         "json2csv": "4.5.4",
         "lint-staged": "9.4.2",
