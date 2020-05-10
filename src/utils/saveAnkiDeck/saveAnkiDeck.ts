@@ -10,13 +10,16 @@ const template = {
 }
 
 const saveAnkiDeck = (deckName: string, cards: Card[]) =>
-    fetch('https://micro-anki-yakhinvadim.now.sh/', {
-        body: JSON.stringify({ cards, deckName, template }),
-        method: 'POST',
-        headers: new Headers({
-            'Content-Type': 'application/json'
-        })
-    })
+    fetch(
+        'https://cors-anywhere.herokuapp.com/https://vercel-anki-deck.now.sh/api/create',
+        {
+            body: JSON.stringify({ cards, deckName, template }),
+            method: 'POST',
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            })
+        }
+    )
         .then(res => res.blob())
         .then(blob => saveAs(blob, `${deckName}.apkg`))
 
