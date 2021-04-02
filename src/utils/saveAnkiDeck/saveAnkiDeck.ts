@@ -11,7 +11,7 @@ const template = {
 
 const saveAnkiDeck = (deckName: string, cards: Card[]) =>
     fetch(
-        'https://cors-anywhere.herokuapp.com/https://vercel-anki-deck.now.sh/api/create',
+        'https://murmuring-tor-18986.herokuapp.com/https://vercel-anki-deck.now.sh/api/create',
         {
             body: JSON.stringify({ cards, deckName, template }),
             method: 'POST',
