@@ -15,7 +15,7 @@ const composeQuery = (word: string) => {
 
     const dictionaryUrl = `https://www.ldoceonline.com/dictionary/${escapedWord}`
 
-    const queryUrl = `https://murmuring-tor-18986.herokuapp.com/${dictionaryUrl}`
+    const queryUrl = `https://murmuring-tor-18986.fly.dev/${dictionaryUrl}`
 
     return queryUrl
 }

@@ -1,7 +1,7 @@
 import composeQuery from './composeQuery'
 
 const path =
-    'https://murmuring-tor-18986.herokuapp.com/https://www.ldoceonline.com/dictionary/'
+    'https://murmuring-tor-18986.fly.dev/https://www.ldoceonline.com/dictionary/'
 const makeUrl = (word: string) => `${path}${word}`
 
 describe('composeQuery', () => {
