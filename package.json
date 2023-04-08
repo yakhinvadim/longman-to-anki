@@ -4,8 +4,9 @@
     "homepage": "https://yakhinvadim.github.io/longman-to-anki/",
     "private": true,
     "dependencies": {
-        "@material-ui/core": "4.5.1",
-        "@material-ui/icons": "4.5.1",
+        "@material-ui/core": "4.12.4",
+        "@material-ui/icons": "4.11.3",
+        "@material-ui/lab": "^4.0.0-alpha.61",
         "@types/enzyme": "3.10.3",
         "@types/fetch-mock": "7.3.1",
         "@types/file-saver": "2.0.1",
