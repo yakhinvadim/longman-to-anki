@@ -24,7 +24,7 @@ export default class Header extends PureComponent {
                     <br />
                     <br />
                     If you're interested, please{' '}
-                    <a href="https://www.newsminimalist.com/subscribe">
+                    <a href="https://newsletter.newsminimalist.com/subscribe">
                         support me by subscribing
                     </a>
                     ! And if you like it, please share it with your friends!
