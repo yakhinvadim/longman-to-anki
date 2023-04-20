@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "e4575106c4a84e137eb482d7f71cc68d",
+    "revision": "534df8babb65d072fc88ade2de9333e6",
     "url": "/longman-to-anki/index.html"
   },
   {
-    "revision": "7294cdc627c2b726a997",
+    "revision": "824b98e20909a098b6c7",
     "url": "/longman-to-anki/static/css/main.7fc851ce.chunk.css"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/longman-to-anki/static/js/2.8b514adc.chunk.js"
   },
   {
-    "revision": "7294cdc627c2b726a997",
-    "url": "/longman-to-anki/static/js/main.93431ceb.chunk.js"
+    "revision": "824b98e20909a098b6c7",
+    "url": "/longman-to-anki/static/js/main.abc4d9df.chunk.js"
   },
   {
     "revision": "7d139d21f7533b3f1e46",

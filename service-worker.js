@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/longman-to-anki/precache-manifest.f59269bd7c34dd63888df17a02cdcc38.js"
+  "/longman-to-anki/precache-manifest.a59b49389b10aabafd2fb891437b8733.js"
 );
 
 self.addEventListener('message', (event) => {
